@@ -1,1 +1,65 @@
-/* You can add global styles to this file, and also import other style files */
+@import "./app/shared/styles/variables";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 1.8rem;
+    color: $gray;
+    font-family: "Montserrat", sans-serif;
+    position: relative;
+    min-height: 100vh;
+}
+
+:root {
+    display: flex;
+    min-height: 100vh;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.wrapper {
+    width: 90%;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.section-padding {
+    padding: 12rem 0;
+}
+
+.title {
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: $black;
+    text-align: center;
+}
+
+.button {
+    margin: 0 auto;
+    display: block;
+    width: fit-content;
+    border-radius: 50px;
+    border: none;
+    background-color: $orange;
+    color: $white;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    &--orange {
+    }
+}

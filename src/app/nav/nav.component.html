@@ -1,0 +1,37 @@
+<header class="header">
+    <nav [class]="['nav'].concat(extraFeatures)">
+        <div class="nav__box wrapper">
+            <div class="nav__container">
+                <h1 class="header__h1">
+                    <a routerLink="/home" class="header__h1-link">
+                        Poligiot
+                    </a>
+                </h1>
+                <button class="hamburger hamburger--3dx" type="button" (click)="toggleIsActive()"
+                    [ngClass]="{'is-active': isActive}">
+                    <span class="hamburger-box">
+                        <span class="hamburger-inner"></span>
+                    </span>
+                </button>
+            </div>
+            <ul class="nav__list" [ngClass]="{'nav__list--active': isActive}">
+                <li class="nav__list-item" *ngIf="!isAuth">
+                    <a routerLink="/auth/login" class="nav__list-item-link" (click)="toggleIsActive()">Zaloguj się</a>
+                </li>
+                <li class="nav__list-item nav__list-item--reverse" *ngIf="!isAuth">
+                    <a routerLink="/auth/signup" class="nav__list-item-link nav__list-item-link--reverse" (click)="toggleIsActive()">Zarejestruj
+                        się</a>
+                </li>
+                <li class="nav__list-item" *ngIf="isAuth">
+                    <a routerLink="/sets" class="nav__list-item-link" (click)="toggleIsActive()">Panel główny</a>
+                </li>
+                <li class="nav__list-item" *ngIf="isAuth">
+                    <a routerLink="/user" class="nav__list-item-link" (click)="toggleIsActive()">Dane użytkownika</a>
+                </li>
+                <li class="nav__list-item nav__list-item--reverse" *ngIf="isAuth">
+                    <a routerLink="/auth/login" class="nav__list-item-link nav__list-item-link--reverse" (click)="toggleIsActive()">Wyloguj się</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

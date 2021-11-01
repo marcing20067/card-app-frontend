@@ -1,1 +1,24 @@
-<p>home works!</p>
+<section class="home wrapper section-padding">
+    <div class="home__box">
+        <img src="../../assets/icons/hat.svg" class="home__box-icon" alt="">
+        <h2 class="home__box-title">
+            <span class="home__box-title-span">ucz się szybciej</span>
+            <span class="home__box-title-span">ucz się lepiej</span>
+        </h2>
+    </div>
+
+    <p class="home__text">Metodą fiszek nauczysz się szybciej. Wystarczy, że poświęcisz 10 minut dziennie na
+        systematyczną naukę.</p>
+
+    <app-field>
+        <input type="text" formControlName="password" id="password" appInput>
+        <label for="password" label>Wyszukaj zestaw...</label>
+        <app-icon src="../../assets/icons/search.svg" alt="" left inputId="password"></app-icon>
+    </app-field>
+
+    <p class="home__paragraph">
+        <span class="home__paragraph-span">lub</span>
+        <a [routerLink]="[ '/sets/create' ]" class="home__paragraph-link">Stwórz zestaw</a>
+    </p>
+</section>
+<app-footer></app-footer>
