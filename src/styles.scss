@@ -16,6 +16,10 @@ html {
     box-sizing: border-box;
 }
 
+p, a, label, h2 {
+    line-height: 150%;
+}
+
 body {
     font-size: 1.8rem;
     color: $gray;
@@ -60,6 +64,13 @@ body {
     font-weight: 700;
     text-transform: uppercase;
 
-    &--orange {
+    // &--orange {
+    // }
+}
+
+
+@media (min-width: 768px) {
+    .wrapper {
+        width: 75%;
     }
 }

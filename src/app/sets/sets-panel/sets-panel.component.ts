@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SetsService } from '../sets.service';
 
 @Component({
   selector: 'app-sets-panel',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sets-panel.component.scss']
 })
 export class SetsPanelComponent implements OnInit {
-
-  constructor() { }
+  sets: any;
+  constructor(private setsService: SetsService) { }
 
   ngOnInit(): void {
+    this.setsService.getSetsPanelData().subscribe(res => {
+      console.log(res);
+    })
   }
 
 }

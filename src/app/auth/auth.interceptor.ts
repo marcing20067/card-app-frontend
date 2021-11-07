@@ -2,17 +2,30 @@ import { Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
-  HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { TokenService } from '../shared/services/token.service';
+import { switchMap } from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+  constructor(private tokenService: TokenService) {}
 
-  constructor() {}
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    return this.tokenService.isAuth().pipe(
+      switchMap((isTokenValid) => {
+        if (!isTokenValid) {
+          return next.handle(req);
+        }
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    return next.handle(request);
+        const accessToken = this.tokenService.getAccessToken();
+        const authReq = req.clone({
+          headers: req.headers.set('X-Access-Token', `${accessToken}`),
+        });
+
+        return next.handle(authReq);
+      })
+    );
   }
 }

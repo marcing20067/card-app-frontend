@@ -1,22 +1,48 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { newUser } from './newUser.model';
+import { newUser } from '../shared/models/newUser.model';
 import { User } from '../shared/models/user.model';
+import { TokenData } from '../shared/models/tokenData.model';
+import { tap } from 'rxjs/operators';
+import { TokenService } from '../shared/services/token.service';
+import { ExpiresTokenData } from '../shared/models/expiresTokenData.model';
+import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  tokenData$ = new BehaviorSubject<string>('');
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private tokenService: TokenService, private router: Router) {}
 
-  login(user: User) {
-    return this.http.post(environment.BACKEND_URL + 'login', user);
+  login(user: User, rememberMe: boolean) {
+    return this.http
+      .post<ExpiresTokenData>(environment.BACKEND_URL + 'login', user, {
+        observe: 'response',
+      })
+      .pipe(
+        tap((res) => {
+          const expiresData = res.body as ExpiresTokenData;
+          const accessToken = res.headers.get('X-Access-Token') as string;
+
+          this.tokenService.setTokenData(
+            {
+              accessToken: accessToken,
+              accessTokenExpiresIn: expiresData.accessTokenExpiresIn,
+              refreshTokenExpiresIn: expiresData.refreshTokenExpiresIn,
+            },
+            rememberMe
+          );
+          this.router.navigate(['/sets']);
+        })
+      );
   }
 
   signup(user: newUser) {
-    return this.http.post(environment.BACKEND_URL + 'signup', user);
+    return this.http.post(environment.BACKEND_URL + 'signup', user).pipe(
+      tap(() => {
+        this.router.navigate(['/auth/login']);
+      })
+    );
   }
 }

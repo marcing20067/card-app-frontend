@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FooterComponent } from './footer/footer.component';
-import { FieldComponent } from './field/field.component';
-import { InputDirective } from './field/input/input.directive';
-import { IconComponent } from './field/icon/icon.component';
+import { FieldComponent } from './components/field/field.component';
+import { InputDirective } from './components/field/input/input.directive';
+import { IconComponent } from './components/field/icon/icon.component';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [FooterComponent, FieldComponent, InputDirective, IconComponent],
+  declarations: [FieldComponent, InputDirective, IconComponent],
   imports: [CommonModule, RouterModule],
-  exports: [FooterComponent, FieldComponent, InputDirective, IconComponent],
+  exports: [FieldComponent, InputDirective, IconComponent],
 })
 export class SharedModule {}

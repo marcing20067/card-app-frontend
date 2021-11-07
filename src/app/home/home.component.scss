@@ -1,7 +1,20 @@
 @import "../shared/styles/variables";
 
+.shapes {
+    display: none;
+    &__top {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}
+
 .home {
-    &__box {
+    .cards {
+        display: none;
+    }
+
+    &__header {
         position: relative;
 
         &-icon {
@@ -44,6 +57,46 @@
             color: inherit;
             font-size: 2.8rem;
             text-decoration: underline;
+        }
+    }
+}
+
+@media (min-width: 1024px) {
+    .home {
+        &__box {
+            display: flex;
+            align-items: center;
+        }
+
+        &__header {
+            &-title {
+                font-size: 4.8rem;
+            }
+
+            &-icon {
+                width: 3.4rem;
+            }
+        }
+
+        &__text {
+            font-size: 2.4rem;
+        }
+
+        &__paragraph-span {
+            font-size: 3.6rem;
+        }
+
+        &__paragraph-link {
+            font-size: 1.8rem;
+        }
+
+        &__container {
+            width: 60%;
+        }
+
+        .cards {
+            display: block;
+            width: 40%;
         }
     }
 }

@@ -15,21 +15,23 @@
                 </button>
             </div>
             <ul class="nav__list" [ngClass]="{'nav__list--active': isActive}">
-                <li class="nav__list-item" *ngIf="!isAuth">
+                <li class="nav__list-item" *ngIf="!(isAuth$ | async)">
                     <a routerLink="/auth/login" class="nav__list-item-link" (click)="toggleIsActive()">Zaloguj się</a>
                 </li>
-                <li class="nav__list-item nav__list-item--reverse" *ngIf="!isAuth">
-                    <a routerLink="/auth/signup" class="nav__list-item-link nav__list-item-link--reverse" (click)="toggleIsActive()">Zarejestruj
+                <li class="nav__list-item nav__list-item--reverse" *ngIf="!(isAuth$ | async)">
+                    <a routerLink="/auth/signup" class="nav__list-item-link nav__list-item-link--reverse"
+                        (click)="toggleIsActive()">Zarejestruj
                         się</a>
                 </li>
-                <li class="nav__list-item" *ngIf="isAuth">
+                <li class="nav__list-item" *ngIf="(isAuth$ | async)">
                     <a routerLink="/sets" class="nav__list-item-link" (click)="toggleIsActive()">Panel główny</a>
                 </li>
-                <li class="nav__list-item" *ngIf="isAuth">
+                <li class="nav__list-item" *ngIf="(isAuth$ | async)">
                     <a routerLink="/user" class="nav__list-item-link" (click)="toggleIsActive()">Dane użytkownika</a>
                 </li>
-                <li class="nav__list-item nav__list-item--reverse" *ngIf="isAuth">
-                    <a routerLink="/auth/login" class="nav__list-item-link nav__list-item-link--reverse" (click)="toggleIsActive()">Wyloguj się</a>
+                <li class="nav__list-item nav__list-item--reverse" *ngIf="(isAuth$ | async)">
+                    <a routerLink="/auth/login" class="nav__list-item-link nav__list-item-link--reverse"
+                        (click)="toggleIsActive()">Wyloguj się</a>
                 </li>
             </ul>
         </div>

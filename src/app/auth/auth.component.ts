@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { newUser } from './newUser.model';
-import { User } from '../shared/models/user.model';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -11,23 +9,21 @@ import { AuthService } from './auth.service';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent {
-  authForm!: FormGroup;
+  authForm: FormGroup = this.fb.group({
+    username: ['', Validators.required],
+    password: ['', Validators.required],
+    rememberMe: [false, Validators.required],
+  });
   isLoginRoute!: boolean;
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private authService: AuthService,
-    private router: Router
+    private authService: AuthService
   ) {
     this.isLoginRoute = this.route.snapshot.url[0].path === 'login';
 
-    if (this.isLoginRoute) {
-      this.authForm = this.fb.group({
-        username: ['', Validators.required],
-        password: ['', Validators.required],
-      });
-    } else {
+    if (!this.isLoginRoute) {
       this.authForm = this.fb.group({
         username: ['', Validators.required],
         password: ['', Validators.required],
@@ -38,21 +34,14 @@ export class AuthComponent {
   }
 
   onSubmit() {
-    const user = this.authForm.value;
+    const data = this.authForm.value;
+
     if (this.isLoginRoute) {
-      this.authService.login(user as User).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.router.navigate(['/sets']);
-        },
-      });
+      const rememberMe = data.rememberMe;
+
+      this.authService.login(data, rememberMe).subscribe();
     } else {
-      this.authService.signup(user as newUser).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.router.navigate(['/auth/login']);
-        },
-      });
+      this.authService.signup(data).subscribe();
     }
   }
 }

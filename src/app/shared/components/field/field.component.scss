@@ -1,7 +1,9 @@
-@import "../styles/variables";
+@import "../../styles/variables";
 
 .field {
     position: relative;
+    max-width: 32.5rem;
+    margin: 0 auto;
     width: 100%;
     overflow: hidden;
 }

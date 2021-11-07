@@ -31,4 +31,25 @@
         padding: 0.8rem 1.6rem;
         font-size: 1.6rem;
     }
+
+    &__box {
+        &-checkbox {
+            position: static;
+            width: auto;
+        }
+
+        &--checkbox {
+            position: static;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        &-label--checkbox {
+            position: static;
+            width: auto;
+            transform: none;
+            margin-right: 1.6rem;
+        }
+    }
 }

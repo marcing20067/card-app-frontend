@@ -19,7 +19,7 @@
 
         <div class="form__box">
             <app-field>
-                <input type="text" formControlName="password" id="password" appInput>
+                <input type="password" formControlName="password" id="password" appInput>
                 <label for="password" label>Hasło</label>
                 <app-icon src="../../assets/icons/search.svg" alt="" left inputId="password"></app-icon>
             </app-field>
@@ -27,13 +27,18 @@
 
         <div class="form__box" *ngIf="!isLoginRoute">
             <app-field>
-                <input type="text" formControlName="repeatPassword" id="repeat-password" appInput>
+                <input type="password" formControlName="repeatPassword" id="repeat-password" appInput>
                 <label for="repeat-password" label>Powtórz hasło</label>
                 <app-icon src="../../assets/icons/search.svg" alt="" left inputId="repeat-password"></app-icon>
             </app-field>
         </div>
 
-        <button type="submit" class="form__button button button--orange">
+        <div class="form__box form__box--checkbox" *ngIf="isLoginRoute">
+            <label for="remember-me" class="form__box-label--checkbox">Zapamiętaj mnie</label>
+            <input type="checkbox" formControlName="rememberMe" id="remember-me" class="form__box-checkbox">
+        </div>
+
+        <button type="submit" class="form__button button button--orange" [disabled]="authForm.invalid">
             {{ isLoginRoute ? 'Zaloguj się' : 'Zarejestuj się' }}
         </button>
     </form>
@@ -43,4 +48,3 @@
         {{ isLoginRoute ? 'Zarejestuj się' : 'Zaloguj się'}}
     </a>
 </section>
-<app-footer></app-footer>
