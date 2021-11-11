@@ -13,7 +13,11 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient, private tokenService: TokenService, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private tokenService: TokenService,
+    private router: Router
+  ) {}
 
   login(user: User, rememberMe: boolean) {
     return this.http
@@ -22,14 +26,13 @@ export class AuthService {
       })
       .pipe(
         tap((res) => {
-          const expiresData = res.body as ExpiresTokenData;
+          const expiresTokenData = res.body as ExpiresTokenData;
           const accessToken = res.headers.get('X-Access-Token') as string;
-
           this.tokenService.setTokenData(
             {
               accessToken: accessToken,
-              accessTokenExpiresIn: expiresData.accessTokenExpiresIn,
-              refreshTokenExpiresIn: expiresData.refreshTokenExpiresIn,
+              accessTokenExpiresIn: expiresTokenData.accessTokenExpiresIn,
+              refreshTokenExpiresIn: expiresTokenData.refreshTokenExpiresIn,
             },
             rememberMe
           );

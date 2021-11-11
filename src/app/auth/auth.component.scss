@@ -9,6 +9,10 @@
 }
 
 .auth {
+    &__box-circles {
+        display: none;
+    }
+    
     &__title {
         margin-bottom: 3.2rem;
     }
@@ -25,7 +29,12 @@
 .form {
     display: grid;
     row-gap: 3.2rem;
-    margin-bottom: 4.8rem;
+    margin: 0 auto 4.8rem auto;
+    width: clamp(25rem, 100%, 32.5rem);
+
+    .circles {
+        display: none;
+    }
 
     &__button {
         padding: 0.8rem 1.6rem;
@@ -50,6 +59,36 @@
             width: auto;
             transform: none;
             margin-right: 1.6rem;
+        }
+    }
+}
+
+@media (min-width: 1024px) {
+    .auth {
+        &__box {
+            position: relative;
+            width: fit-content;
+            margin: 0 auto;
+            border-radius: 5px;
+            padding: 3.2rem;
+            box-shadow: -4px 4px 16px rgba(0, 0, 0, 0.25);
+
+            &-circles {
+                position: absolute;
+                display: block;
+
+                &--login {
+                    transform: rotate(-130deg);
+                    top: -17%;
+                    right: -33%;
+                }
+
+                &--signup {
+                    transform: rotate(50deg);
+                    left: -50%;
+                    bottom: -20%;
+                }
+            }
         }
     }
 }

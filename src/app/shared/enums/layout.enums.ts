@@ -1,7 +1,7 @@
 export enum NavExtraFeaturesForRoute {
   '/home' = '',
-  '/auth/login' = '',
-  '/auth/signup' = '',
+  '/auth/login' = 'banner',
+  '/auth/signup' = 'banner desktop-no-bgc',
   '/sets' = '',
   '/sets/learn' = '',
   '/sets/create' = '',

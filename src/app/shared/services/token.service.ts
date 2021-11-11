@@ -17,18 +17,25 @@ import { TokenData } from '../models/tokenData.model';
 export class TokenService {
   constructor(private http: HttpClient) {}
   private isAuth$ = new BehaviorSubject<boolean>(false);
-  private tokenData: TokenData = {
-    accessTokenExpiresIn: 0,
-    refreshTokenExpiresIn: 0,
-    accessToken: '',
-  };
+  private tokenData: TokenData | null = null;
 
   isAuth() {
-    const expiresData = this.getExpiresData();
-    this.tokenData = {
-      accessToken: this.getAccessToken(),
-      ...expiresData
+    if (!this.tokenData) {
+      return of(false);
     }
+
+    if (!this.tokenData.accessToken) {
+      this.tokenData.accessToken = localStorage.getItem('accessToken') || '';
+    }
+
+    if (
+      !this.tokenData.accessTokenExpiresIn ||
+      !this.tokenData.refreshTokenExpiresIn
+    ) {
+      this.tokenData.accessTokenExpiresIn = Number(localStorage.getItem('accessTokenExpiresIn'));
+      this.tokenData.refreshTokenExpiresIn = Number(localStorage.getItem('refreshTokenExpiresIn'));
+    }
+
     return this.checkTokenValid().pipe(
       tap((isTokenValid) => {
         this.isAuth$.next(isTokenValid);
@@ -41,40 +48,27 @@ export class TokenService {
   }
 
   getAccessToken() {
-    let accessToken = this.tokenData.accessToken;
+    let accessToken = this.tokenData?.accessToken;
     if (!accessToken) {
       accessToken = localStorage.getItem('accessToken') as string;
     }
     return accessToken;
   }
 
-  getExpiresData(): ExpiresTokenData {
-    let accessTokenExpiresIn = this.tokenData.accessTokenExpiresIn;
-    let refreshTokenExpiresIn = this.tokenData.refreshTokenExpiresIn;
-
-    if (!accessTokenExpiresIn || !refreshTokenExpiresIn) {
-      accessTokenExpiresIn = +(localStorage.getItem('accessTokenExpiresIn') as string);
-      refreshTokenExpiresIn = +(localStorage.getItem('refreshTokenExpiresIn') as string);
-    }
-    return {
-      accessTokenExpiresIn,
-      refreshTokenExpiresIn,
-    };
-  }
-
   checkTokenValid() {
-    const MAX_TIME = 10800;
+    const TIME_UNTIL_VALIDATION = 180000;
     const now = Date.now();
-
+    
     const isAccessTokenValid =
-      this.tokenData.accessTokenExpiresIn > now - MAX_TIME;
+      this.tokenData!.accessTokenExpiresIn > now - TIME_UNTIL_VALIDATION;
     if (isAccessTokenValid) {
       return of(true);
     }
 
     const isRefreshTokenValid =
-      this.tokenData.accessTokenExpiresIn > now - MAX_TIME;
+      this.tokenData!.accessTokenExpiresIn > now - TIME_UNTIL_VALIDATION;
     if (!isRefreshTokenValid) {
+      this.clearTokenData();
       return of(false);
     }
 
@@ -90,7 +84,6 @@ export class TokenService {
         switchMap((response) => {
           const accessToken = response.headers.get('X-Access-Token') as string;
           const expiresTokenData = response.body as ExpiresTokenData;
-
           this.setTokenData(
             {
               ...expiresTokenData,
@@ -114,10 +107,20 @@ export class TokenService {
       refreshTokenExpiresIn: now + data.refreshTokenExpiresIn,
     };
     if (rememberMe) {
-      const accessTokenExpiresIn = now + this.tokenData.accessTokenExpiresIn;
       localStorage.setItem('accessToken', data.accessToken);
-      localStorage.setItem('accessTokenExpiresIn', `${accessTokenExpiresIn}`);
-      localStorage.setItem('refreshTokenExpiresIn', `${accessTokenExpiresIn}`);
+      localStorage.setItem(
+        'accessTokenExpiresIn',
+        `${this.tokenData.accessTokenExpiresIn}`
+      );
+      localStorage.setItem(
+        'refreshTokenExpiresIn',
+        `${this.tokenData.accessTokenExpiresIn}`
+      );
     }
+  }
+
+  clearTokenData() {
+    this.tokenData = null;
+    localStorage.clear();
   }
 }

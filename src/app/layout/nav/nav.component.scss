@@ -15,6 +15,7 @@ $nav-list-color: #fb9962;
 }
 
 .nav {
+    // default
     position: fixed;
     z-index: 100;
     top: 0;
@@ -70,10 +71,21 @@ $nav-list-color: #fb9962;
             }
         }
     }
+
+    // extraFeatures
+    &--banner &__list,
+    &--banner .hamburger {
+        display: none;
+    }
+
+    &--banner &__container {
+        justify-content: center;
+    }
 }
 
 @media (min-width: 1024px) {
     .nav {
+        // default
         .hamburger {
             display: none;
         }
@@ -97,6 +109,18 @@ $nav-list-color: #fb9962;
                     margin-right: 0;
                 }
             }
+        }
+        // extraFeatures
+        &--banner &__box {
+            justify-content: center;
+        }
+
+        &--desktop-no-bgc {
+            background: none;
+        }
+
+        &--desktop-no-bgc .header__h1-link {
+            color: #000;
         }
     }
 }
