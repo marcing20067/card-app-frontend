@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { newUser } from '../shared/models/newUser.model';
 import { User } from '../shared/models/user.model';
-import { TokenData } from '../shared/models/tokenData.model';
 import { tap } from 'rxjs/operators';
 import { TokenService } from '../shared/services/token.service';
 import { ExpiresTokenData } from '../shared/models/expiresTokenData.model';

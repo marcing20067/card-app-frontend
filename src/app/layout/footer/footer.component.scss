@@ -20,16 +20,14 @@
     }
 
     &--creamy-bgc {
+        padding: 0.8rem 0;
         background-color: $creamy;
     }
 }
 
+
 @media (min-width: 1024px) {
-    .footer {
-        &--no-footer {
-            display: none;
-        }
-        
+    .footer {  
         &__box {
             display: flex;
             justify-content: space-between;

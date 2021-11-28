@@ -4,13 +4,21 @@ import { SetsRoutingModule } from './sets-routing.module';
 import { SetsCreateComponent } from './sets-create/sets-create.component';
 import { SetsLearnComponent } from './sets-learn/sets-learn.component';
 import { SetsPanelComponent } from './sets-panel/sets-panel.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
+import { SetComponent } from './sets-panel/set/set.component';
+import { SetViewComponent } from './sets-panel/set-view/set-view.component';
+import { CardComponent } from './sets-learn/card/card.component';
+import { StatsComponent } from './sets-learn/stats/stats.component';
 
 
 @NgModule({
-  declarations: [SetsCreateComponent, SetsLearnComponent, SetsPanelComponent],
+  declarations: [SetsCreateComponent, SetsLearnComponent, SetsPanelComponent, SetComponent, SetViewComponent, CardComponent, StatsComponent],
   imports: [
     CommonModule,
-    SetsRoutingModule
+    SetsRoutingModule,
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class SetsModule { }

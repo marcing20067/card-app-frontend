@@ -1,1 +1,46 @@
-<p>sets-create works!</p>
+<section class="sets-create section-padding">
+    <form class="form" [formGroup]="setsCreateForm" (ngSubmit)="onSubmit()">
+        <div class="form__set-data">
+            <div class="form__set-data-box wrapper">
+                <app-field>
+                    <input type="text" formControlName="name" id="name" appInput>
+                    <label for="name" label>Tytuł zestawu</label>
+                </app-field>
+            </div>
+        </div>
+
+        <div class="wrapper form__box">
+            <div class="form__cards" formArrayName="cards">
+                <div *ngFor="let card of cards.controls; index as i">
+                    <div [formGroupName]="i" class="form__cards-box">
+                        <p class="form__cards-box-heading">
+                            Fiszka {{ i < 10 ? '0' : '' }}{{ i + 1 }} </p>
+
+                                <app-field class="form__cards-box-concept">
+                                    <input type="text" formControlName="concept" id="concept" appInput>
+                                    <label for="concept" label>Pojęcie</label>
+                                </app-field>
+                                <app-field class="form__cards-box-definition">
+                                    <input type="text" formControlName="definition" id="definition" appInput>
+                                    <label for="definition" label>Definicja</label>
+                                </app-field>
+                                <app-field class="form__cards-box-example">
+                                    <input type="text" id="example" appInput formControlName="example">
+                                    <label for="example" label>Przykład użycia(opcjonalne)</label>
+                                </app-field>
+                    </div>
+                </div>
+            </div>
+
+
+            <hr class="form__line">
+            <div class="form__buttons">
+                <button class="form__buttons-item form__buttons-item--add-card" type="button" (click)="addCard()">
+                    <img src="../../../assets/icons/plus.svg" alt="">
+                    Dodaj fiszkę
+                </button>
+                <button class="form__buttons-item form__buttons-item--submit" type="submit">Zapisz</button>
+            </div>
+        </div>
+    </form>
+</section>

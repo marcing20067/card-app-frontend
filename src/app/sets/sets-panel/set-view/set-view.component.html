@@ -1,0 +1,43 @@
+<div class="set-view wrapper">
+    <div class="set-view__box">
+        <div class="set-view__empty-state" *ngIf="!set">
+            <h3 class="set-view__empty-state-heading">Wybierz zestaw</h3>
+            <p class="set-view__empty-state-text">Wybierz zestaw, aby podejrzeć statystyki.</p>
+        </div>
+
+        <div class="set-view__container" *ngIf="set">
+            <div class="set-view__box">
+                <h3 class="set-view__heading">{{ set.name }}</h3>
+                <p class="set-view__cards-length">{{ set.cards.length }} fiszek</p>
+            </div>
+
+            <div class="stats">
+                <div class="stats__item">
+                    <p class="stats__item-text">Bardzo dobrze znane: <span
+                            class="stats__item-text-number stats__item-text-number--group5">{{
+                            set.stats.group5 }}</span></p>
+                </div>
+                <div class="stats__item">
+                    <p class="stats__item-text">Dobrze znane: <span
+                            class="stats__item-text-number stats__item-text-number--group4">{{
+                            set.stats.group4 }}</span></p>
+                </div>
+                <div class="stats__item">
+                    <p class="stats__item-text">Lepiej znane: <span
+                            class="stats__item-text-number stats__item-text-number--group3">{{
+                            set.stats.group3 }}</span></p>
+                </div>
+                <div class="stats__item">
+                    <p class="stats__item-text">Słabo znane: <span
+                            class="stats__item-text-number stats__item-text-number--group2">{{
+                            set.stats.group2 }}</span></p>
+                </div>
+                <div class="stats__item">
+                    <p class="stats__item-text">Nieznane: <span
+                            class="stats__item-text-number stats__item-text-number--group1">{{
+                            set.stats.group1 }}</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

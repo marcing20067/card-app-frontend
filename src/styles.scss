@@ -20,6 +20,10 @@ p, a, label, h2 {
     line-height: 150%;
 }
 
+button {
+    cursor: pointer;
+}
+
 body {
     font-size: 1.8rem;
     color: $gray;
@@ -73,4 +77,10 @@ body {
     .wrapper {
         width: 75%;
     }
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

@@ -2,6 +2,7 @@ import { Card } from "./card.model";
 
 export interface Set {
     _id?: string,
+    name: string,
     cards: Card[],
     stats: {
         group1: number,

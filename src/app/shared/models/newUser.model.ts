@@ -1,6 +1,6 @@
-export interface newUser {
-    username: string;
+import { User } from "./user.model";
+
+export interface newUser extends User {
     email: string;
-    password: string;
     repeatPassword: string;
 }

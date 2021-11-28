@@ -1,0 +1,108 @@
+@import "../../../shared/styles/variables";
+
+.card {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    position: relative;
+    width: 31rem;
+    height: 48rem;
+    color: $white;
+    text-align: center;
+    border-top-left-radius: 2.5rem;
+    border-bottom-right-radius: 2.5rem;
+    overflow: hidden;
+    box-shadow: 0px -4px 16px rgba(0, 0, 0, 0.25);
+
+    &__side {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 6rem 1fr 6rem;
+        grid-template-areas:
+            "top"
+            "center"
+            "bottom";
+        height: 100%;
+        width: 100%;
+        
+        &--definition {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+    
+    &__center {
+        grid-area: center;
+        background-color: $white;
+
+        &-text {
+            color: $black;
+            font-weight: 800;
+            font-size: 2rem;
+        }
+    }
+
+    &__top {
+        grid-area: top;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        &-heading {
+            position: absolute;
+            width: 100%;
+        }
+
+        &-level {
+            width: 6rem;
+            height: 100%;
+
+            font-size: 1.2rem;
+        }
+    }
+
+    &__bottom {
+        grid-area: bottom;
+        position: relative;
+        justify-content: start;
+
+        &-icon {
+            padding: 2rem;
+        }
+
+        &-label {
+            position: absolute;
+            width: 100%;
+        }
+    }
+
+    &--activate &__top,
+    &--activate &__bottom {
+        background-color: $purple;
+    }
+
+    &--activate &__top-level,
+    &__bottom-icon {
+        background-color: $light-purple;
+    }
+
+    &--activate &__top-level {
+        color: $level-yellow;
+    }
+
+    &--not-activate &__top,
+    &--not-activate &__bottom {
+        background-color: $gray-two;
+    }
+
+    &--not-activate &__top-level,
+    &--not-activate &__bottom-icon {
+        background-color: $gray-three;
+    }
+
+    &--not-activate &__top-level {
+        color: $white;
+    }
+}

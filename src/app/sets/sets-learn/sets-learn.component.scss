@@ -1,0 +1,95 @@
+@import "../../shared/styles/variables";
+
+.learn {
+    &__slider {
+        &-text {
+            text-align: center;
+            font-size: 1.6rem;
+            color: $black;
+        }
+
+        &-box {
+            position: relative;
+            width: 75%;
+            margin: 0 auto;
+            height: 1.6rem;
+
+            &-line {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                transform: translateY(-50%);
+                width: 100%;
+                height: 0.3rem;
+                background-color: #e0e0e0;
+            }
+
+            &-dot {
+                position: absolute;
+                left: 0;
+                z-index: 1;
+                height: 100%;
+                width: 1.6rem;
+                background-color: $orange;
+                border-radius: 50%;
+            }
+        }
+    }
+
+    &__circles {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+
+        &-item {
+            position: absolute;
+            top: 50%;
+            display: flex;
+            align-items: center;
+            width: 35rem;
+            height: 43rem;
+            background-color: #616161;
+            border-radius: 50%;
+            
+            &--dont-know {
+                padding-right: 1rem;
+                transform: translate(-70%, -50%);
+                justify-content: flex-end;
+            }
+
+            &--know {
+                padding-left: 2rem;
+                right: 0;
+                transform: translate(70%, -50%);
+                justify-content: start;
+            }
+        }
+    }
+
+    &__cards {
+        position: relative;
+        height: calc(48rem + 2.4rem + 2.4rem);
+        overflow: hidden;
+
+        &-item {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+
+            &--three {
+                top: 0;
+                z-index: 0;
+            }
+
+            &--two {
+                top: 2.4rem;
+                z-index: 1;
+            }
+
+            &--one {
+                top: 4.8rem;
+                z-index: 2;
+            }
+        }
+    }
+}

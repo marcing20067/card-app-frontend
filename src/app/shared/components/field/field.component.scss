@@ -2,7 +2,6 @@
 
 .field {
     position: relative;
-    max-width: 32.5rem;
     margin: 0 auto;
     width: 100%;
     overflow: hidden;
@@ -29,7 +28,8 @@ label {
     position: absolute;
     z-index: 1;
     top: 50%;
-    left: 4.2rem;
+    left: 0;
+    padding: 0 4.2rem;
     font-weight: 500;
     transform: translateY(-50%);
     width: 100%;

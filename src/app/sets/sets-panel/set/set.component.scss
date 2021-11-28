@@ -1,0 +1,59 @@
+@import "../../../shared/styles/variables";
+
+.set {
+    width: fit-content;
+    box-shadow: 0 0 0.8rem rgba(0, 0, 0, 0.25);
+    border-radius: 1.6rem;
+    color: $black;
+    background-color: $white;
+    font-family: "Raleway", sans-serif;
+    text-align: center;
+    text-transform: uppercase;
+
+    &__box {
+        padding: 4.25rem;
+        border-top: 0.05rem solid $gray;
+    }
+
+    &__learn {
+        text-decoration: none;
+        color: $black;
+        padding: 0.5rem;
+        display: block;
+        text-transform: uppercase;
+        font-family: "Raleway";
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+
+    &__name {
+        font-size: 1.4rem;
+        font-weight: bold;
+    }
+
+    &__cards-length {
+        font-size: 1.2rem;
+    }
+
+    &__buttons {
+        border-top: 0.05rem solid $gray;
+        display: flex;
+
+        &-item {
+            padding: 0.4rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+
+            &--edit {
+                border-right: 0.05rem solid $gray;
+            }
+
+            &--delete {
+                border: none;
+                background: none;
+            }
+        }
+    }
+}

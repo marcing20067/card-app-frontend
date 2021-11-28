@@ -1,0 +1,29 @@
+<section class="learn section-padding">
+    <div class="learn__slider" *ngIf="cardsWithCurrentGroup?.length as cardsLength">
+        <p class="learn__slider-text">{{ activateCardIndex + 1 }}/{{ cardsLength }}</p>
+        <div class="learn__slider-box">
+            <div class="learn__slider-box-line"></div>
+            <div class="learn__slider-box-dot" [style.left]="100/(cardsLength - 1) * activateCardIndex + '%'"></div>
+        </div>
+    </div>
+
+
+
+    <div class="learn__cards" *ngIf="cardsView?.deactive && set">
+        <div class="learn__circles">
+            <div class="learn__circles-item learn__circles-item--dont-know" #dontKnow>Nie wiem</div>
+            <div class="learn__circles-item learn__circles-item--know" #know>Wiem!</div>
+        </div>
+
+        <app-card [isActivate]="false" [setName]="set.name" [card]="cardsView.deactive[1]"
+            class="learn__cards-item learn__cards-item--three"></app-card>
+        <app-card [isActivate]="false" [setName]="set.name" [card]="cardsView.deactive[0]"
+            class="learn__cards-item learn__cards-item--two"></app-card>
+        <app-card [isActivate]="true" [setName]="set.name" [card]="cardsView.active" #activate
+            class="learn__cards-item learn__cards-item--one"></app-card>
+    </div>
+
+    <ng-container *ngIf="set && set.stats as stats">
+        <app-stats [data]="stats"></app-stats>
+    </ng-container>
+</section>

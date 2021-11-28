@@ -1,0 +1,33 @@
+<div class="card card--not-active" [ngClass]="{'card--activate': isActivate, 'card--not-activate': !isActivate}"
+    *ngIf="card" (click)="onSwitch()">
+    <div class="card__side card__side--concept" [style.opacity]="isConceptSide ? 1 : 0">
+        <div class="card__top">
+            <p class="card__top-heading">{{ setName }}</p>
+            <p class="card__top-level flex-center">LVL {{ card.group }}</p>
+        </div>
+
+        <div class="card__center flex-center">
+            <p class="card__center-text">{{ card.concept }}</p>
+        </div>
+
+        <div class="card__bottom flex-center">
+            <img class="card__bottom-icon" src="../../../../assets/icons/info.svg" alt="">
+            <p class="card__bottom-label flex-center">Phrase</p>
+        </div>
+    </div>
+
+    <div class="card__side card__side--definition" [style.opacity]="!isConceptSide ? 1 : 0">
+        <div class="card__top">
+            <p class="card__top-heading flex-center">{{ setName }}</p>
+            <p class="card__top-level flex-center">LVL {{ card.group }}</p>
+        </div>
+        
+        <div class="card__center flex-center">
+            <p class="card__center-text">{{ card.definition }}</p>
+        </div>
+
+        <div class="card__bottom flex-center">
+            <p class="card__bottom-label">Definicja i przykłady</p>
+        </div>
+    </div>
+</div>
