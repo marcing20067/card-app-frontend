@@ -15,19 +15,26 @@ export class NavComponent {
   isActive = false;
   isAuth$ = this.tokenService.getIsAuthListener();
 
-  constructor(private location: Location, private tokenService: TokenService, private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private location: Location,
+    private tokenService: TokenService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.location.onUrlChange((path) => {
       this.class = ['nav'];
       const splitedPath = path.split('/');
-      if(splitedPath.length > 3) {
-        path = splitedPath.slice(0, splitedPath.length - 1).join('/') + '/:id'
+      if (splitedPath.length > 3) {
+        path = splitedPath.slice(0, splitedPath.length - 1).join('/') + '/:id';
       }
       const actualRoute = path as ActualRoute;
       const extraFeatures = NavExtraFeaturesForRoute[actualRoute];
-      extraFeatures.split(' ').forEach((feature) => {
-        if (!feature) return;
-        this.class.push(`nav--${feature}`);
-      });
+      if (extraFeatures) {
+        extraFeatures.split(' ').forEach((feature) => {
+          if (!feature) return;
+          this.class.push(`nav--${feature}`);
+        });
+      }
     });
     this.tokenService.isAuth().subscribe();
   }

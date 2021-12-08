@@ -7,5 +7,8 @@ import { Set } from 'src/app/shared/models/set.model';
   styleUrls: ['./stats.component.scss'],
 })
 export class StatsComponent {
-  @Input() data!: any;
+  @Input() data!: {
+    groups: Set['stats'];
+    currentGroup: number;
+  }
 }

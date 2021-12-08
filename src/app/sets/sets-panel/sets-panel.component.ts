@@ -9,11 +9,7 @@ import { Set } from 'src/app/shared/models/set.model';
 export class SetsPanelComponent {
   selectedSet: Set | null = null;
   sets$ = this.setsService.getSets();
-  constructor(private setsService: SetsService) {
-    this.sets$.subscribe(sets => {
-      console.log(sets.length);
-    })
-  }
+  constructor(private setsService: SetsService) {}
 
   onDeleteSet(id: string | undefined) {
     console.log(id);

@@ -1,0 +1,88 @@
+@import "../../../shared/styles/variables";
+
+.stats {
+    position: fixed;
+    z-index: 4;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: $creamy;
+    color: #000;
+    font-weight: 600;
+    font-size: 1.2rem;
+
+    &__box {
+        max-width: 45rem;
+        padding: 1.8rem 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    &__item {
+        position: relative;
+        width: 4.8rem;
+        height: 2.3rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &::after {
+            content: "";
+            position: absolute;
+            height: 50%;
+            width: 100%;
+            left: 0;
+            bottom: 0;
+            height: 1px;
+        }
+
+        &--activate {
+            height: 4.8rem;
+            color: $white;
+
+            &::after {
+                z-index: -1;
+                height: 100%;
+                border-radius: 0.8rem;
+            }
+        }
+
+        &--red::after {
+            background-color: $red;
+        }
+
+        &--yellow::after {
+            background-color: $yellow;
+        }
+
+        &--light-yellow::after {
+            background-color: $light-yellow;
+        }
+
+        &--light-green::after {
+            background-color: $light-green;
+        }
+
+        &--green::after {
+            background-color: $green;
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .stats {
+        position: static;
+        font-size: 1.8rem;
+        background-color: transparent;
+        
+        &__item {
+            width: 7rem;
+            height: 3.5rem;
+
+            &--activate {
+                height: 7rem;
+            }
+        }
+    }
+}

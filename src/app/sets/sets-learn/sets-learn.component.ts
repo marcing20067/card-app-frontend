@@ -1,46 +1,19 @@
 import {
-  AfterViewInit,
   Component,
-  ElementRef,
-  OnDestroy,
   OnInit,
-  QueryList,
-  Renderer2,
-  ViewChild,
-  ViewChildren,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { fromEvent, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Card } from 'src/app/shared/models/card.model';
 import { Set } from 'src/app/shared/models/set.model';
 import { SetsService } from '../sets.service';
-
-interface TouchEvent {
-  changedTouches: [
-    {
-      identifier: number;
-      target: HTMLElement;
-      screenX: number;
-      screenY: number;
-      clientX: number;
-      clientY: number;
-    }
-  ];
-  view: Window;
-}
 
 @Component({
   selector: 'app-sets-learn',
   templateUrl: './sets-learn.component.html',
   styleUrls: ['./sets-learn.component.scss'],
 })
-export class SetsLearnComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChildren('activate', { read: ElementRef })
-  activateCard!: QueryList<ElementRef>;
-  @ViewChild('know') know!: ElementRef;
-  @ViewChild('dontKnow') dontKnow!: ElementRef;
-
+export class SetsLearnComponent implements OnInit {
   set!: Set;
   cardsWithCurrentGroup!: Card[];
   cardsView!: {
@@ -51,12 +24,9 @@ export class SetsLearnComponent implements OnInit, AfterViewInit, OnDestroy {
   activateCardIndex = 0;
   newDeactiveCardIndex = 3;
 
-  cardListenerSubs: Subscription[] = [];
-
   constructor(
     private route: ActivatedRoute,
-    private setsService: SetsService,
-    private renderer: Renderer2
+    private setsService: SetsService
   ) {}
 
   ngOnInit() {
@@ -74,59 +44,7 @@ export class SetsLearnComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
-  ngAfterViewInit() {
-    this.activateCard.changes.pipe(take(1)).subscribe(() => {
-      const card = this.activateCard.first.nativeElement as HTMLElement;
-
-      const touchEndSub = fromEvent<TouchEvent>(card, 'touchend').subscribe(
-        (event) => {
-          const isKnow = this.isKnow(card);
-          
-          if (isKnow === null) {
-            return;
-          }
-          this.renderer.setStyle(card, 'left', window.innerWidth / 2 + 'px');
-          this.learn(isKnow);
-        }
-      );
-
-      const touchMoveSub = fromEvent<TouchEvent>(card, 'touchmove', {
-        passive: true,
-      }).subscribe((event) => {
-        const clientX = event.changedTouches[0].clientX;
-        this.renderer.setStyle(card, 'left', clientX + 'px');
-      });
-
-      this.cardListenerSubs.push(touchMoveSub);
-      this.cardListenerSubs.push(touchEndSub);
-    });
-  }
-
-  private isKnow(card: HTMLElement): boolean | null {
-    const knowEl = this.know.nativeElement;
-    const dontKnowEl = this.dontKnow.nativeElement;
-    const selectErrorMarginPx = 50;
-
-    const isLeftSide =
-      card.getBoundingClientRect().left <
-      dontKnowEl.getBoundingClientRect().right + selectErrorMarginPx;
-
-    const isRightSide =
-      card.getBoundingClientRect().right + selectErrorMarginPx >
-      knowEl.getBoundingClientRect().left;
-
-    if (isLeftSide) {
-      return false;
-    }
-
-    if (isRightSide) {
-      return true;
-    }
-
-    return null;
-  }
-
-  private learn(isKnow: boolean) {
+  onLearn(isKnow: boolean) {
     const activeCard = this.cardsView.active;
     const cardIndex = this.set.cards.indexOf(activeCard);
 
@@ -134,7 +52,7 @@ export class SetsLearnComponent implements OnInit, AfterViewInit, OnDestroy {
       ...activeCard,
       group: isKnow ? activeCard.group + 1 : 1,
     };
-
+    
     if (this.wasLastCardUsed()) {
       const cardWithSmallestGroup = this.getCardWithSmallestGroup();
 
@@ -143,19 +61,20 @@ export class SetsLearnComponent implements OnInit, AfterViewInit, OnDestroy {
       );
 
       this.resetData();
-      return;
     }
 
-    this.cardsView = {
-      active: this.cardsView.deactive[0],
-      deactive: [
-        this.cardsView.deactive[1],
-        this.cardsWithCurrentGroup[this.newDeactiveCardIndex],
-      ],
-    };
+    if (!this.wasLastCardUsed()) {
+      this.cardsView = {
+        active: this.cardsView.deactive[0],
+        deactive: [
+          this.cardsView.deactive[1],
+          this.cardsWithCurrentGroup[this.newDeactiveCardIndex],
+        ],
+      };
 
-    this.activateCardIndex++;
-    this.newDeactiveCardIndex++;
+      this.activateCardIndex++;
+      this.newDeactiveCardIndex++;
+    }
   }
 
   private wasLastCardUsed() {
@@ -186,11 +105,5 @@ export class SetsLearnComponent implements OnInit, AfterViewInit, OnDestroy {
       active: this.cardsWithCurrentGroup[0],
       deactive: [this.cardsWithCurrentGroup[1], this.cardsWithCurrentGroup[2]],
     };
-  }
-
-  ngOnDestroy() {
-    this.cardListenerSubs.forEach((sub) => {
-      sub.unsubscribe();
-    });
   }
 }

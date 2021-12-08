@@ -7,23 +7,12 @@
         </div>
     </div>
 
-
-
-    <div class="learn__cards" *ngIf="cardsView?.deactive && set">
-        <div class="learn__circles">
-            <div class="learn__circles-item learn__circles-item--dont-know" #dontKnow>Nie wiem</div>
-            <div class="learn__circles-item learn__circles-item--know" #know>Wiem!</div>
-        </div>
-
-        <app-card [isActivate]="false" [setName]="set.name" [card]="cardsView.deactive[1]"
-            class="learn__cards-item learn__cards-item--three"></app-card>
-        <app-card [isActivate]="false" [setName]="set.name" [card]="cardsView.deactive[0]"
-            class="learn__cards-item learn__cards-item--two"></app-card>
-        <app-card [isActivate]="true" [setName]="set.name" [card]="cardsView.active" #activate
-            class="learn__cards-item learn__cards-item--one"></app-card>
-    </div>
+    <app-cards [setName]="set.name" [cardsView]="cardsView" *ngIf="cardsView" (learnEvent)="onLearn($event)"></app-cards>
 
     <ng-container *ngIf="set && set.stats as stats">
-        <app-stats [data]="stats"></app-stats>
+        <app-stats class="learn__stats" [data]="{
+            groups: stats,
+            currentGroup: cardsWithCurrentGroup[0].group
+        }"></app-stats>
     </ng-container>
 </section>

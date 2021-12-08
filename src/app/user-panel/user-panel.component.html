@@ -1,1 +1,23 @@
-<p>user-panel works!</p>
+<section class="user-panel wrapper section-padding" *ngIf="userStatus">
+    <h2 class="user-panel__title">Dane użytkownika</h2>
+    <div class="status">
+        <div class="status__item">
+            <p class="status__item-heading">E-mail:</p>
+            <p class="status__item-value">{{ userStatus.email }}</p>
+        </div>
+        <div class="status__item">
+            <p class="status__item-heading">Nazwa użytkownika:</p>
+            <p class="status__item-value">{{ userStatus.username }}</p>
+        </div>
+    </div>
+    <div class="user-panel__buttons">
+        <button class="user-panel__buttons-item button" (click)="onReset('username')">Zmień nazwę użytkownika</button>
+        <button class="user-panel__buttons-item button" (click)="onReset('password')">Zmień hasło</button>
+    </div>
+
+    <div class="user-panel__popup" *ngIf="showPopup">
+        <p class="user-panel__popup-heading">Sprawdź swój e-mail</p>
+        <p class="user-panel__popup-text">Na e-mail został wysłany link, dzięki któremu zmienisz swoje dane użytkownika.</p>
+        <button class="user-panel__popup-button button" (click)="onClose()">Ok</button>
+    </div>
+</section>

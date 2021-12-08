@@ -1,46 +1,44 @@
-import { HttpClient } from '@angular/common/http';
-import { ViewFlags } from '@angular/compiler/src/core';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, EMPTY, of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import {
-  catchError,
   distinctUntilChanged,
-  switchMap,
   take,
   tap,
 } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
-import { ExpiresTokenData } from '../models/expiresTokenData.model';
 import { TokenData } from '../models/tokenData.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TokenService {
-  constructor(private http: HttpClient) {
-   
-  }
   private isAuth$ = new BehaviorSubject<boolean>(false);
-  private tokenData: TokenData | Partial<TokenData> = {};
+  private tokenData: Partial<TokenData> = {};
 
   isAuth() {
-    this.tokenData.accessToken = this.getAccessToken();
-    this.postRefreshToken().subscribe();
-    if (
-      !this.tokenData.accessTokenExpiresIn ||
-      !this.tokenData.refreshTokenExpiresIn
-    ) {
-      this.tokenData.accessTokenExpiresIn = localStorage.getItem(
-        'accessTokenExpiresIn'
-      ) as string;
-      this.tokenData.refreshTokenExpiresIn = localStorage.getItem(
-        'refreshTokenExpiresIn'
-      ) as string;
+    if (Object.keys(this.tokenData).length === 0) {
+      const accessToken = localStorage.getItem('accessToken');
+      const accessTokenEndValidity = Number(
+        localStorage.getItem('accessTokenEndValidity')
+      );
+      const refreshTokenEndValidity = Number(
+        localStorage.getItem('refreshTokenEndValidity')
+      );
+
+      if (!accessToken || !accessTokenEndValidity || !refreshTokenEndValidity) {
+        return of(false);
+      }
+
+      this.tokenData = {
+        accessToken,
+        accessTokenEndValidity,
+        refreshTokenEndValidity,
+      };
     }
 
-    return this.checkTokenValid().pipe(
+    return this.checkTokensValidity().pipe(
       take(1),
       tap((isTokenValid) => {
+        console.log(isTokenValid)
         this.isAuth$.next(isTokenValid);
         if (!isTokenValid) {
           this.clearTokenData();
@@ -53,92 +51,51 @@ export class TokenService {
     return this.isAuth$.asObservable().pipe(distinctUntilChanged());
   }
 
-  getAccessToken() {
-    let accessToken = this.tokenData?.accessToken;
-    if (!accessToken) {
-      accessToken = localStorage.getItem('accessToken') as string;
-    }
-    return accessToken;
-  }
-
-  checkTokenValid() {
-    const TIME_UNTIL_VALIDATION_IN_MINUTES = 3;
-    const now = new Date();
-    now.setMinutes(now.getMinutes() - TIME_UNTIL_VALIDATION_IN_MINUTES);
-
-    const isAccessTokenValid =
-      new Date(<string>this.tokenData.accessTokenExpiresIn) > now;
+  checkTokensValidity() {
+    const now = Date.now();
+    console.log(this.tokenData.accessTokenEndValidity || 0);
+    const isAccessTokenValid = this.tokenData.accessTokenEndValidity || 0 > now;
     if (isAccessTokenValid) {
       return of(true);
-    }
-
-    const isRefreshTokenValid =
-      new Date(<string>this.tokenData.refreshTokenExpiresIn) > now;
-    if (isRefreshTokenValid) {
-      return this.postRefreshToken();
     }
     return of(false);
   }
 
-  postRefreshTokenCalling = false;
-  private postRefreshToken() {
-    if (this.postRefreshTokenCalling) {
-      return of(false);
-    }
-    this.postRefreshTokenCalling = true;
-    return this.http
-      .post<ExpiresTokenData>(
-        environment.BACKEND_URL + 'refresh',
-        {},
-        {
-          observe: 'response',
-        
-        }
-      )
-      .pipe(
-        switchMap((response) => {
-          const accessToken = response.headers.get('X-Access-Token') as string;
-          const expiresTokenData = response.body as ExpiresTokenData;
-          this.setTokenData(
-            {
-              ...expiresTokenData,
-              accessToken: accessToken,
-            },
-            true
-          );
-          return of(true);
-        }),
-        tap((res) => {
-          console.log(res);
-          this.postRefreshTokenCalling = false;
-        }),
-        catchError(() => {
-          return of(false);
-        })
-      );
+  getAccessToken() {
+    return this.tokenData.accessToken;
   }
 
   setTokenData(data: any, rememberMe: boolean) {
-    const accessTokenDate = new Date();
-    accessTokenDate.setMilliseconds(data.accessTokenExpiresIn);
-    const refreshTokenDate = new Date();
-    refreshTokenDate.setMilliseconds(data.refreshTokenExpiresIn);
+    console.log(data)
+    const TIME_UNTIL_VALIDATION_IN_MINUTES = 3;
+    const now = Date.now();
 
-    this.tokenData.accessToken = data.accessToken.toLocaleString('eng');
-    (this.tokenData.accessTokenExpiresIn =
-      accessTokenDate.toLocaleString('eng')),
-      (this.tokenData.refreshTokenExpiresIn =
-        refreshTokenDate.toLocaleString('eng'));
+    const accessTokenEndValidity =
+      now +
+      data.accessTokenExpiresIn -
+      TIME_UNTIL_VALIDATION_IN_MINUTES * 60000;
+    const refreshTokenEndValidity =
+      now +
+      data.refreshTokenExpiresIn -
+      TIME_UNTIL_VALIDATION_IN_MINUTES * 60000;
+
+    this.tokenData = {
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
+      accessTokenEndValidity,
+      refreshTokenEndValidity,
+    };
 
     if (rememberMe) {
       localStorage.setItem('accessToken', data.accessToken);
+      localStorage.setItem('refreshToken', data.refreshToken);
       localStorage.setItem(
-        'accessTokenExpiresIn',
-        `${this.tokenData.accessTokenExpiresIn}`
+        'accessTokenEndValidity',
+        `${accessTokenEndValidity}`
       );
       localStorage.setItem(
-        'refreshTokenExpiresIn',
-        `${this.tokenData.refreshTokenExpiresIn}`
+        'refreshTokenEndValidity',
+        `${refreshTokenEndValidity}`
       );
     }
   }

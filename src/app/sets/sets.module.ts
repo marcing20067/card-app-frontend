@@ -10,10 +10,11 @@ import { SetComponent } from './sets-panel/set/set.component';
 import { SetViewComponent } from './sets-panel/set-view/set-view.component';
 import { CardComponent } from './sets-learn/card/card.component';
 import { StatsComponent } from './sets-learn/stats/stats.component';
+import { CardsComponent } from './sets-learn/cards/cards.component';
 
 
 @NgModule({
-  declarations: [SetsCreateComponent, SetsLearnComponent, SetsPanelComponent, SetComponent, SetViewComponent, CardComponent, StatsComponent],
+  declarations: [SetsCreateComponent, SetsLearnComponent, SetsPanelComponent, SetComponent, SetViewComponent, CardComponent, StatsComponent, CardsComponent],
   imports: [
     CommonModule,
     SetsRoutingModule,

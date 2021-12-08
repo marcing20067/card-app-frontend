@@ -6,7 +6,6 @@
         
         <h2 class="auth__title title">{{ isLoginRoute ? 'Logowanie' : 'Rejestracja' }}</h2>
         <form [formGroup]="authForm" class="form" (ngSubmit)="onSubmit()">
-
             <div class="form__box">
                 <app-field>
                     <input type="text" formControlName="username" id="username" appInput>

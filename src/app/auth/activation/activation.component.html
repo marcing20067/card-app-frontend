@@ -1,0 +1,12 @@
+<section class="activation">
+    <div class="activation__box" *ngIf="activationSuccessfully">
+        <p class="activation__box-text">
+            Aktywacja przebiegła pomyślnie!
+        </p>
+    </div>
+    <div class="activation__box" *ngIf="!activationSuccessfully">
+        <p class="activation__box-text">
+            Ups! Coś poszło nie tak :(
+        </p>
+    </div>
+</section>
