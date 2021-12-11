@@ -5,6 +5,7 @@ import {
   startWith,
   switchMap,
   take,
+  tap,
 } from 'rxjs/operators';
 import { FieldsState, FieldState } from './fieldState.model';
 

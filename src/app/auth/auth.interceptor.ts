@@ -12,20 +12,15 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private tokenService: TokenService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    return this.tokenService.isAuth().pipe(
-      switchMap((isTokenValid) => {
-        console.log(isTokenValid);
-        if (!isTokenValid) {
-          return next.handle(req);
-        }
+    const isAuth = this.tokenService.isAuth();
+    if(!isAuth) {
+      return next.handle(req);
+    }
+    const accessToken = this.tokenService.getAccessToken();
+    const authReq = req.clone({
+      headers: req.headers.set('Authorization', `${accessToken}`),
+    });
 
-        const accessToken = this.tokenService.getAccessToken();
-        const authReq = req.clone({
-          headers: req.headers.set('Authorization', `${accessToken}`),
-        });
-
-        return next.handle(authReq);
-      })
-    );
+    return next.handle(authReq);
   }
 }

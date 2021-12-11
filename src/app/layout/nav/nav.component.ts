@@ -18,8 +18,6 @@ export class NavComponent {
   constructor(
     private location: Location,
     private tokenService: TokenService,
-    private route: ActivatedRoute,
-    private router: Router
   ) {
     this.location.onUrlChange((path) => {
       this.class = ['nav'];
@@ -36,7 +34,7 @@ export class NavComponent {
         });
       }
     });
-    this.tokenService.isAuth().subscribe();
+    this.tokenService.isAuth();
   }
 
   toggleIsActive() {

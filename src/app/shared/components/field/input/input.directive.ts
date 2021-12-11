@@ -1,41 +1,50 @@
-import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  HostListener,
+  Renderer2,
+  SimpleChanges,
+} from '@angular/core';
 import { FieldService } from '../field.service';
 
 @Directive({
   selector: '[appInput]',
 })
 export class InputDirective {
+  id: string = '';
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
     private fieldService: FieldService
   ) {}
 
-  @HostListener('focus', ['$event'])
-  onFocus(event: FocusEvent) {
-    const id = this.getInputId(event);
+  ngOnInit() {
+    this.id = this.el.nativeElement.id;
+    this.handleInputValue();
+  }
+
+  @HostListener('focus')
+  onFocus() {
     this.fieldService.changeFieldState({
-      [id]: {
-        isFocus: true,
-      },
+      [this.id]: { isFocus: true },
     });
   }
 
-  @HostListener('blur', ['$event'])
-  onBlur(event: FocusEvent) {
-    const id = this.getInputId(event);
-    this.fieldService.changeFieldState({ [id]: { isFocus: false } });
-
-    const isInputEmpty = this.el.nativeElement.value === '';
-    if (!isInputEmpty) {
-      this.renderer.addClass(this.el.nativeElement, 'input--not-empty');
-    } else {
-      this.renderer.removeClass(this.el.nativeElement, 'input--not-empty');
-    }
+  @HostListener('blur')
+  onBlur() {
+    this.handleInputValue();
+    this.fieldService.changeFieldState({
+      [this.id]: { isFocus: false },
+    });
   }
 
-  private getInputId(event: FocusEvent): string {
-    const input = event.target as HTMLInputElement;
-    return input.getAttribute('id') as string;
+  handleInputValue() {
+    const isInputEmpty = this.el.nativeElement.value === '';
+    if (isInputEmpty) {
+      this.renderer.removeClass(this.el.nativeElement, 'input--not-empty');
+    }
+    if (!isInputEmpty) {
+      this.renderer.addClass(this.el.nativeElement, 'input--not-empty');
+    }
   }
 }

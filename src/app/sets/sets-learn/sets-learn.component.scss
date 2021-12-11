@@ -35,6 +35,21 @@
             }
         }
     }
+
+    &__complete {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: $black;
+        text-align: center;
+        
+        &-heading {
+            font-weight: 700;
+            font-size: 2.4rem;
+            margin-bottom: 1.6rem;
+        }
+    }
 }
 
 @media (min-width: 768px) {

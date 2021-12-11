@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, of } from 'rxjs';
-import {
-  distinctUntilChanged,
-  take,
-  tap,
-} from 'rxjs/operators';
+import { distinctUntilChanged, take, tap } from 'rxjs/operators';
 import { TokenData } from '../models/tokenData.model';
 
 @Injectable({
@@ -25,7 +21,7 @@ export class TokenService {
       );
 
       if (!accessToken || !accessTokenEndValidity || !refreshTokenEndValidity) {
-        return of(false);
+        return false;
       }
 
       this.tokenData = {
@@ -35,16 +31,12 @@ export class TokenService {
       };
     }
 
-    return this.checkTokensValidity().pipe(
-      take(1),
-      tap((isTokenValid) => {
-        console.log(isTokenValid)
-        this.isAuth$.next(isTokenValid);
-        if (!isTokenValid) {
-          this.clearTokenData();
-        }
-      })
-    );
+    const isTokensValid = this.checkTokensValidity();
+    this.isAuth$.next(isTokensValid);
+    if (!isTokensValid) {
+      this.clearTokenData();
+    }
+    return isTokensValid;
   }
 
   getIsAuthListener() {
@@ -53,12 +45,12 @@ export class TokenService {
 
   checkTokensValidity() {
     const now = Date.now();
-    console.log(this.tokenData.accessTokenEndValidity || 0);
-    const isAccessTokenValid = this.tokenData.accessTokenEndValidity || 0 > now;
+    const isAccessTokenValid =
+      (this.tokenData.accessTokenEndValidity || 0) > now;
     if (isAccessTokenValid) {
-      return of(true);
+      return true;
     }
-    return of(false);
+    return false;
   }
 
   getAccessToken() {
@@ -66,7 +58,6 @@ export class TokenService {
   }
 
   setTokenData(data: any, rememberMe: boolean) {
-    console.log(data)
     const TIME_UNTIL_VALIDATION_IN_MINUTES = 3;
     const now = Date.now();
 
@@ -101,7 +92,7 @@ export class TokenService {
   }
 
   private clearTokenData() {
-    // this.tokenData = {};
-    // localStorage.clear();
+    this.tokenData = {};
+    localStorage.clear();
   }
 }

@@ -15,7 +15,12 @@ const routes: Routes = [
     path: 'create',
     component: SetsCreateComponent,
     canActivate: [AuthGuard]
-  },{
+  },
+  {
+    path: 'create/:id',
+    component: SetsCreateComponent,
+    canActivate: [AuthGuard]
+  }, {
     path: 'learn/:id',
     component: SetsLearnComponent,
     canActivate: [AuthGuard]

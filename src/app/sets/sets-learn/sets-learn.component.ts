@@ -1,9 +1,7 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { take } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, take } from 'rxjs/operators';
 import { Card } from 'src/app/shared/models/card.model';
 import { Set } from 'src/app/shared/models/set.model';
 import { SetsService } from '../sets.service';
@@ -14,12 +12,14 @@ import { SetsService } from '../sets.service';
   styleUrls: ['./sets-learn.component.scss'],
 })
 export class SetsLearnComponent implements OnInit {
+  learnEnd: boolean = false;
   set!: Set;
   cardsWithCurrentGroup!: Card[];
   cardsView!: {
     active: Card;
     deactive: [Card, Card];
   };
+  updateCardEvent$ = new Subject<unknown>();
 
   activateCardIndex = 0;
   newDeactiveCardIndex = 3;
@@ -36,12 +36,24 @@ export class SetsLearnComponent implements OnInit {
       .pipe(take(1))
       .subscribe((set) => {
         this.set = set;
+        const cardWithSmallestGroup = this.getCardWithSmallestGroup();
+        if (cardWithSmallestGroup.group === 6) {
+          this.learnEnd = true;
+          return;
+        }
         this.cardsWithCurrentGroup = this.set.cards.filter(
-          (c) => c.group === 1
+          (c) => c.group === cardWithSmallestGroup.group
         );
 
         this.initializeCardsView();
       });
+
+    this.updateCardEvent$.pipe(debounceTime(1500)).subscribe(() => {
+      this.setsService
+        .editSet(this.set)
+        .pipe(take(1))
+        .subscribe();
+    });
   }
 
   onLearn(isKnow: boolean) {
@@ -52,9 +64,15 @@ export class SetsLearnComponent implements OnInit {
       ...activeCard,
       group: isKnow ? activeCard.group + 1 : 1,
     };
-    
+
+    this.updateCardEvent$.next();
+
     if (this.wasLastCardUsed()) {
       const cardWithSmallestGroup = this.getCardWithSmallestGroup();
+
+      if (cardWithSmallestGroup.group === 6) {
+        this.learnEnd = true;
+      }
 
       this.cardsWithCurrentGroup = this.set.cards.filter(
         (c) => c.group === cardWithSmallestGroup.group
