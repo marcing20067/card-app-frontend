@@ -1,9 +1,9 @@
 <section class="auth wrapper section-padding">
-    <div class="auth__box">
+    <div class="auth__box" *ngIf="!signupSuccessfully">
         <app-circles class="auth__box-circles"
             [ngClass]="{'auth__box-circles--login': isLoginRoute, 'auth__box-circles--signup': !isLoginRoute}">
         </app-circles>
-        
+
         <h2 class="auth__title title">{{ isLoginRoute ? 'Logowanie' : 'Rejestracja' }}</h2>
         <form [formGroup]="authForm" class="form" (ngSubmit)="onSubmit()">
             <div class="form__box">
@@ -48,9 +48,13 @@
             </button>
         </form>
 
-
         <a [routerLink]="[ '/auth', isLoginRoute ? 'signup' : 'login']" class="auth__link">
             {{ isLoginRoute ? 'Zarejestuj się' : 'Zaloguj się'}}
         </a>
+    </div>
+
+    <div class="auth__signup-info" *ngIf="signupSuccessfully">
+        <p class="auth__signup-info-heading">Sprawdź swój e-mail</p>
+        <p class="auth__signup-info-text">Na e-mail został wysłany link aktywujący konto.</p>
     </div>
 </section>

@@ -14,23 +14,23 @@
                     </span>
                 </button>
             </div>
-            <ul class="nav__list" [ngClass]="{'nav__list--active': isActive}" *ngIf="(isAuth$ | async) as isAuth">
-                <li class="nav__list-item" *ngIf="!isAuth">
+            <ul class="nav__list" [ngClass]="{'nav__list--active': isActive}"
+                *ngIf="{ isAuth: isAuth$ | async } as authData">
+                <li class="nav__list-item" *ngIf="!authData.isAuth">
                     <a routerLink="/auth/login" class="nav__list-item-link" (click)="toggleIsActive()">Zaloguj się</a>
                 </li>
-                <li class="nav__list-item nav__list-item--reverse" *ngIf="!isAuth">
+                <li class="nav__list-item nav__list-item--reverse" *ngIf="!authData.isAuth">
                     <a routerLink="/auth/signup" class="nav__list-item-link nav__list-item-link--reverse"
                         (click)="toggleIsActive()">Zarejestruj się</a>
                 </li>
-                <li class="nav__list-item" *ngIf="isAuth">
+                <li class="nav__list-item" *ngIf="authData.isAuth">
                     <a routerLink="/sets" class="nav__list-item-link" (click)="toggleIsActive()">Panel główny</a>
                 </li>
-                <li class="nav__list-item" *ngIf="isAuth">
+                <li class="nav__list-item" *ngIf="authData.isAuth">
                     <a routerLink="/user" class="nav__list-item-link" (click)="toggleIsActive()">Dane użytkownika</a>
-                </li>
-                <li class="nav__list-item nav__list-item--reverse" *ngIf="isAuth">
-                    <a routerLink="/auth/login" class="nav__list-item-link nav__list-item-link--reverse"
-                        (click)="toggleIsActive()">Wyloguj się</a>
+                <li class="nav__list-item nav__list-item--button" *ngIf="authData.isAuth">
+                    <button class="nav__list-item-link nav__list-item-link--button nav__list-item-link--reverse"
+                        (click)="toggleIsActive(); onLogout()">Wyloguj się</button>
                 </li>
             </ul>
         </div>

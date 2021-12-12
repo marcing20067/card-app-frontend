@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SetsService } from '../sets.service';
 import { Set } from 'src/app/shared/models/set.model';
-import { take } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
+import { PopupService } from 'src/app/shared/services/popup/popup.service';
 @Component({
   selector: 'app-sets-panel',
   templateUrl: './sets-panel.component.html',
@@ -9,14 +10,40 @@ import { take } from 'rxjs/operators';
 })
 export class SetsPanelComponent implements OnInit {
   selectedSet: Set | null = null;
-  sets$ = this.setsService.getSetsListener();
-  constructor(private setsService: SetsService) {}
+  sets$ = this.setsService.getSetsListener().pipe(
+    map((sets) => {
+      return sets.map((item) => {
+        const formattedName = item.name[0].toUpperCase() + item.name.slice(1);
+        const updatedSet = { ...item, name: formattedName };
+        return updatedSet;
+      });
+    })
+  );
+  constructor(
+    private setsService: SetsService,
+    private popupService: PopupService
+  ) {}
 
-  onDeleteSet(id: string | undefined) {
-    this.setsService
-      .deleteSet(id as string)
+  onDeleteSet(set: Set) {
+    this.popupService
+      .getConfirmEventListener()
       .pipe(take(1))
-      .subscribe();
+      .subscribe((isConfirm) => {
+        if (isConfirm) {
+          this.setsService
+            .deleteSet(set._id as string)
+            .pipe(take(1))
+            .subscribe();
+        }
+      });
+
+    this.popupService.display({
+      isShow: true,
+      content: {
+        heading: `Czy na pewno chcesz usunąć zestaw "${set.name}"?`,
+        text: 'Wybrany zestaw zostanie nieodwracalnie usunięty.',
+      },
+    });
   }
 
   onSelectSet(set: Set) {

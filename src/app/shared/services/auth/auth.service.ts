@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { newUser } from '../models/newUser.model';
-import { User } from '../models/user.model';
+import { newUser } from '../../models/newUser.model';
+import { User } from '../../models/user.model';
 import { tap } from 'rxjs/operators';
-import { TokenService } from './token.service';
+import { TokenService } from '../token/token.service';
 import { Router } from '@angular/router';
-import { UserStatus } from '../models/userStatus.model';
+import { UserStatus } from '../../models/userStatus.model';
 
 @Injectable({
   providedIn: 'root',
@@ -43,11 +43,7 @@ export class AuthService {
   }
 
   signup(user: newUser) {
-    return this.http.post(environment.BACKEND_URL + 'auth/signup', user).pipe(
-      tap(() => {
-        this.router.navigate(['/auth/login']);
-      })
-    );
+    return this.http.post(environment.BACKEND_URL + 'auth/signup', user);
   }
 
   userStatus() {

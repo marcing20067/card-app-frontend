@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../shared/services/auth.service';
+import { AuthService } from '../shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -15,6 +15,7 @@ export class AuthComponent {
     rememberMe: [false, Validators.required],
   });
   isLoginRoute!: boolean;
+  signupSuccessfully = false;
 
   constructor(
     private fb: FormBuilder,
@@ -38,10 +39,11 @@ export class AuthComponent {
 
     if (this.isLoginRoute) {
       const rememberMe = data.rememberMe;
-
       this.authService.login(data, rememberMe).subscribe();
     } else {
-      this.authService.signup(data).subscribe();
+      this.authService.signup(data).subscribe(() => {
+        this.signupSuccessfully = true;
+      });
     }
   }
 }

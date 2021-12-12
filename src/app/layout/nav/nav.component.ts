@@ -1,8 +1,10 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 import { NavExtraFeaturesForRoute } from 'src/app/shared/enums/layout.enums';
-import { TokenService } from 'src/app/shared/services/token.service';
+import { PopupService } from 'src/app/shared/services/popup/popup.service';
+import { TokenService } from 'src/app/shared/services/token/token.service';
 import { ActualRoute } from 'src/app/shared/types/actualRoute.type';
 
 @Component({
@@ -18,7 +20,9 @@ export class NavComponent {
   constructor(
     private location: Location,
     private tokenService: TokenService,
-  ) {
+    private popupService: PopupService,
+    private router: Router
+    ) {
     this.location.onUrlChange((path) => {
       this.class = ['nav'];
       const splitedPath = path.split('/');
@@ -39,5 +43,21 @@ export class NavComponent {
 
   toggleIsActive() {
     this.isActive = !this.isActive;
+  }
+
+  onLogout() {
+    this.popupService.getConfirmEventListener().pipe(take(1)).subscribe(isConfirm => {
+      if(isConfirm) {
+        this.tokenService.clearTokenData();
+        this.router.navigate(['/auth/login'])
+      }
+    })
+
+    this.popupService.display({
+      isShow: true,
+      content: {
+        heading: 'Czy na pewno chcesz się wylogować?'
+      }
+    })
   }
 }

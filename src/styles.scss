@@ -16,7 +16,10 @@ html {
     box-sizing: border-box;
 }
 
-p, a, label, h2 {
+p,
+a,
+label,
+h2 {
     line-height: 150%;
 }
 
@@ -29,7 +32,7 @@ body {
     color: $gray;
     font-family: "Montserrat", sans-serif;
     position: relative;
-    min-height: 500px;
+    min-height: clamp(500px, 100vh, 100vh);
 }
 
 :root {
@@ -64,14 +67,18 @@ body {
     border-radius: 50px;
     border: none;
     background-color: $orange;
+    border: 1px solid $orange;
     color: $white;
     font-weight: 700;
     text-transform: uppercase;
 
-    // &--orange {
-    // }
+    &--reverse {
+        color: $gray;
+        border: 1px solid;
+        font-family: inherit;
+        background-color: $white;
+    }
 }
-
 
 @media (min-width: 768px) {
     .wrapper {

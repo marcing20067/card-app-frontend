@@ -13,8 +13,8 @@ import { SetsService } from '../sets.service';
   styleUrls: ['./sets-create.component.scss'],
 })
 export class SetsCreateComponent {
+  mode = '';
   oldSet!: Set;
-  setName: string = '';
   setsCreateForm = this.fb.group({
     name: ['', Validators.required],
     cards: this.fb.array([]),
@@ -36,7 +36,6 @@ export class SetsCreateComponent {
         .subscribe({
           next: (set) => {
             this.oldSet = set;
-            this.setName = set.name;
             for (let i = 0; i < set.cards.length; i++) {
               this.addCard();
             }
@@ -45,6 +44,7 @@ export class SetsCreateComponent {
               name: set.name,
               cards: set.cards,
             });
+            this.mode = 'edit';
           },
           error: (res: HttpErrorResponse) => {
             if (res.status === 400) {
@@ -53,8 +53,8 @@ export class SetsCreateComponent {
           },
         });
     } else {
+      this.mode === 'create';
       this.addCard();
-      this.setName = 'edit';
     }
   }
 
@@ -75,7 +75,7 @@ export class SetsCreateComponent {
 
   onSubmit() {
     const newSet: Set = this.setsCreateForm.value;
-    if(this.oldSet) {
+    if (this.oldSet) {
       newSet.stats = {
         group1: 0,
         group2: 0,
@@ -83,16 +83,29 @@ export class SetsCreateComponent {
         group4: 0,
         group5: 0,
       };
-      newSet.cards.forEach((newEl => {
-        const notChangedElIndex = this.oldSet.cards.indexOf(newEl);
-        if(notChangedElIndex > 0) {
+      newSet.cards.forEach((newEl) => {
+        const notChangedElIndex = this.oldSet.cards.findIndex((el) => {
+          return (
+            el.concept === newEl.concept && el.definition === newEl.definition
+          );
+        });
+
+        if (notChangedElIndex >= 0) {
           const notChangedEl = this.oldSet.cards[notChangedElIndex] as Card;
-          const elGroupFullName = 'group' + notChangedEl.group as keyof Set["stats"];
+          const elGroupFullName = ('group' +
+            notChangedEl.group) as keyof Set['stats'];
           newSet.stats[elGroupFullName] = newSet.stats[elGroupFullName] + 1;
         } else {
+          newEl.group = 1;
           newSet.stats.group1++;
         }
-      }))
+      });
+
+      this.setsService
+        .editSet({ ...newSet, _id: this.oldSet._id })
+        .subscribe((data) => {
+          console.log(data);
+        });
     }
     if (!this.oldSet) {
       newSet.stats = {
@@ -102,7 +115,9 @@ export class SetsCreateComponent {
         group4: 0,
         group5: 0,
       };
-      this.setsService.addSet(newSet).subscribe();
+      this.setsService.addSet(newSet).subscribe((res) => {
+        console.log(res);
+      });
     }
   }
 }

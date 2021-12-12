@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Set } from 'src/app/shared/models/set.model';
 @Component({
   selector: 'app-set',
@@ -9,14 +8,14 @@ import { Set } from 'src/app/shared/models/set.model';
 export class SetComponent {
   @Input() set!: Set;
   @Output() selectSet = new EventEmitter<Set>();
-  @Output() deleteSet = new EventEmitter<string>();
+  @Output() deleteSet = new EventEmitter<Set>();
 
   onSelectSet(set: Set) {
     this.selectSet.emit(set);
   }
 
-  onDeleteSet(setId: string | undefined) {
-    this.deleteSet.emit(setId);
+  onDeleteSet(set: Set) {
+    this.deleteSet.emit(set);
   }
 
 }

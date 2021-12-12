@@ -44,22 +44,22 @@
         padding: 3.2rem 0;
         display: grid;
         width: fit-content;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         gap: 3.6rem;
         margin: 0 auto;
     }
 
     &__set {
         &--even {
-            grid-column: 1/3;
+            grid-column: 1/2;
         }
 
         &--odd {
-            grid-column: 3/5;
+            grid-column: 3/4;
         }
 
         &--last {
-            grid-column: 2/4;
+            grid-column: 2/3;
         }
     }
 

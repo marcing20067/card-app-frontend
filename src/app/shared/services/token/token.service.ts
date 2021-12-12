@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, of } from 'rxjs';
-import { distinctUntilChanged, take, tap } from 'rxjs/operators';
-import { TokenData } from '../models/tokenData.model';
+import { BehaviorSubject } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { TokenData } from '../../models/tokenData.model';
 
 @Injectable({
   providedIn: 'root',
@@ -91,7 +91,7 @@ export class TokenService {
     }
   }
 
-  private clearTokenData() {
+  clearTokenData() {
     this.tokenData = {};
     localStorage.clear();
   }

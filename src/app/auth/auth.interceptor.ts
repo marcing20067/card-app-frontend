@@ -4,7 +4,7 @@ import {
   HttpHandler,
   HttpInterceptor,
 } from '@angular/common/http';
-import { TokenService } from '../shared/services/token.service';
+import { TokenService } from '../shared/services/token/token.service';
 import { switchMap } from 'rxjs/operators';
 
 @Injectable()

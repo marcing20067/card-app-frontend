@@ -2,7 +2,7 @@
     <form class="form" [formGroup]="setsCreateForm" (ngSubmit)="onSubmit()">
         <div class="form__set-data">
             <div class="form__set-data-box wrapper">
-                <app-field *ngIf="setName">
+                <app-field *ngIf="mode === 'edit' || oldSet">
                     <input type="text" formControlName="name" id="name" appInput>
                     <label for="name" label>Tytuł zestawu</label>
                 </app-field>

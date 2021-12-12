@@ -12,7 +12,7 @@
     &__box-circles {
         display: none;
     }
-    
+
     &__title {
         margin-bottom: 3.2rem;
     }
@@ -23,6 +23,17 @@
         font-size: 1.4rem;
         text-decoration: none;
         color: $gray;
+    }
+
+    &__signup-info {
+        color: $black;
+        
+        &-heading {
+            font-size: 2.4rem;
+            margin-bottom: 3.2rem;
+            font-weight: 700;
+        }
+        text-align: center;
     }
 }
 
