@@ -55,5 +55,7 @@ export class SetsPanelComponent implements OnInit {
     this.setsService.getSets().subscribe();
   }
 
-  onLoadMore() {}
+  onLoadMore() {
+    this.setsService.loadMore().subscribe();
+  }
 }

@@ -9,7 +9,8 @@ import { Set } from '../shared/models/set.model';
   providedIn: 'root',
 })
 export class SetsService {
-  sets$ = new BehaviorSubject<Set[]>([]);
+  private page = 1;
+  private sets$ = new BehaviorSubject<Set[]>([]);
   constructor(private http: HttpClient) {}
 
   getSet(id: string) {
@@ -18,14 +19,33 @@ export class SetsService {
 
   getSetsListener() {
     return this.sets$.asObservable();
-}
+  }
 
   getSets() {
-    return this.http
-      .get<Set[]>(environment.BACKEND_URL + 'sets')
-      .pipe(tap((sets) => {
+    this.page = 1;
+    return this.http.get<Set[]>(environment.BACKEND_URL + 'sets').pipe(
+      tap((sets) => {
         this.sets$.next(sets);
-      }));
+      })
+    );
+  }
+
+  loadMore() {
+    this.page++;
+    return this.http
+      .get<Set[]>(environment.BACKEND_URL + 'sets', {
+        params: {
+          page: this.page,
+        },
+      })
+      .pipe(
+        tap((newSets) => {
+          this.sets$.pipe(take(1)).subscribe((oldSets) => {
+            const sets = [...oldSets, ...newSets];
+            this.sets$.next(sets);
+          });
+        })
+      );
   }
 
   deleteSet(id: string) {
