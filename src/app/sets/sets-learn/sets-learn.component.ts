@@ -63,7 +63,7 @@ export class SetsLearnComponent implements OnInit {
     this.set.cards[cardIndex] = {
       ...activeCard,
       group: isKnow ? activeCard.group + 1 : 1,
-    };
+  };
 
     this.updateCardEvent$.next();
 
