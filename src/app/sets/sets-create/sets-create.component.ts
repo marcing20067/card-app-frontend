@@ -53,7 +53,7 @@ export class SetsCreateComponent {
           },
         });
     } else {
-      this.mode === 'create';
+      this.mode = 'create';
       this.addCard();
     }
   }
@@ -103,8 +103,8 @@ export class SetsCreateComponent {
 
       this.setsService
         .editSet({ ...newSet, _id: this.oldSet._id })
-        .subscribe((data) => {
-          console.log(data);
+        .subscribe(() => {
+          this.router.navigate(['/sets'])
         });
     }
     if (!this.oldSet) {
@@ -115,8 +115,8 @@ export class SetsCreateComponent {
         group4: 0,
         group5: 0,
       };
-      this.setsService.addSet(newSet).subscribe((res) => {
-        console.log(res);
+      this.setsService.addSet(newSet).subscribe(() => {
+        this.router.navigate(['/sets'])
       });
     }
   }
