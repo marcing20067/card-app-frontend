@@ -35,10 +35,12 @@ body {
     min-height: clamp(500px, 100vh, 100vh);
 }
 
-:root {
+.box {
+    padding-top: 7.6rem;
     display: flex;
     min-height: 100vh;
     height: 100vh;
+    justify-content: space-between;
     flex-direction: column;
 }
 
