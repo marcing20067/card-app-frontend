@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../shared/services/auth/auth.service';
+import { similarValidator } from './similar.directive';
 
 @Component({
   selector: 'app-auth',
@@ -27,9 +32,27 @@ export class AuthComponent {
     if (!this.isLoginRoute) {
       this.authForm = this.fb.group({
         username: ['', Validators.required],
-        password: ['', Validators.required],
+        password: [
+          '',
+          [
+            Validators.required,
+            similarValidator.call(this, {
+              similarKey: 'repeatPassword',
+              errorKey: 'password',
+            }),
+          ],
+        ],
         email: ['', [Validators.required, Validators.email]],
-        repeatPassword: ['', Validators.required],
+        repeatPassword: [
+          '',
+          [
+            Validators.required,
+            similarValidator.call(this, {
+              similarKey: 'password',
+              errorKey: 'repeatPassword',
+            }),
+          ],
+        ],
       });
     }
   }
