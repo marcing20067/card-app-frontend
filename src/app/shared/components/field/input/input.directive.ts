@@ -20,7 +20,6 @@ export class InputDirective {
 
   ngOnInit() {
     this.id = this.el.nativeElement.id;
-    this.handleInputValue();
   }
 
   @HostListener('focus')
