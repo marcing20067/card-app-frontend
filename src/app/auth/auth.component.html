@@ -3,7 +3,7 @@
         <app-circles class="auth__box-circles"
             [ngClass]="{'auth__box-circles--login': isLoginRoute, 'auth__box-circles--signup': !isLoginRoute}">
         </app-circles>
-
+        
         <h2 class="auth__title title">{{ isLoginRoute ? 'Logowanie' : 'Rejestracja' }}</h2>
         <form [formGroup]="authForm" class="form" (ngSubmit)="onSubmit()">
             <div class="form__box">
@@ -24,15 +24,16 @@
 
             <div class="form__box">
                 <app-field>
-                    <input type="password" formControlName="password" id="password" appInput>
+                    <input type="password" formControlName="password" id="password" #password  appInput>
                     <label for="password" label>Hasło</label>
                     <app-icon src="../../assets/icons/search.svg" alt="" left inputId="password"></app-icon>
                 </app-field>
             </div>
 
+            
             <div class="form__box" *ngIf="!isLoginRoute">
                 <app-field>
-                    <input type="password" formControlName="repeatPassword" id="repeat-password" appInput>
+                    <input type="password" formControlName="repeatPassword" id="repeat-password" #repeatPassword appInput>
                     <label for="repeat-password" label>Powtórz hasło</label>
                     <app-icon src="../../assets/icons/search.svg" alt="" left inputId="repeat-password"></app-icon>
                 </app-field>
@@ -43,7 +44,7 @@
                 <input type="checkbox" formControlName="rememberMe" id="remember-me" class="form__box-checkbox">
             </div>
 
-            <button type="submit" class="form__button button button--orange" [disabled]="authForm.invalid">
+            <button type="submit" class="form__button button button--orange" [disabled]="authForm.invalid || !isLoginRoute && !isSimilar">
                 {{ isLoginRoute ? 'Zaloguj się' : 'Zarejestuj się' }}
             </button>
         </form>

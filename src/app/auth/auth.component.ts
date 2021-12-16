@@ -1,19 +1,16 @@
-import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { Component, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 import { AuthService } from '../shared/services/auth/auth.service';
-import { similarValidator } from './similar.directive';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
 })
-export class AuthComponent {
+export class AuthComponent implements OnDestroy {
   authForm: FormGroup = this.fb.group({
     username: ['', Validators.required],
     password: ['', Validators.required],
@@ -21,6 +18,8 @@ export class AuthComponent {
   });
   isLoginRoute!: boolean;
   signupSuccessfully = false;
+  isSimilar = false;
+  formSub!: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -32,28 +31,23 @@ export class AuthComponent {
     if (!this.isLoginRoute) {
       this.authForm = this.fb.group({
         username: ['', Validators.required],
-        password: [
-          '',
-          [
-            Validators.required,
-            similarValidator.call(this, {
-              similarKey: 'repeatPassword',
-              errorKey: 'password',
-            }),
-          ],
-        ],
+        password: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        repeatPassword: [
-          '',
-          [
-            Validators.required,
-            similarValidator.call(this, {
-              similarKey: 'password',
-              errorKey: 'repeatPassword',
-            }),
-          ],
-        ],
+        repeatPassword: ['', Validators.required],
       });
+
+      this.formSub = this.authForm.valueChanges
+        .pipe(
+          distinctUntilChanged((prev, next) => {
+            return (
+              prev.repeatPassword === next.repeatPassword &&
+              prev.password === next.password
+            );
+          })
+        )
+        .subscribe((value) => {
+          this.isSimilar = value.password === value.repeatPassword;
+        });
     }
   }
 
@@ -67,6 +61,12 @@ export class AuthComponent {
       this.authService.signup(data).subscribe(() => {
         this.signupSuccessfully = true;
       });
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.formSub) {
+      this.formSub.unsubscribe();
     }
   }
 }

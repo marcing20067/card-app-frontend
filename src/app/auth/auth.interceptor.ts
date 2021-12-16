@@ -5,7 +5,6 @@ import {
   HttpInterceptor,
 } from '@angular/common/http';
 import { TokenService } from '../shared/services/token/token.service';
-import { switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
