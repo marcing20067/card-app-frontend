@@ -6,7 +6,8 @@ import { AuthComponent } from './auth.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login'
+    redirectTo: 'login',
+    pathMatch: 'prefix'
   },
   {
     path: 'login',
