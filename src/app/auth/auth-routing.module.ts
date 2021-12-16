@@ -5,6 +5,10 @@ import { AuthComponent } from './auth.component';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'login'
+  },
+  {
     path: 'login',
     component: AuthComponent,
   },
