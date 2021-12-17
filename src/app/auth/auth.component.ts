@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, take } from 'rxjs/operators';
 import { AuthService } from '../shared/services/auth/auth.service';
 
 @Component({
@@ -11,6 +11,7 @@ import { AuthService } from '../shared/services/auth/auth.service';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnDestroy {
+  isLoading = false;
   authForm: FormGroup = this.fb.group({
     username: ['', Validators.required],
     password: ['', Validators.required],
@@ -52,15 +53,31 @@ export class AuthComponent implements OnDestroy {
   }
 
   onSubmit() {
+    this.isLoading = true;
     const data = this.authForm.value;
-
     if (this.isLoginRoute) {
       const rememberMe = data.rememberMe;
-      this.authService.login(data, rememberMe).subscribe();
+      this.authService
+        .login(data, rememberMe)
+        .pipe(take(1))
+        .subscribe({
+          error: () => {
+            this.isLoading = false;
+          },
+        });
     } else {
-      this.authService.signup(data).subscribe(() => {
-        this.signupSuccessfully = true;
-      });
+      this.authService
+        .signup(data)
+        .pipe(take(1))
+        .subscribe({
+          next: () => {
+            this.isLoading = false;
+            this.signupSuccessfully = true;
+          },
+          error: () => {
+            this.isLoading = false;
+          },
+        });
     }
   }
 

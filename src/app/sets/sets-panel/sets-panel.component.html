@@ -1,8 +1,13 @@
 <div class="wrapper"></div>
-<section class="sets-panel section-padding">
+
+<app-loader *ngIf="isLoading"></app-loader>
+
+<section class="sets-panel section-padding" *ngIf="!isLoading">
+    
     <h2 class="sets-panel__title">Utworzone zestawy</h2>
 
     <button class="sets-panel__load-more" (click)="onLoadMore()">Załaduj więcej</button>
+
 
     <div class="sets-panel__box">
         <div class="wrapper" *ngIf="(sets$ | async) as sets">

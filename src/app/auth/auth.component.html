@@ -1,4 +1,5 @@
-<section class="auth wrapper section-padding">
+<app-loader *ngIf="isLoading"></app-loader>
+<section class="auth wrapper section-padding" *ngIf="!isLoading">
     <div class="auth__box" *ngIf="!signupSuccessfully">
         <app-circles class="auth__box-circles"
             [ngClass]="{'auth__box-circles--login': isLoginRoute, 'auth__box-circles--signup': !isLoginRoute}">

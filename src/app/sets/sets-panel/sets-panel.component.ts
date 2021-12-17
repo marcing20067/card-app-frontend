@@ -9,6 +9,7 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
   styleUrls: ['./sets-panel.component.scss'],
 })
 export class SetsPanelComponent implements OnInit {
+  isLoading = true;
   selectedSet: Set | null = null;
   sets$ = this.setsService.getSetsListener().pipe(
     map((sets) => {
@@ -26,14 +27,17 @@ export class SetsPanelComponent implements OnInit {
 
   onDeleteSet(set: Set) {
     this.popupService
-      .getConfirmEventListener()
-      .pipe(take(1))
-      .subscribe((isConfirm) => {
+    .getConfirmEventListener()
+    .pipe(take(1))
+    .subscribe((isConfirm) => {
+        this.isLoading = true;
         if (isConfirm) {
           this.setsService
             .deleteSet(set._id as string)
             .pipe(take(1))
-            .subscribe();
+            .subscribe(() => {
+              this.isLoading = false;
+            });
         }
       });
 
@@ -52,10 +56,15 @@ export class SetsPanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setsService.getSets().subscribe();
+    this.setsService.getSets().subscribe(() => {
+      this.isLoading = false;
+    });
   }
 
   onLoadMore() {
-    this.setsService.loadMore().subscribe();
+    this.isLoading = true;
+    this.setsService.loadMore().subscribe(() => {
+      this.isLoading = false;
+    });
   }
 }

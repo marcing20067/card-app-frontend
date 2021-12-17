@@ -13,6 +13,7 @@ import { SetsService } from '../sets.service';
   styleUrls: ['./sets-create.component.scss'],
 })
 export class SetsCreateComponent {
+  isLoading = false;
   mode = '';
   oldSet!: Set;
   setsCreateForm = this.fb.group({
@@ -30,6 +31,7 @@ export class SetsCreateComponent {
   ngOnInit(): void {
     const id = this.route.snapshot.params.id;
     if (id) {
+      this.isLoading = true;
       this.setsService
         .getSet(id)
         .pipe(take(1))
@@ -45,6 +47,7 @@ export class SetsCreateComponent {
               cards: set.cards,
             });
             this.mode = 'edit';
+            this.isLoading = false;
           },
           error: (res: HttpErrorResponse) => {
             if (res.status === 400) {
@@ -74,6 +77,7 @@ export class SetsCreateComponent {
   }
 
   onSubmit() {
+    this.isLoading = true;
     const newSet: Set = this.setsCreateForm.value;
     if (this.oldSet) {
       newSet.stats = {
@@ -104,7 +108,7 @@ export class SetsCreateComponent {
       this.setsService
         .editSet({ ...newSet, _id: this.oldSet._id })
         .subscribe(() => {
-          this.router.navigate(['/sets'])
+          this.router.navigate(['/sets']);
         });
     }
     if (!this.oldSet) {
@@ -116,7 +120,7 @@ export class SetsCreateComponent {
         group5: 0,
       };
       this.setsService.addSet(newSet).subscribe(() => {
-        this.router.navigate(['/sets'])
+        this.router.navigate(['/sets']);
       });
     }
   }

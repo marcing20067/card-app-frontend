@@ -1,4 +1,6 @@
-<section class="activation">
+<app-loader *ngIf="isLoading"></app-loader>
+
+<section class="activation" *ngIf="!isLoading">
     <div class="activation__box" *ngIf="activationSuccessfully">
         <p class="activation__box-text">
             Aktywacja przebiegła pomyślnie!

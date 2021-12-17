@@ -75,9 +75,8 @@
             top: 0;
             right: 0;
             z-index: -1;
-            width: 67%;
+            width: 50%;
             height: auto;
-            max-width: 918px;
         }
     }
 
@@ -91,6 +90,10 @@
             position: relative;
             width: 40%;
             display: block;
+
+            &-img {
+                width: 100%;
+            }
 
             app-circles {
                 position: absolute;
@@ -124,6 +127,16 @@
 
         &__container {
             width: 60%;
+        }
+    }
+}
+
+@media (min-width: 2000px) {
+    .shapes {
+        &__top {
+            width: auto;
+            height: 90vh;
+            max-height: 1700px;
         }
     }
 }
