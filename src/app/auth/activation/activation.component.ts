@@ -10,24 +10,20 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 })
 export class ActivationComponent implements OnInit {
   isLoading = true;
-  activationSuccessfully = false;
+  isActivationFailed = false;
   activationToken = '';
   
-  constructor(private route: ActivatedRoute, private authService: AuthService) {
-    this.activationToken = this.route.snapshot.params.activationToken;
-  }
+  constructor(private route: ActivatedRoute, private authService: AuthService) {}
 
   ngOnInit(): void {
+    const activationToken = this.route.snapshot.params.activationToken;
     this.authService
-      .activation(this.activationToken)
+      .activation(activationToken)
       .pipe(take(1))
       .subscribe({
-        next: () => {
-          this.isLoading = false;
-          this.activationSuccessfully = true;
-        },
         error: () => {
           this.isLoading = false;
+          this.isActivationFailed = true;
         },
       });
   }

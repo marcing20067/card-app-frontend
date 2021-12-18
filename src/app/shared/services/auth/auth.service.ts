@@ -53,7 +53,9 @@ export class AuthService {
   activation(activationToken: string) {
     return this.http.get(
       environment.BACKEND_URL + `auth/activate/${activationToken}`
-    );
+    ).pipe(tap(() => {
+      this.router.navigate(['/auth/login']);
+    }));
   }
 
   reset(mode: 'password' | 'username', username: string) {
