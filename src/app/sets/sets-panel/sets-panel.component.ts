@@ -11,18 +11,11 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
 export class SetsPanelComponent implements OnInit {
   isLoading = true;
   selectedSet: Set | null = null;
-  sets$ = this.setsService.getSetsListener().pipe(
-    map((sets) => {
-      return sets.map((item) => {
-        const formattedName = item.name[0].toUpperCase() + item.name.slice(1);
-        const updatedSet = { ...item, name: formattedName };
-        return updatedSet;
-      });
-    })
-  );
+  sets$ = this.setsService.getSetsListener()
+  
   constructor(
     private setsService: SetsService,
-    private popupService: PopupService
+    private popupService: PopupService,
   ) {}
 
   onDeleteSet(set: Set) {

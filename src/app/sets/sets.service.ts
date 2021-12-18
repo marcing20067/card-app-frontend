@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Set } from '../shared/models/set.model';
 
@@ -18,7 +18,18 @@ export class SetsService {
   }
 
   getSetsListener() {
-    return this.sets$.asObservable();
+    return this.sets$.asObservable().pipe(
+      map((sets) => {
+        return sets.map((item) => {
+          let formattedName = (item.name[0].toUpperCase() + item.name.slice(1)).replace(' ', '');
+          if (formattedName.length > 9) {
+            formattedName = formattedName.slice(0, 7) + '..';
+          }
+          const updatedSet = { ...item, name: formattedName };
+          return updatedSet;
+        });
+      })
+    );
   }
 
   getSets() {

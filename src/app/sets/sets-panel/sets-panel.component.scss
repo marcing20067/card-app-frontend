@@ -44,7 +44,7 @@
         padding: 3.2rem 0;
         display: grid;
         width: fit-content;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
         gap: 3.6rem;
         margin: 0 auto;
     }
@@ -55,11 +55,12 @@
         }
 
         &--odd {
-            grid-column: 3/4;
+            grid-column: 2/3;
         }
 
         &--last {
-            grid-column: 2/3;
+            grid-column: 1/3;
+            margin: 0 auto;
         }
     }
 
@@ -87,6 +88,10 @@
             flex-wrap: wrap;
             justify-content: center;
             width: 100%;
+        }
+
+        &__set--last {
+            margin: 0;
         }
     }
 }
