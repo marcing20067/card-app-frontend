@@ -8,7 +8,7 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
 })
 export class PopupComponent {
   constructor(private popupService: PopupService) {}
-  data = this.popupService.getDisplayListener();
+  data$ = this.popupService.getDisplayListener();
   isShow = false;
 
   onConfirm(isConfirm: boolean) {

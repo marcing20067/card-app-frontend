@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { debounceTime, take } from 'rxjs/operators';
 import { Card } from 'src/app/shared/models/card.model';
 import { Set } from 'src/app/shared/models/set.model';
@@ -11,7 +11,7 @@ import { SetsService } from '../sets.service';
   templateUrl: './sets-learn.component.html',
   styleUrls: ['./sets-learn.component.scss'],
 })
-export class SetsLearnComponent implements OnInit {
+export class SetsLearnComponent implements OnInit, OnDestroy {
   learnEnd: boolean = false;
   set!: Set;
   cardsWithCurrentGroup!: Card[];
@@ -20,7 +20,7 @@ export class SetsLearnComponent implements OnInit {
     deactive: [Card, Card];
   };
   updateCardEvent$ = new Subject<unknown>();
-
+  updateCardSub!: Subscription;
   activateCardIndex = 0;
   newDeactiveCardIndex = 3;
 
@@ -48,7 +48,7 @@ export class SetsLearnComponent implements OnInit {
         this.initializeCardsView();
       });
 
-    this.updateCardEvent$.pipe(debounceTime(1500)).subscribe(() => {
+    this.updateCardSub = this.updateCardEvent$.pipe(debounceTime(1500)).subscribe(() => {
       this.setsService
         .editSet(this.set)
         .pipe(take(1))
@@ -123,5 +123,9 @@ export class SetsLearnComponent implements OnInit {
       active: this.cardsWithCurrentGroup[0],
       deactive: [this.cardsWithCurrentGroup[1], this.cardsWithCurrentGroup[2]],
     };
+  }
+
+  ngOnDestroy(): void {
+    this.updateCardSub.unsubscribe()
   }
 }

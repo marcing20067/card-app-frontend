@@ -11,12 +11,12 @@
         <app-cards [setName]="set.name" [cardsView]="cardsView" *ngIf="cardsView" (learnEvent)="onLearn($event)">
         </app-cards>
 
-        <ng-container *ngIf="set && set.stats as stats">
+        <div *ngIf="set && set.stats as stats">
             <app-stats class="learn__stats" [data]="{
             groups: stats,
             currentGroup: cardsWithCurrentGroup[0].group
         }"></app-stats>
-        </ng-container>
+        </div>
     </div>
     <div *ngIf="learnEnd" class="learn__complete">
         <p class="learn__complete-heading">Gratulację!</p>

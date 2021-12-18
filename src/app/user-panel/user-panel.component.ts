@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 import { UserStatus } from '../shared/models/userStatus.model';
 import { AuthService } from '../shared/services/auth/auth.service';
 
@@ -16,7 +17,7 @@ export class UserPanelComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.authService.userStatus().subscribe((status) => {
+    this.authService.userStatus().pipe(take(1)).subscribe((status) => {
       this.userStatus = status;
       this.isLoading = false;
     });
@@ -24,7 +25,7 @@ export class UserPanelComponent implements OnInit {
 
   onReset(mode: 'username' | 'password') {
     this.isLoading = true;
-    this.authService.reset(mode, this.userStatus.username).subscribe(() => {
+    this.authService.reset(mode, this.userStatus.username).pipe(take(1)).subscribe(() => {
       this.isLoading = false;
       this.showPopup = true;
     });

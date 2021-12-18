@@ -22,7 +22,8 @@ export class NavComponent {
     private tokenService: TokenService,
     private popupService: PopupService,
     private router: Router
-    ) {
+  ) {
+    this.tokenService.isAuth();
     this.location.onUrlChange((path) => {
       this.class = ['nav'];
       const splitedPath = path.split('/');
@@ -38,26 +39,28 @@ export class NavComponent {
         });
       }
     });
-    this.tokenService.isAuth();
   }
 
-  toggleIsActive() {
+  onToggleActive() {
     this.isActive = !this.isActive;
   }
 
   onLogout() {
-    this.popupService.getConfirmEventListener().pipe(take(1)).subscribe(isConfirm => {
-      if(isConfirm) {
-        this.tokenService.clearTokenData();
-        this.router.navigate(['/auth/login'])
-      }
-    })
+    this.popupService
+      .getConfirmEventListener()
+      .pipe(take(1))
+      .subscribe((isConfirm) => {
+        if (isConfirm) {
+          this.tokenService.clearTokenData();
+          this.router.navigate(['/auth/login']);
+        }
+      });
 
     this.popupService.display({
       isShow: true,
       content: {
-        heading: 'Czy na pewno chcesz się wylogować?'
-      }
-    })
+        heading: 'Czy na pewno chcesz się wylogować?',
+      },
+    });
   }
 }

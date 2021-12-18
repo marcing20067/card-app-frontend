@@ -1,4 +1,4 @@
-<div class="popup" *ngIf="data | async as data">
+<div class="popup" *ngIf="data$ | async as data">
     <div class="popup__box" *ngIf="data.isShow">
         <p class="popup__heading">{{ data.content?.heading }}</p>
         <p class="popup__text" *ngIf="data.content?.text">{{ data.content?.text }}</p>

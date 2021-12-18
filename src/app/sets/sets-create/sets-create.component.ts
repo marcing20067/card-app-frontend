@@ -107,6 +107,7 @@ export class SetsCreateComponent {
 
       this.setsService
         .editSet({ ...newSet, _id: this.oldSet._id })
+        .pipe(take(1))
         .subscribe(() => {
           this.router.navigate(['/sets']);
         });
@@ -119,7 +120,7 @@ export class SetsCreateComponent {
         group4: 0,
         group5: 0,
       };
-      this.setsService.addSet(newSet).subscribe(() => {
+      this.setsService.addSet(newSet).pipe(take(1)).subscribe(() => {
         this.router.navigate(['/sets']);
       });
     }

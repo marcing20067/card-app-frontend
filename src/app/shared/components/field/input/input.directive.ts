@@ -3,7 +3,6 @@ import {
   ElementRef,
   HostListener,
   Renderer2,
-  SimpleChanges,
 } from '@angular/core';
 import { FieldService } from '../field.service';
 

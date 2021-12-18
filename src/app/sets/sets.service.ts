@@ -46,7 +46,6 @@ export class SetsService {
         );
       }),
       tap((sets) => {
-        console.log(sets);
         this.sets$.next(sets);
       })
     );
