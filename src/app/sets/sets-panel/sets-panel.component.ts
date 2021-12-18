@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SetsService } from '../sets.service';
 import { Set } from 'src/app/shared/models/set.model';
-import { map, take } from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-sets-panel',
   templateUrl: './sets-panel.component.html',
@@ -11,18 +12,19 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
 export class SetsPanelComponent implements OnInit {
   isLoading = true;
   selectedSet: Set | null = null;
-  sets$ = this.setsService.getSetsListener()
-  
+  sets$ = this.setsService.getSetsListener();
+  setName!: string;
   constructor(
     private setsService: SetsService,
     private popupService: PopupService,
+    private route: ActivatedRoute
   ) {}
 
   onDeleteSet(set: Set) {
     this.popupService
-    .getConfirmEventListener()
-    .pipe(take(1))
-    .subscribe((isConfirm) => {
+      .getConfirmEventListener()
+      .pipe(take(1))
+      .subscribe((isConfirm) => {
         this.isLoading = true;
         if (isConfirm) {
           this.setsService
@@ -45,13 +47,16 @@ export class SetsPanelComponent implements OnInit {
 
   onSelectSet(set: Set) {
     this.selectedSet = set;
-    console.log(set);
   }
 
   ngOnInit(): void {
-    this.setsService.getSets().subscribe(() => {
-      this.isLoading = false;
-    });
+    this.setName = this.route.snapshot.queryParams.name;
+    this.setsService
+      .getSets(this.setName)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.isLoading = false;
+      });
   }
 
   onLoadMore() {

@@ -21,7 +21,9 @@ export class SetsService {
     return this.sets$.asObservable().pipe(
       map((sets) => {
         return sets.map((item) => {
-          let formattedName = (item.name[0].toUpperCase() + item.name.slice(1)).replace(' ', '');
+          let formattedName = (
+            item.name[0].toUpperCase() + item.name.slice(1)
+          ).replace(' ', '');
           if (formattedName.length > 9) {
             formattedName = formattedName.slice(0, 7) + '..';
           }
@@ -32,10 +34,19 @@ export class SetsService {
     );
   }
 
-  getSets() {
+  getSets(name?: string) {
     this.page = 1;
     return this.http.get<Set[]>(environment.BACKEND_URL + 'sets').pipe(
+      map((sets) => {
+        if (!name) {
+          return sets;
+        }
+        return sets.filter((s) =>
+          s.name.toUpperCase().includes(name.toUpperCase())
+        );
+      }),
       tap((sets) => {
+        console.log(sets);
         this.sets$.next(sets);
       })
     );
