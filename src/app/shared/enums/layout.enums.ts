@@ -1,9 +1,10 @@
 export enum NavExtraFeaturesForRoute {
   '/home' = '',
   '/auth/login' = 'banner',
+  '/auth/activation/:id' = '',
   '/auth/signup' = 'banner desktop-no-bgc',
   '/sets' = '',
-  '/sets/learn/:id' = 'creamy-bgc',
+  '/sets/learn/:id' = '',
   '/sets/create' = '',
   '/user' = '',
 }
@@ -16,4 +17,5 @@ export enum FooterExtraFeaturesForRoute {
   '/sets/learn/:id' = 'creamy-bgc mobile-no-footer',
   '/sets/create' = 'creamy-bgc',
   '/user' = 'creamy-bgc',
+  '/auth/activation/:id' = 'creamy-bgc',
 }
