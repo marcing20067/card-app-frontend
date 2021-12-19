@@ -6,6 +6,7 @@ export enum NavExtraFeaturesForRoute {
   '/sets' = '',
   '/sets/learn/:id' = '',
   '/sets/create' = '',
+  '/sets/create/:id' = '',
   '/user' = '',
 }
 
@@ -16,6 +17,7 @@ export enum FooterExtraFeaturesForRoute {
   '/sets' = 'creamy-bgc',
   '/sets/learn/:id' = 'creamy-bgc mobile-no-footer',
   '/sets/create' = 'creamy-bgc',
+  '/sets/create/:id' = '',
   '/user' = 'creamy-bgc',
   '/auth/activation/:id' = 'creamy-bgc',
 }
