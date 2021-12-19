@@ -79,14 +79,14 @@ export class SetsCreateComponent {
   onSubmit() {
     this.isLoading = true;
     const newSet: Set = this.setsCreateForm.value;
+    newSet.stats = {
+      group1: 0,
+      group2: 0,
+      group3: 0,
+      group4: 0,
+      group5: 0,
+    };
     if (this.oldSet) {
-      newSet.stats = {
-        group1: 0,
-        group2: 0,
-        group3: 0,
-        group4: 0,
-        group5: 0,
-      };
       newSet.cards.forEach((newEl) => {
         const notChangedElIndex = this.oldSet.cards.findIndex((el) => {
           return (
@@ -113,16 +113,13 @@ export class SetsCreateComponent {
         });
     }
     if (!this.oldSet) {
-      newSet.stats = {
-        group1: newSet.cards.length,
-        group2: 0,
-        group3: 0,
-        group4: 0,
-        group5: 0,
-      };
-      this.setsService.addSet(newSet).pipe(take(1)).subscribe(() => {
-        this.router.navigate(['/sets']);
-      });
+      newSet.stats.group1 = newSet.cards.length;
+      this.setsService
+        .addSet(newSet)
+        .pipe(take(1))
+        .subscribe(() => {
+          this.router.navigate(['/sets']);
+        });
     }
   }
 }
