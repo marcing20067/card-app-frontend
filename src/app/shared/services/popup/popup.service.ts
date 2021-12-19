@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { take } from 'rxjs/operators';
 import { PopupData } from 'src/app/layout/popup/popupData.model';
 
 @Injectable({

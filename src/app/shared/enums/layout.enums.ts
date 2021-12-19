@@ -13,7 +13,7 @@ export enum FooterExtraFeaturesForRoute {
   '/auth/login' = 'desktop-pill-items',
   '/auth/signup' = 'desktop-pill-items',
   '/sets' = 'creamy-bgc',
-  '/sets/learn/:id' = 'creamy-bgc',
+  '/sets/learn/:id' = 'creamy-bgc mobile-no-footer',
   '/sets/create' = 'creamy-bgc',
   '/user' = 'creamy-bgc',
 }

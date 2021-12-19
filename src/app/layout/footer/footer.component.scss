@@ -1,11 +1,15 @@
 @import "../../shared/styles/variables";
 
 .footer {
+    text-align: center;
+
     &--no-footer {
         display: none;
     }
 
-    text-align: center;
+    &--mobile-no-footer {
+        display: none;
+    }
 
     &__box {
         display: grid;
@@ -25,9 +29,8 @@
     }
 }
 
-
 @media (min-width: 1024px) {
-    .footer {  
+    .footer {
         &__box {
             display: flex;
             justify-content: space-between;
@@ -38,6 +41,10 @@
             background-color: $white;
             border-radius: 50px;
             padding: 0.8rem 1.6rem;
+        }
+
+        &--mobile-no-footer {
+            display: block;
         }
     }
 }
