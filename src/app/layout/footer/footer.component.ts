@@ -1,7 +1,9 @@
 import { Location } from '@angular/common';
-import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ActualRoute } from 'src/app/shared/types/actualRoute.type';
 import { FooterExtraFeaturesForRoute } from '../../shared/enums/layout.enums';
+import { LayoutService } from '../layout.service';
 
 type FooterExtraFeature =
   | 'no-footer'
@@ -10,38 +12,29 @@ type FooterExtraFeature =
   | 'mobile-no-footer'
   | 'creamy-bgc mobile-no-footer';
 
-
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
 })
-export class FooterComponent {
-  @ViewChild('footer') footer!: ElementRef;
-
+export class FooterComponent implements OnInit, OnDestroy {
+  class = ['footer'];
+  sub!: Subscription;
   extraFeature: FooterExtraFeature | '' = '';
 
-  constructor(private location: Location, private renderer: Renderer2) {}
+  constructor(private layoutService: LayoutService) {}
 
-  ngAfterViewInit(): void {
-    this.location.onUrlChange((actualRoute) => {
-      const splitedRoute = actualRoute.split('/');
-
-      if (splitedRoute.length === 4) {
-        splitedRoute[splitedRoute.length - 1] = ':id';
-        const route = splitedRoute.join('/');
-        this.extraFeature = FooterExtraFeaturesForRoute[route as ActualRoute];
-      } else {
-        this.extraFeature =
-          FooterExtraFeaturesForRoute[actualRoute as ActualRoute];
-      }
-
-      const extraFeatures = this.extraFeature.split(' ');
-
-      extraFeatures.forEach((feature) => {
-        if (!feature) return;
-        this.renderer.addClass(this.footer.nativeElement, `footer--${feature}`);
+  ngOnInit(): void {
+    this.sub = this.layoutService.onUrlChange('Footer').subscribe((feature) => {
+      this.class = ['footer'];
+      feature.split(' ').forEach((f) => {
+        if (!f) return;
+        this.class = [...this.class, `footer--${f}`];
       });
     });
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }

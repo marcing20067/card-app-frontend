@@ -1,44 +1,46 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { NavExtraFeaturesForRoute } from 'src/app/shared/enums/layout.enums';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { TokenService } from 'src/app/shared/services/token/token.service';
 import { ActualRoute } from 'src/app/shared/types/actualRoute.type';
+import { LayoutService } from '../layout.service';
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.scss'],
 })
-export class NavComponent {
+export class NavComponent implements OnInit, OnDestroy {
+  sub!: Subscription;
   class = ['nav'];
   isActive = false;
   isAuth$ = this.tokenService.getIsAuthListener();
 
   constructor(
-    private location: Location,
     private tokenService: TokenService,
     private popupService: PopupService,
+    private layoutService: LayoutService,
     private router: Router
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.tokenService.isAuth();
-    this.location.onUrlChange((path) => {
+    this.sub = this.layoutService.onUrlChange('Nav').subscribe((feature) => {
       this.class = ['nav'];
-      const splitedPath = path.split('/');
-      if (splitedPath.length > 3) {
-        path = splitedPath.slice(0, splitedPath.length - 1).join('/') + '/:id';
-      }
-      const actualRoute = path as ActualRoute;
-      const extraFeatures = NavExtraFeaturesForRoute[actualRoute];
-      if (extraFeatures) {
-        extraFeatures.split(' ').forEach((feature) => {
-          if (!feature) return;
-          this.class.push(`nav--${feature}`);
-        });
-      }
+      feature.split(' ').forEach((f) => {
+        if (!f) return;
+        this.class.push(`nav--${f}`);
+      });
     });
+    
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   onToggleActive() {
