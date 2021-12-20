@@ -29,7 +29,7 @@ export class FooterComponent implements OnInit, OnDestroy {
       this.class = ['footer'];
       feature.split(' ').forEach((f) => {
         if (!f) return;
-        this.class = [...this.class, `footer--${f}`];
+        this.class.push(`footer--${f}`);
       });
     });
   }
