@@ -23,7 +23,7 @@
                 <label for="repeat-new-password" label>Powtórz hasło</label>
                 <!-- <app-icon src="../../assets/icons/search.svg" alt="" left inputId="new-password"></app-icon> -->
             </app-field>
-            <button class="form__submit button" [disabled]="resetForm.invalid" type="submit">Zmień</button>
+            <button class="form__submit button" [disabled]="resetForm.invalid && !isSimilar" type="submit">Zmień</button>
         </form>
     </div>
 </section>

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
@@ -8,9 +9,12 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
   templateUrl: './reset.component.html',
   styleUrls: ['./reset.component.scss'],
 })
-export class ResetComponent implements OnInit {
+export class ResetComponent implements OnInit, OnDestroy {
   mode = '';
   resetForm!: FormGroup;
+  formSub!: Subscription;
+  isSimilar = false;
+
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -31,6 +35,10 @@ export class ResetComponent implements OnInit {
         repeatNewPassword: this.fb.control('', Validators.required),
       });
     }
+
+    this.formSub = this.resetForm.valueChanges.subscribe((value) => {
+      this.isSimilar = value.newPassword === value.repeatNewPassword;
+    });
   }
 
   onSubmit() {
@@ -39,5 +47,11 @@ export class ResetComponent implements OnInit {
     this.authService
       .resetWithToken(mode, token, this.resetForm.value)
       .subscribe();
+  }
+
+  ngOnDestroy(): void {
+    if (this.formSub) {
+      this.formSub.unsubscribe();
+    }
   }
 }
