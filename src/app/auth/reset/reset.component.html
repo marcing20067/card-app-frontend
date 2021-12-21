@@ -5,7 +5,7 @@
             <app-field class="form__field">
                 <input type="text" formControlName="newUsername" id="new-username" appInput>
                 <label for="new-username" label>Nazwa użytkownika</label>
-                <!-- <app-icon src="../../assets/icons/search.svg" alt="" left inputId="new-username"></app-icon> -->
+                <app-icon src="../../assets/icons/user.svg" alt="" left inputId="new-username"></app-icon>
             </app-field>
             <button class="form__submit button" [disabled]="resetForm.invalid" type="submit">Zmień</button>
         </form>
@@ -16,12 +16,12 @@
             <app-field class="form__field">
                 <input type="text" formControlName="newPassword" id="new-password" appInput>
                 <label for="new-password" label>Hasło</label>
-                <!-- <app-icon src="../../assets/icons/search.svg" alt="" left inputId="new-password"></app-icon> -->
+                <app-icon src="../../assets/icons/key.svg" alt="" left inputId="new-password"></app-icon>
             </app-field>
             <app-field class="form__field">
                 <input type="text" formControlName="repeatNewPassword" id="repeat-new-password" appInput>
                 <label for="repeat-new-password" label>Powtórz hasło</label>
-                <!-- <app-icon src="../../assets/icons/search.svg" alt="" left inputId="new-password"></app-icon> -->
+                <app-icon src="../../assets/icons/key.svg" alt="" left inputId="new-password"></app-icon>
             </app-field>
             <button class="form__submit button" [disabled]="resetForm.invalid && !isSimilar" type="submit">Zmień</button>
         </form>
