@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import * as AuthValidators from '../validators';
 
 @Component({
   selector: 'app-reset',
@@ -25,14 +26,14 @@ export class ResetComponent implements OnInit, OnDestroy {
     this.mode = this.route.snapshot.url[1].path;
     if (this.mode === 'username') {
       this.resetForm = this.fb.group({
-        newUsername: this.fb.control('', Validators.required),
+        newUsername: ['', AuthValidators.username],
       });
     }
 
     if (this.mode === 'password') {
       this.resetForm = this.fb.group({
-        newPassword: this.fb.control('', Validators.required),
-        repeatNewPassword: this.fb.control('', Validators.required),
+        newPassword:  ['', AuthValidators.password],
+        repeatNewPassword: ['', AuthValidators.repeatPassword],
       });
     }
 

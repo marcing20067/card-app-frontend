@@ -17,7 +17,7 @@ export class SetsCreateComponent {
   mode = '';
   oldSet!: Set;
   setsCreateForm = this.fb.group({
-    name: ['', Validators.required],
+    name: ['', Validators.required, Validators.minLength(3), Validators.maxLength(25)],
     cards: this.fb.array([]),
   });
 
@@ -65,8 +65,8 @@ export class SetsCreateComponent {
     const newCardGroup = this.fb.group({
       concept: ['', Validators.required],
       definition: ['', Validators.required],
-      group: [1, Validators.required],
-      example: [''],
+      group: 1,
+      example: '',
     });
 
     this.cards.push(newCardGroup);

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged, take } from 'rxjs/operators';
 import { AuthService } from '../shared/services/auth/auth.service';
+import * as AuthValidators from './validators';
 
 @Component({
   selector: 'app-auth',
@@ -24,20 +25,21 @@ export class AuthComponent implements OnDestroy {
     private authService: AuthService
   ) {
     this.mode = this.route.snapshot.url[0].path;
+
     if (this.mode === 'login') {
       this.authForm = this.fb.group({
-        username: ['', Validators.required],
-        password: ['', Validators.required],
+        username: ['', AuthValidators.username],
+        password: ['', AuthValidators.password],
         rememberMe: [false, Validators.required],
       });
     }
 
     if (this.mode === 'signup') {
       this.authForm = this.fb.group({
-        username: ['', Validators.required],
-        password: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        repeatPassword: ['', Validators.required],
+        username: ['', AuthValidators.username],
+        password: ['', AuthValidators.password],
+        email: ['', AuthValidators.email],
+        repeatPassword: ['', AuthValidators.repeatPassword],
       });
 
       this.formSub = this.authForm.valueChanges
