@@ -3,6 +3,6 @@ export type ActualRoute =
   | '/auth/login'
   | '/auth/signup'
   | '/sets'
-  | '/sets/learn/:id'
+  | '/sets/learn/:param'
   | '/sets/create'
   | '/user';

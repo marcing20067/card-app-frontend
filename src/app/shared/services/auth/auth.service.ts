@@ -63,4 +63,8 @@ export class AuthService {
       username: username,
     });
   }
+
+  resetWithToken(mode: 'password' | 'username', token: string, data: any) {
+    return this.http.put(environment.BACKEND_URL + `reset/${mode}/${token}`, data)
+  }
 }

@@ -27,7 +27,7 @@ export class LayoutService {
     const splitedPath = path.split('/');
     if (splitedPath.length > 3) {
       return (splitedPath.slice(0, splitedPath.length - 1).join('/') +
-        '/:id') as ActualRoute;
+        '/:param') as ActualRoute;
     }
     return path as ActualRoute;
   }

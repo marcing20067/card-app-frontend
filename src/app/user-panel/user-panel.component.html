@@ -1,5 +1,5 @@
 <app-loader *ngIf="isLoading"></app-loader>
-<section class="user-panel wrapper section-padding" *ngIf="userStatus">
+<section class="user-panel wrapper section-padding" *ngIf="!isLoading">
     <h2 class="user-panel__title">Dane użytkownika</h2>
     <div class="status">
         <div class="status__item">
