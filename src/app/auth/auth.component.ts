@@ -11,13 +11,9 @@ import { AuthService } from '../shared/services/auth/auth.service';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnDestroy {
+  mode!: string;
   isLoading = false;
-  authForm: FormGroup = this.fb.group({
-    username: ['', Validators.required],
-    password: ['', Validators.required],
-    rememberMe: [false, Validators.required],
-  });
-  isLoginRoute!: boolean;
+  authForm!: FormGroup;
   signupSuccessfully = false;
   isSimilar = false;
   formSub!: Subscription;
@@ -27,9 +23,16 @@ export class AuthComponent implements OnDestroy {
     private route: ActivatedRoute,
     private authService: AuthService
   ) {
-    this.isLoginRoute = this.route.snapshot.url[0].path === 'login';
+    this.mode = this.route.snapshot.url[0].path;
+    if (this.mode === 'login') {
+      this.authForm = this.fb.group({
+        username: ['', Validators.required],
+        password: ['', Validators.required],
+        rememberMe: [false, Validators.required],
+      });
+    }
 
-    if (!this.isLoginRoute) {
+    if (this.mode === 'signup') {
       this.authForm = this.fb.group({
         username: ['', Validators.required],
         password: ['', Validators.required],
@@ -55,7 +58,7 @@ export class AuthComponent implements OnDestroy {
   onSubmit() {
     this.isLoading = true;
     const data = this.authForm.value;
-    if (this.isLoginRoute) {
+    if (this.mode === 'login') {
       const rememberMe = data.rememberMe;
       this.authService
         .login(data, rememberMe)
@@ -65,7 +68,9 @@ export class AuthComponent implements OnDestroy {
             this.isLoading = false;
           },
         });
-    } else {
+    }
+
+    if (this.mode === 'signup') {
       this.authService
         .signup(data)
         .pipe(take(1))
