@@ -2,7 +2,6 @@
 .sets-panel {
     &__title {
         padding: 1.6rem 0;
-        color: $black;
         text-align: center;
         text-transform: uppercase;
     }
@@ -21,7 +20,6 @@
 
     &__empty-state {
         text-align: center;
-        color: $black;
         padding: 3.2rem;
         &-heading {
             font-weight: 700;
