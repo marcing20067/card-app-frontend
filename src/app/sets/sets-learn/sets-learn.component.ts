@@ -14,7 +14,6 @@ import { SetsService } from '../sets.service';
 export class SetsLearnComponent implements OnInit, OnDestroy {
   private updateCardEvent$ = new Subject<unknown>();
   private updateCardSub!: Subscription;
-  private newDeactiveCardIndex = 3;
   activateCardIndex = 0;
   learnEnd = false;
   set!: Set;
@@ -49,7 +48,7 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
       });
 
     this.updateCardSub = this.updateCardEvent$
-      .pipe(debounceTime(1500))
+      .pipe(debounceTime(500))
       .subscribe(() => {
         this.setsService.editSet(this.set).pipe(take(1)).subscribe();
       });
@@ -78,20 +77,18 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
       );
 
       this.resetData();
+      return;
     }
 
-    if (!this.wasLastCardUsed()) {
-      this.cardsView = {
-        active: this.cardsView.deactive[0],
-        deactive: [
-          this.cardsView.deactive[1],
-          this.cardsWithCurrentGroup[this.newDeactiveCardIndex],
-        ],
-      };
+    this.cardsView = {
+      active: this.cardsView.deactive[0],
+      deactive: [
+        this.cardsView.deactive[1],
+        this.cardsWithCurrentGroup[this.activateCardIndex + 3],
+      ],
+    };
 
-      this.activateCardIndex++;
-      this.newDeactiveCardIndex++;
-    }
+    this.activateCardIndex++;
   }
 
   private wasLastCardUsed() {
@@ -111,7 +108,6 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
   }
 
   private resetData() {
-    this.newDeactiveCardIndex = 3;
     this.activateCardIndex = 0;
 
     this.initializeCardsView();

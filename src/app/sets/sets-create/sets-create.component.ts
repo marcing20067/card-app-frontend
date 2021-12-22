@@ -60,9 +60,6 @@ export class SetsCreateComponent {
         });
     } else {
       this.mode = 'create';
-      this.setsCreateForm.valueChanges.subscribe(() => {
-        console.log(this.cards.controls[0].controls.concept.errors);
-      });
       this.addCard();
     }
   }
