@@ -10,6 +10,16 @@
                     <label for="username" label>Nazwa użytkownika</label>
                     <app-icon src="../../assets/icons/user.svg" alt="" left inputId="username"></app-icon>
                 </app-field>
+
+                <div *ngIf="mode === 'signup' && authForm.get('username') as username">
+                    <app-error *ngIf="username.errors?.required && username.touched">
+                        To pole jest obowiązkowe.</app-error>
+                    <app-error *ngIf="username.errors?.pattern">
+                        Nazwa może się składać jedynie z liter. <br>
+                        Nie może zawierać polskich liter.</app-error>
+                    <app-error *ngIf="username.errors?.minlength">
+                        Nazwa musi być dłuższa niż 4.</app-error>
+                </div>
             </div>
 
             <div class="form__box" *ngIf="mode === 'signup'">
@@ -18,6 +28,13 @@
                     <label for="email" label>E-mail</label>
                     <app-icon src="../../assets/icons/mail.svg" alt="" left inputId="email"></app-icon>
                 </app-field>
+
+                <div *ngIf="authForm.get('email') as email">
+                    <app-error *ngIf="email.errors?.required && email.touched">
+                        To pole jest obowiązkowe.</app-error>
+                    <app-error *ngIf="email.errors?.pattern">
+                        Podaj poprawny email.</app-error>
+                </div>
             </div>
 
             <div class="form__box">
@@ -26,6 +43,13 @@
                     <label for="password" label>Hasło</label>
                     <app-icon src="../../assets/icons/key.svg" alt="" left inputId="password"></app-icon>
                 </app-field>
+
+                <div *ngIf="mode === 'signup' && authForm.get('password') as password">
+                    <app-error *ngIf="password.errors?.required && password.touched">
+                        To pole jest obowiązkowe.</app-error>
+                    <app-error *ngIf="password.errors?.minlength">
+                        Hasło musi być dłuższe niż 8 znaków.</app-error>
+                </div>
             </div>
 
 
@@ -36,6 +60,11 @@
                     <label for="repeat-password" label>Powtórz hasło</label>
                     <app-icon src="../../assets/icons/key.svg" alt="" left inputId="repeat-password"></app-icon>
                 </app-field>
+
+                <div *ngIf="authForm.get('repeatPassword') as repeatPassword">
+                    <app-error *ngIf="repeatPassword.errors?.similar && repeatPassword.value !== ''">
+                        To pole nie jest takie same jak hasło.</app-error>
+                </div>
             </div>
 
             <div class="form__box form__box--checkbox" *ngIf="mode === 'login'">
@@ -44,13 +73,13 @@
             </div>
 
             <button type="submit" class="form__button button button--orange"
-                [disabled]="authForm.invalid || mode === 'signup' && !isSimilar">
+                [disabled]="authForm.invalid">
                 {{ mode === 'login' ? 'Zaloguj się' : 'Zarejestuj się' }}
             </button>
         </form>
 
         <a [routerLink]="[ '/auth', mode === 'login' ? 'signup' : 'login']" class="auth__link">
-            {{ mode === 'login' ?  'Zarejestuj się' : 'Zaloguj się' }}
+            {{ mode === 'login' ? 'Zarejestuj się' : 'Zaloguj się' }}
         </a>
     </div>
 

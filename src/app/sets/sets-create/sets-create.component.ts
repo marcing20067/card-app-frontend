@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { Card } from 'src/app/shared/models/card.model';
@@ -17,7 +17,7 @@ export class SetsCreateComponent {
   mode = '';
   oldSet!: Set;
   setsCreateForm = this.fb.group({
-    name: ['', Validators.required, Validators.minLength(3), Validators.maxLength(25)],
+    name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25)]],
     cards: this.fb.array([]),
   });
 
@@ -57,10 +57,12 @@ export class SetsCreateComponent {
         });
     } else {
       this.mode = 'create';
+      this.setsCreateForm.valueChanges.subscribe(() => {
+        console.log(this.cards.controls[0].controls.concept.errors)
+      })
       this.addCard();
     }
   }
-
   addCard() {
     const newCardGroup = this.fb.group({
       concept: ['', Validators.required],
@@ -72,8 +74,12 @@ export class SetsCreateComponent {
     this.cards.push(newCardGroup);
   }
 
-  get cards() {
-    return this.setsCreateForm.get('cards') as FormArray;
+  get cards() {    
+    interface Cards extends Omit<FormArray, 'controls'> {
+      controls: FormGroup[]
+    }
+
+    return this.setsCreateForm.get('cards') as unknown as Cards;
   }
 
   onSubmit() {

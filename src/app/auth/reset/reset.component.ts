@@ -14,7 +14,6 @@ export class ResetComponent implements OnInit, OnDestroy {
   mode = '';
   resetForm!: FormGroup;
   formSub!: Subscription;
-  isSimilar = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,13 +31,14 @@ export class ResetComponent implements OnInit, OnDestroy {
 
     if (this.mode === 'password') {
       this.resetForm = this.fb.group({
-        newPassword:  ['', AuthValidators.password],
+        newPassword: ['', AuthValidators.password],
         repeatNewPassword: ['', AuthValidators.repeatPassword],
       });
     }
 
     this.formSub = this.resetForm.valueChanges.subscribe((value) => {
-      this.isSimilar = value.newPassword === value.repeatNewPassword;
+      const isSimilar = value.newPassword === value.repeatNewPassword;
+      this.resetForm.get('repeatNewPassword')?.setErrors(isSimilar ? null : { similar: 'false' });
     });
   }
 

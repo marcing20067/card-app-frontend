@@ -1,13 +1,11 @@
-.reset {
-    &__title {
+.form {
+    &__box {
         margin-bottom: 3.2rem;
     }
-}
 
-.form {
     &__field {
         display: block;
-        margin-bottom: 3.2rem;
+        margin-top: 3.2rem;
     }
 
     &__submit {

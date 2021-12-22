@@ -7,29 +7,53 @@
                     <input type="text" formControlName="name" id="name" appInput>
                     <label for="name" label>Tytuł zestawu</label>
                 </app-field>
+
+                <div *ngIf="setsCreateForm.get('name') as name">
+                    <app-error *ngIf="name.errors?.minlength">Hasło musi mieć co najmniej 3 znaki</app-error>
+                    <app-error *ngIf="name.errors?.maxlength">Hasło może mieć maksymalnie 25 znaków</app-error>
+                    <app-error *ngIf="name.errors?.required && name.touched">To pole jest obowiązkowe</app-error>
+                </div>
             </div>
         </div>
 
         <div class="wrapper form__box">
             <div class="form__cards" formArrayName="cards">
                 <div *ngFor="let card of cards.controls; index as i">
-                    <div [formGroupName]="i" class="form__cards-box">
-                        <p class="form__cards-box-heading">
+                    <div [formGroupName]="i" class="form__cards-container">
+                        <p class="form__cards-container-heading">
                             Fiszka <span>{{ i < 10 ? '0' : '' }}{{ i + 1 }}</span>
                         </p>
 
-                        <app-field class="form__cards-box-concept">
-                            <input type="text" formControlName="concept" id="concept" appInput>
-                            <label for="concept" label>Pojęcie</label>
-                        </app-field>
-                        <app-field class="form__cards-box-definition">
-                            <input type="text" formControlName="definition" id="definition" appInput>
-                            <label for="definition" label>Definicja</label>
-                        </app-field>
-                        <app-field class="form__cards-box-example">
-                            <input type="text" id="example" appInput formControlName="example">
-                            <label for="example" label>Przykład użycia(opcjonalne)</label>
-                        </app-field>
+                        <div class="form__cards-container-concept">
+                            <app-field>
+                                <input type="text" formControlName="concept" id="concept" appInput>
+                                <label for="concept" label>Pojęcie</label>
+                            </app-field>
+                            <div *ngIf="card.controls.concept as concept">
+                                <app-error *ngIf="concept.touched && concept.errors?.required">
+                                    To pole jest obowiązkowe.
+                                </app-error>
+                            </div>
+                        </div>
+
+                        <div class="form__cards-container-definition">
+                            <app-field>
+                                <input type="text" formControlName="definition" id="definition" appInput>
+                                <label for="definition" label>Definicja</label>
+                            </app-field>
+                            <div *ngIf="card.controls.definition as definition">
+                                <app-error *ngIf="definition.touched && definition.errors?.required ">
+                                    To pole jest obowiązkowe.
+                                </app-error>
+                            </div>
+                        </div>
+
+                        <div class="form__cards-container-example">
+                            <app-field>
+                                <input type="text" id="example" appInput formControlName="example">
+                                <label for="example" label>Przykład użycia(opcjonalne)</label>
+                            </app-field>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -41,7 +65,7 @@
                     <img src="../../../assets/icons/plus.svg" alt="">
                     Dodaj fiszkę
                 </button>
-                <button class="form__buttons-item form__buttons-item--submit" type="submit">Zapisz</button>
+                <button class="form__buttons-item form__buttons-item--submit" type="submit" [disabled]="setsCreateForm.invalid">Zapisz</button>
             </div>
         </div>
     </form>

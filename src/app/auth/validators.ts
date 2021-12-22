@@ -3,7 +3,7 @@ import { Validators } from '@angular/forms';
 export const username = [
   Validators.required,
   Validators.minLength(4),
-  Validators.pattern(/[a-z]/i),
+  Validators.pattern(/^[a-z]{1,}$/i),
 ];
 
 export const password = [Validators.required, Validators.minLength(8)];

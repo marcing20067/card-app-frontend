@@ -16,7 +16,6 @@ export class AuthComponent implements OnDestroy {
   isLoading = false;
   authForm!: FormGroup;
   signupSuccessfully = false;
-  isSimilar = false;
   formSub!: Subscription;
 
   constructor(
@@ -52,7 +51,10 @@ export class AuthComponent implements OnDestroy {
           })
         )
         .subscribe((value) => {
-          this.isSimilar = value.password === value.repeatPassword;
+          const isSimilar = value.password === value.repeatPassword;
+          this.authForm
+            .get('repeatPassword')
+            ?.setErrors(isSimilar ? null : { similar: 'false' });
         });
     }
   }
