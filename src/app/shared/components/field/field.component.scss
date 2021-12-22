@@ -8,7 +8,7 @@
     overflow: hidden;
 }
 
-input {
+.field input {
     padding: 1.6rem 4.2rem 1.6rem 4.2rem;
     width: 100%;
     display: block;
@@ -25,7 +25,7 @@ input {
     }
 }
 
-label {
+.field label {
     position: absolute;
     z-index: 1;
     top: 50%;
@@ -39,7 +39,7 @@ label {
     pointer-events: none;
 }
 
-input:focus ~ label,
+.field input:focus ~ label,
 .input--not-empty ~ label {
     display: none;
 }
