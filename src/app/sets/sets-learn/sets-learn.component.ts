@@ -12,17 +12,17 @@ import { SetsService } from '../sets.service';
   styleUrls: ['./sets-learn.component.scss'],
 })
 export class SetsLearnComponent implements OnInit, OnDestroy {
-  learnEnd: boolean = false;
+  private updateCardEvent$ = new Subject<unknown>();
+  private updateCardSub!: Subscription;
+  private newDeactiveCardIndex = 3;
+  activateCardIndex = 0;
+  learnEnd = false;
   set!: Set;
   cardsWithCurrentGroup!: Card[];
   cardsView!: {
     active: Card;
     deactive: [Card, Card];
   };
-  updateCardEvent$ = new Subject<unknown>();
-  updateCardSub!: Subscription;
-  activateCardIndex = 0;
-  newDeactiveCardIndex = 3;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,12 +48,11 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
         this.initializeCardsView();
       });
 
-    this.updateCardSub = this.updateCardEvent$.pipe(debounceTime(1500)).subscribe(() => {
-      this.setsService
-        .editSet(this.set)
-        .pipe(take(1))
-        .subscribe();
-    });
+    this.updateCardSub = this.updateCardEvent$
+      .pipe(debounceTime(1500))
+      .subscribe(() => {
+        this.setsService.editSet(this.set).pipe(take(1)).subscribe();
+      });
   }
 
   onLearn(isKnow: boolean) {
@@ -63,7 +62,7 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
     this.set.cards[cardIndex] = {
       ...activeCard,
       group: isKnow ? activeCard.group + 1 : 1,
-  };
+    };
 
     this.updateCardEvent$.next();
 
@@ -125,7 +124,7 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
     };
   }
 
-  ngOnDestroy(): void {
-    this.updateCardSub.unsubscribe()
+  ngOnDestroy() {
+    this.updateCardSub.unsubscribe();
   }
 }

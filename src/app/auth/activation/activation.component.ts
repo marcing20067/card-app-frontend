@@ -11,7 +11,6 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 export class ActivationComponent implements OnInit {
   isLoading = true;
   isActivationFailed = false;
-  activationToken = '';
   
   constructor(private route: ActivatedRoute, private authService: AuthService) {}
 

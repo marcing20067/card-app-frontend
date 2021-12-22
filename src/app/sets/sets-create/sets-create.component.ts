@@ -13,13 +13,16 @@ import { SetsService } from '../sets.service';
   styleUrls: ['./sets-create.component.scss'],
 })
 export class SetsCreateComponent {
+  setsCreateForm = this.fb.group({
+    name: [
+      '',
+      [Validators.required, Validators.minLength(3), Validators.maxLength(25)],
+    ],
+    cards: this.fb.array([]),
+  });
   isLoading = false;
   mode = '';
   oldSet!: Set;
-  setsCreateForm = this.fb.group({
-    name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25)]],
-    cards: this.fb.array([]),
-  });
 
   constructor(
     private fb: FormBuilder,
@@ -58,8 +61,8 @@ export class SetsCreateComponent {
     } else {
       this.mode = 'create';
       this.setsCreateForm.valueChanges.subscribe(() => {
-        console.log(this.cards.controls[0].controls.concept.errors)
-      })
+        console.log(this.cards.controls[0].controls.concept.errors);
+      });
       this.addCard();
     }
   }
@@ -74,9 +77,9 @@ export class SetsCreateComponent {
     this.cards.push(newCardGroup);
   }
 
-  get cards() {    
+  get cards() {
     interface Cards extends Omit<FormArray, 'controls'> {
-      controls: FormGroup[]
+      controls: FormGroup[];
     }
 
     return this.setsCreateForm.get('cards') as unknown as Cards;

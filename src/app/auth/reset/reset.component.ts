@@ -11,9 +11,9 @@ import * as AuthValidators from '../validators';
   styleUrls: ['./reset.component.scss'],
 })
 export class ResetComponent implements OnInit, OnDestroy {
-  mode = '';
+  private formSub!: Subscription;
   resetForm!: FormGroup;
-  formSub!: Subscription;
+  mode!: string;
 
   constructor(
     private route: ActivatedRoute,

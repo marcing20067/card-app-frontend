@@ -12,7 +12,7 @@ import { FieldsState, FieldState } from './fieldState.model';
   providedIn: 'root',
 })
 export class FieldService {
-  fieldsState$ = new BehaviorSubject<FieldsState>({});
+  private fieldsState$ = new BehaviorSubject<FieldsState>({});
 
   getFieldStateListener(inputId: string): Observable<FieldState> {
     return this.fieldsState$.asObservable().pipe(

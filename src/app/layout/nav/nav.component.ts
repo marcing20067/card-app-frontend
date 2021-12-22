@@ -1,12 +1,9 @@
-import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { NavExtraFeaturesForRoute } from 'src/app/shared/enums/layout.enums';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { TokenService } from 'src/app/shared/services/token/token.service';
-import { ActualRoute } from 'src/app/shared/types/actualRoute.type';
 import { LayoutService } from '../layout.service';
 
 @Component({
@@ -15,10 +12,10 @@ import { LayoutService } from '../layout.service';
   styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent implements OnInit, OnDestroy {
-  sub!: Subscription;
+  private sub!: Subscription;
   class = ['nav'];
-  isActive = false;
   isAuth$ = this.tokenService.getIsAuthListener();
+  isActive = false;
 
   constructor(
     private tokenService: TokenService,
@@ -27,7 +24,7 @@ export class NavComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.tokenService.isAuth();
     this.sub = this.layoutService.onUrlChange('Nav').subscribe((feature) => {
       this.class = ['nav'];
@@ -37,10 +34,6 @@ export class NavComponent implements OnInit, OnDestroy {
       });
     });
     
-  }
-
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
   }
 
   onToggleActive() {
@@ -64,5 +57,9 @@ export class NavComponent implements OnInit, OnDestroy {
         heading: 'Czy na pewno chcesz się wylogować?',
       },
     });
+  }
+  
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

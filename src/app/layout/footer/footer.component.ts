@@ -18,13 +18,13 @@ type FooterExtraFeature =
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent implements OnInit, OnDestroy {
+  private sub!: Subscription;
   class = ['footer'];
-  sub!: Subscription;
   extraFeature: FooterExtraFeature | '' = '';
 
   constructor(private layoutService: LayoutService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.sub = this.layoutService.onUrlChange('Footer').subscribe((feature) => {
       this.class = ['footer'];
       feature.split(' ').forEach((f) => {
@@ -34,7 +34,7 @@ export class FooterComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.sub.unsubscribe();
   }
 }

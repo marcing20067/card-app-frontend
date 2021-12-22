@@ -14,11 +14,22 @@ export class SetsPanelComponent implements OnInit {
   selectedSet: Set | null = null;
   sets$ = this.setsService.getSetsListener();
   setName!: string;
+  
   constructor(
     private setsService: SetsService,
     private popupService: PopupService,
     private route: ActivatedRoute
   ) {}
+
+  ngOnInit() {
+    this.setName = this.route.snapshot.queryParams.name;
+    this.setsService
+      .getSets(this.setName)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.isLoading = false;
+      });
+  }
 
   onDeleteSet(set: Set) {
     this.popupService
@@ -47,16 +58,6 @@ export class SetsPanelComponent implements OnInit {
 
   onSelectSet(set: Set) {
     this.selectedSet = set;
-  }
-
-  ngOnInit(): void {
-    this.setName = this.route.snapshot.queryParams.name;
-    this.setsService
-      .getSets(this.setName)
-      .pipe(take(1))
-      .subscribe(() => {
-        this.isLoading = false;
-      });
   }
 
   onLoadMore() {

@@ -27,7 +27,7 @@ export class CardsComponent {
     deactive: [Card, Card];
   };
 
-  @Output() learnEvent = new EventEmitter<boolean>();
+  @Output() private learnEvent = new EventEmitter<boolean>();
 
   onLearn(isKnow: boolean) {
     this.learnEvent.emit(isKnow);

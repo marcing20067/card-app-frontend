@@ -6,9 +6,9 @@ import { Set } from 'src/app/shared/models/set.model';
   styleUrls: ['./set.component.scss']
 })
 export class SetComponent {
+  @Output() private selectSet = new EventEmitter<Set>();
+  @Output() private deleteSet = new EventEmitter<Set>();
   @Input() set!: Set;
-  @Output() selectSet = new EventEmitter<Set>();
-  @Output() deleteSet = new EventEmitter<Set>();
 
   onSelectSet(set: Set) {
     this.selectSet.emit(set);

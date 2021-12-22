@@ -16,7 +16,7 @@ export class UserPanelComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.authService.userStatus().pipe(take(1)).subscribe((status) => {
       this.userStatus = status;
       this.isLoading = false;

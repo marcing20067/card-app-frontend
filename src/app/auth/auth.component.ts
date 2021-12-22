@@ -12,11 +12,11 @@ import * as AuthValidators from './validators';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnDestroy {
-  mode!: string;
+  private formSub!: Subscription;
   isLoading = false;
-  authForm!: FormGroup;
+  mode!: string;
   signupSuccessfully = false;
-  formSub!: Subscription;
+  authForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,

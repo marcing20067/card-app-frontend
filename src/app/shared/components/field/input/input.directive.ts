@@ -10,7 +10,7 @@ import { FieldService } from '../field.service';
   selector: '[appInput]',
 })
 export class InputDirective {
-  id: string = '';
+  private id: string = '';
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
