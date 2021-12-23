@@ -10,6 +10,7 @@ export enum NavExtraFeaturesForRoute {
   '/sets/learn/:param' = '',
   '/sets/create' = '',
   '/sets/create/:param' = '',
+  '/not-found' = 'creamy-bgc',
 }
 
 export enum FooterExtraFeaturesForRoute {
@@ -24,4 +25,5 @@ export enum FooterExtraFeaturesForRoute {
   '/sets/learn/:param' = 'creamy-bgc mobile-no-footer',
   '/sets/create' = 'creamy-bgc',
   '/sets/create/:param' = '',
+  '/not-found' = 'creamy-bgc',
 }

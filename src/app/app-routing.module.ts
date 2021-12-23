@@ -20,8 +20,12 @@ const routes: Routes = [
     loadChildren: () => import('./user-panel/user-panel.module').then((m) => m.UserPanelModule),
   },
   {
+    path: 'not-found',
+    loadChildren: () => import('./not-found/not-found.module').then((m) => m.NotFoundModule),
+  },
+  {
     path: '**',
-    redirectTo: 'home',
+    redirectTo: 'not-found',
     pathMatch: 'prefix'
   },
 ];
