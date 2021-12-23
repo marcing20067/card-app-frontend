@@ -30,7 +30,7 @@
         <form class="form" [formGroup]="resetForm" (ngSubmit)="onSubmit()">
             <div class="form__box">
                 <app-field class="form__field">
-                    <input type="text" formControlName="newPassword" id="new-password" appInput>
+                    <input type="password" formControlName="newPassword" id="new-password" appInput>
                     <label for="new-password" label>Hasło</label>
                     <app-icon src="../../assets/icons/key.svg" alt="" left inputId="new-password"></app-icon>
                 </app-field>
@@ -43,7 +43,7 @@
                 </div>
 
                 <app-field class="form__field">
-                    <input type="text" formControlName="repeatNewPassword" id="repeat-new-password" appInput>
+                    <input type="password" formControlName="repeatNewPassword" id="repeat-new-password" appInput>
                     <label for="repeat-new-password" label>Powtórz hasło</label>
                     <app-icon src="../../assets/icons/key.svg" alt="" left inputId="repeat-new-password"></app-icon>
                 </app-field>

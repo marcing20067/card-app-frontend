@@ -64,7 +64,16 @@ export class AuthService {
     });
   }
 
+  logout() {
+    this.tokenService.clearTokenData();
+    this.tokenService.changeIsAuth(false);
+    this.router.navigate(['/auth/login'])
+  }
+
   resetWithToken(mode: 'password' | 'username', token: string, data: any) {
     return this.http.put(environment.BACKEND_URL + `reset/${mode}/${token}`, data)
-  }
+      .pipe(tap(() => {
+        this.logout()
+      }))
+  } 
 }

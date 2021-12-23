@@ -95,4 +95,8 @@ export class TokenService {
     this.tokenData = {};
     localStorage.clear();
   }
+
+  changeIsAuth(isAuth: boolean) {
+    this.isAuth$.next(isAuth);
+  }
 }

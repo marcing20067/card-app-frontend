@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import * as AuthValidators from '../validators';
 
@@ -47,6 +48,7 @@ export class ResetComponent implements OnInit, OnDestroy {
     const mode = this.mode as 'username' | 'password';
     this.authService
       .resetWithToken(mode, token, this.resetForm.value)
+      .pipe(take(1))
       .subscribe();
   }
 
