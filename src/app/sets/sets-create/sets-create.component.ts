@@ -1,5 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
@@ -12,7 +18,8 @@ import { SetsService } from '../sets.service';
   templateUrl: './sets-create.component.html',
   styleUrls: ['./sets-create.component.scss'],
 })
-export class SetsCreateComponent {
+export class SetsCreateComponent implements OnInit {
+  @ViewChildren('concept', { read: ElementRef }) inputs!: QueryList<ElementRef>;
   setsCreateForm = this.fb.group({
     name: [
       '',
@@ -63,6 +70,7 @@ export class SetsCreateComponent {
       this.addCard();
     }
   }
+
   addCard() {
     const newCardGroup = this.fb.group({
       concept: ['', Validators.required],
@@ -83,33 +91,16 @@ export class SetsCreateComponent {
   }
 
   onSubmit() {
-    this.isLoading = true;
     const newSet: Set = this.setsCreateForm.value;
-    newSet.stats = {
-      group1: 0,
-      group2: 0,
-      group3: 0,
-      group4: 0,
-      group5: 0,
-    };
-    if (this.oldSet) {
-      newSet.cards.forEach((newEl) => {
-        const notChangedElIndex = this.oldSet.cards.findIndex((el) => {
-          return (
-            el.concept === newEl.concept && el.definition === newEl.definition
-          );
-        });
 
-        if (notChangedElIndex >= 0) {
-          const notChangedEl = this.oldSet.cards[notChangedElIndex] as Card;
-          const elGroupFullName = ('group' +
-            notChangedEl.group) as keyof Set['stats'];
-          newSet.stats[elGroupFullName] = newSet.stats[elGroupFullName] + 1;
-        } else {
-          newEl.group = 1;
-          newSet.stats.group1++;
-        }
-      });
+    const isDuplicates = this.checkDuplicates([...newSet.cards]);
+    if (isDuplicates) {
+      return;
+    }
+
+    this.isLoading = true;
+    if (this.oldSet) {
+      newSet.stats = this.computeStats([...newSet.cards]);
 
       this.setsService
         .editSet({ ...newSet, _id: this.oldSet._id })
@@ -119,7 +110,13 @@ export class SetsCreateComponent {
         });
     }
     if (!this.oldSet) {
-      newSet.stats.group1 = newSet.cards.length;
+      newSet.stats = {
+        group1: newSet.cards.length,
+        group2: 0,
+        group3: 0,
+        group4: 0,
+        group5: 0,
+      };
       this.setsService
         .addSet(newSet)
         .pipe(take(1))
@@ -127,5 +124,71 @@ export class SetsCreateComponent {
           this.router.navigate(['/sets']);
         });
     }
+  }
+
+  private checkDuplicates(cards: Card[]): boolean {
+    let isDuplicate = false;
+    cards.forEach((el, i) => {
+      const duplicatedCards = cards.filter((c) => c.concept === el.concept);
+      if (duplicatedCards.length >= 2) {
+        isDuplicate = true;
+        cards.length = i + 1;
+      }
+    });
+
+    if (isDuplicate) {
+      const duplicatedCard = cards[cards.length - 1];
+      const duplicateConcept = duplicatedCard.concept;
+      const duplicatedInputs = this.inputs
+        .toArray()
+        .filter((i) => i.nativeElement.value === duplicateConcept);
+      const duplicatedInput = duplicatedInputs[0].nativeElement;
+
+      const scrollMargin = 150;
+      window.scrollTo(
+        0,
+        window.scrollY +
+          duplicatedInput.getBoundingClientRect().top -
+          scrollMargin
+      );
+
+      const controlsWithDuplicatedValue = this.cards.controls.filter(
+        (c) => c.value.concept === duplicateConcept
+      );
+      controlsWithDuplicatedValue[0]
+        .get('concept')
+        ?.setErrors({ duplicated: 'concept' });
+    }
+    return isDuplicate;
+  }
+
+  private computeStats(cards: Card[]): Set['stats'] {
+    const stats = {
+      group1: 0,
+      group2: 0,
+      group3: 0,
+      group4: 0,
+      group5: 0,
+    };
+
+    cards.forEach((newEl) => {
+      const notChangedElIndex = this.oldSet.cards.findIndex((el) => {
+        return (
+          el.concept === newEl.concept && el.definition === newEl.definition
+        );
+      });
+
+      if (notChangedElIndex >= 0) {
+        const notChangedEl = this.oldSet.cards[notChangedElIndex] as Card;
+        const elGroupFullName = ('group' +
+          notChangedEl.group) as keyof Set['stats'];
+        stats[elGroupFullName] = stats[elGroupFullName] + 1;
+      } else {
+        newEl.group = 1;
+        stats.group1++;
+      }
+
+    });
+    return stats;
   }
 }
