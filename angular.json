@@ -79,7 +79,8 @@
               "browserTarget": "card-app-frontend:build:production"
             },
             "development": {
-              "browserTarget": "card-app-frontend:build:development"
+              "browserTarget": "card-app-frontend:build:development",
+              "proxyConfig": "src/proxy.conf.js"
             }
           },
           "defaultConfiguration": "development"
