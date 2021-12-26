@@ -45,12 +45,14 @@ export class AuthService {
       );
   }
 
-  login(user: User) {
+  login(user: User, rememberMe: boolean) {
     return this.http
       .post<{
         accessToken: string;
         accessTokenExpiresIn: number;
-      }>(environment.BACKEND_URL + 'auth/login', user)
+      }>(environment.BACKEND_URL + 'auth/login', user, {
+        params: { rememberMe: rememberMe }
+      })
       .pipe(
         tap((tokenData) => {
           this.tokenService.setTokenData({

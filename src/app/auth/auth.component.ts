@@ -64,7 +64,7 @@ export class AuthComponent implements OnDestroy {
     const data = this.authForm.value;
     if (this.mode === 'login') {
       this.authService
-        .login(data)
+        .login(data, data.rememberMe)
         .pipe(take(1))
         .subscribe({
           error: () => {
