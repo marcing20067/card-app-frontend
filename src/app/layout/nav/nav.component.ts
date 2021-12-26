@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { TokenService } from 'src/app/shared/services/token/token.service';
 import { LayoutService } from '../layout.service';
@@ -21,7 +22,7 @@ export class NavComponent implements OnInit, OnDestroy {
     private tokenService: TokenService,
     private popupService: PopupService,
     private layoutService: LayoutService,
-    private router: Router
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -33,7 +34,6 @@ export class NavComponent implements OnInit, OnDestroy {
         this.class.push(`nav--${f}`);
       });
     });
-    
   }
 
   onToggleActive() {
@@ -46,8 +46,7 @@ export class NavComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((isConfirm) => {
         if (isConfirm) {
-          this.tokenService.clearTokenData();
-          this.router.navigate(['/auth/login']);
+          this.authService.logout().pipe(take(1)).subscribe();
         }
       });
 
@@ -58,7 +57,7 @@ export class NavComponent implements OnInit, OnDestroy {
       },
     });
   }
-  
+
   ngOnDestroy() {
     this.sub.unsubscribe();
   }

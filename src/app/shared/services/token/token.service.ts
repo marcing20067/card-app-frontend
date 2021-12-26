@@ -30,7 +30,6 @@ export class TokenService {
   }
 
   checkTokensValidity() {
-    console.log(this.tokenData);
     const now = Date.now();
     const isAccessTokenValid =
       (this.tokenData.accessTokenEndValidity || 0) > now;
