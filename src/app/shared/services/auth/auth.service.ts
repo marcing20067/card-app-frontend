@@ -27,19 +27,19 @@ export class AuthService {
 
   refresh() {
     return this.http
-      .post<{ accessToken: string; accessTokenExpiresIn: number }>(
+      .post<{ error?: string; accessToken: string; accessTokenExpiresIn: number }>(
         environment.BACKEND_URL + 'refresh',
         {}
       )
       .pipe(
         switchMap((tokenData) => {
+          if(tokenData.error) {
+            this.isRefreshCalled$.next(true);
+            return of(true)
+          }
           this.tokenService.changeIsAuth(true);
           this.isRefreshCalled$.next(true);
           this.tokenService.setTokenData(tokenData);
-          return of(true);
-        }),
-        catchError(() => {
-          this.isRefreshCalled$.next(true);
           return of(true);
         })
       );

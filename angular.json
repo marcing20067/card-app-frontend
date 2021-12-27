@@ -63,13 +63,21 @@
             },
             "development": {
               "outputPath": "../card-app-backend/public",
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            },
+            "watch-prod": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              
+              "outputPath": "../card-app-backend/public",
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
