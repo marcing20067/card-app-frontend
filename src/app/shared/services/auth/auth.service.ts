@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { newUser } from '../../models/newUser.model';
 import { User } from '../../models/user.model';
-import { catchError, switchMap, take, tap } from 'rxjs/operators';
+import { switchMap, take, tap } from 'rxjs/operators';
 import { TokenService } from '../token/token.service';
 import { Router } from '@angular/router';
 import { UserStatus } from '../../models/userStatus.model';

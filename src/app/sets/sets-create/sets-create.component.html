@@ -56,6 +56,16 @@
                                 <input type="text" id="example" appInput formControlName="example">
                                 <label for="example" label>Przykład użycia(opcjonalne)</label>
                             </app-field>
+
+                            <div *ngIf="card.controls.example as example">
+                                <app-error *ngIf="example.errors?.minlength">
+                                   To pole musi mieć co najmniej 3 znaki.
+                                </app-error>
+
+                                <app-error *ngIf="example.errors?.maxlength">
+                                   To pole może mieć maksymalnie 100 znaki.
+                                </app-error>
+                            </div>
                         </div>
                     </div>
                 </div>

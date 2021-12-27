@@ -11,7 +11,6 @@ export class CardComponent {
   @Input() setName: string = '';
   @Input() isActivate: boolean = false;
   isConceptSide = true;
-
   onSwitch() {
     this.isConceptSide = !this.isConceptSide;
   }

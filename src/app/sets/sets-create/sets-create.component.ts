@@ -76,7 +76,7 @@ export class SetsCreateComponent implements OnInit {
       concept: ['', Validators.required],
       definition: ['', Validators.required],
       group: 1,
-      example: '',
+      example: [null, [Validators.minLength(3), Validators.maxLength(100)]],
     });
 
     this.cards.push(newCardGroup);
@@ -187,7 +187,6 @@ export class SetsCreateComponent implements OnInit {
         newEl.group = 1;
         stats.group1++;
       }
-
     });
     return stats;
   }

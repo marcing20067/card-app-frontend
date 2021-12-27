@@ -23,7 +23,15 @@
         </div>
         
         <div class="card__center flex-center">
-            <p class="card__center-text">{{ card.definition }}</p>
+            <p class="card__center-text" *ngIf="!card.example">{{ card.definition }}</p>
+            
+            <div class="card__center-box" *ngIf="card.example">
+                <p class="card__center-box-heading">Definicja</p>
+                <p class="card__center-box-text card__center-box-text--definition">{{ card.definition }}</p>
+
+                <p class="card__center-box-heading">Przykłady użycia</p>
+                <p class="card__center-box-text card__center-box-text--example">{{ card.example }}</p>
+            </div>
         </div>
 
         <div class="card__bottom flex-center">
