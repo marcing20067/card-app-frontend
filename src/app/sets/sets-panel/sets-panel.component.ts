@@ -62,7 +62,7 @@ export class SetsPanelComponent implements OnInit {
 
   onLoadMore() {
     this.isLoading = true;
-    this.setsService.loadMore().subscribe(() => {
+    this.setsService.loadMore().pipe(take(1)).subscribe(() => {
       this.isLoading = false;
     });
   }

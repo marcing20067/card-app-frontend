@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from '../shared/guards/auth.guard';
+import { AuthGuard } from '../shared/guards/auth/auth.guard';
 import { SetsCreateComponent } from './sets-create/sets-create.component';
 import { SetsLearnComponent } from './sets-learn/sets-learn.component';
 import { SetsPanelComponent } from './sets-panel/sets-panel.component';

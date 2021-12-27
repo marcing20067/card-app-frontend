@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthResolver } from './shared/services/auth/auth.resolver';
-import { RefreshGuard } from './shared/services/auth/refresh.guard';
+import { RefreshGuard } from './shared/guards/auth/refresh.guard';
 
 const routes: Routes = [
   {
@@ -12,27 +11,29 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
+    canLoad: [RefreshGuard],
   },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
-    canLoad: [RefreshGuard]
+    canLoad: [RefreshGuard],
   },
   {
     path: 'sets',
     loadChildren: () => import('./sets/sets.module').then((m) => m.SetsModule),
-    canLoad: [RefreshGuard]
+    canLoad: [RefreshGuard],
   },
   {
     path: 'user',
     loadChildren: () =>
       import('./user-panel/user-panel.module').then((m) => m.UserPanelModule),
-      canLoad: [RefreshGuard]
+    canLoad: [RefreshGuard],
   },
   {
     path: 'not-found',
     loadChildren: () =>
       import('./not-found/not-found.module').then((m) => m.NotFoundModule),
+    canLoad: [RefreshGuard],
   },
   {
     path: '**',
