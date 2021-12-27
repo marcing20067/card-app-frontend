@@ -73,10 +73,10 @@ export class SetsCreateComponent implements OnInit {
 
   addCard() {
     const newCardGroup = this.fb.group({
-      concept: ['', Validators.required],
-      definition: ['', Validators.required],
-      group: 1,
-      example: [null, [Validators.minLength(3), Validators.maxLength(100)]],
+      concept: ['', [Validators.required, Validators.maxLength(50)]],
+      definition: ['', [Validators.required, Validators.maxLength(100)]],
+      example: [null, [Validators.maxLength(100)]],
+      group: 1
     });
 
     this.cards.push(newCardGroup);

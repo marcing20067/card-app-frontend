@@ -9,9 +9,9 @@
                 </app-field>
 
                 <div *ngIf="setsCreateForm.get('name') as name">
-                    <app-error *ngIf="name.errors?.minlength">Hasło musi mieć co najmniej 3 znaki</app-error>
-                    <app-error *ngIf="name.errors?.maxlength">Hasło może mieć maksymalnie 25 znaków</app-error>
                     <app-error *ngIf="name.errors?.required && name.touched">To pole jest obowiązkowe</app-error>
+                    <app-error *ngIf="name.errors?.minlength">Nazwa musi mieć co najmniej 3 znaki</app-error>
+                    <app-error *ngIf="name.errors?.maxlength">Nazwa może mieć maksymalnie 25 znaków</app-error>
                 </div>
             </div>
         </div>
@@ -36,6 +36,9 @@
                                 <app-error *ngIf="concept.errors?.duplicated">
                                     Taka fiszka już istnieje.
                                 </app-error>
+                                <app-error *ngIf="concept.errors?.maxlength">
+                                    To pole może mieć maksymalnie 50 znaków.
+                                </app-error>
                             </div>
                         </div>
 
@@ -48,6 +51,10 @@
                                 <app-error *ngIf="definition.touched && definition.errors?.required ">
                                     To pole jest obowiązkowe.
                                 </app-error>
+
+                                <app-error *ngIf="definition.errors?.maxlength">
+                                    To pole może mieć maksymalnie 100 znaki.
+                                </app-error>
                             </div>
                         </div>
 
@@ -58,12 +65,8 @@
                             </app-field>
 
                             <div *ngIf="card.controls.example as example">
-                                <app-error *ngIf="example.errors?.minlength">
-                                   To pole musi mieć co najmniej 3 znaki.
-                                </app-error>
-
                                 <app-error *ngIf="example.errors?.maxlength">
-                                   To pole może mieć maksymalnie 100 znaki.
+                                    To pole może mieć maksymalnie 100 znaki.
                                 </app-error>
                             </div>
                         </div>
@@ -78,7 +81,8 @@
                     <img src="../../../assets/icons/plus.svg" alt="">
                     Dodaj fiszkę
                 </button>
-                <button class="form__buttons-item form__buttons-item--submit" type="submit" [disabled]="setsCreateForm.invalid">Zapisz</button>
+                <button class="form__buttons-item form__buttons-item--submit" type="submit"
+                    [disabled]="setsCreateForm.invalid">Zapisz</button>
             </div>
         </div>
     </form>
