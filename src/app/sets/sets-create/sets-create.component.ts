@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { take } from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 import { Card } from 'src/app/shared/models/card.model';
 import { Set } from 'src/app/shared/models/set.model';
 import { SetsService } from '../sets.service';
@@ -76,7 +76,7 @@ export class SetsCreateComponent implements OnInit {
       concept: ['', [Validators.required, Validators.maxLength(50)]],
       definition: ['', [Validators.required, Validators.maxLength(100)]],
       example: [null, [Validators.maxLength(100)]],
-      group: 1
+      group: 1,
     });
 
     this.cards.push(newCardGroup);
@@ -105,8 +105,22 @@ export class SetsCreateComponent implements OnInit {
       this.setsService
         .editSet({ ...newSet, _id: this.oldSet._id })
         .pipe(take(1))
-        .subscribe(() => {
-          this.router.navigate(['/sets']);
+        .subscribe({
+          next: () => {
+            this.router.navigate(['/sets']);
+          },
+          error: (err: HttpErrorResponse) => {
+            this.isLoading = false;
+            if (err.status === 409) {
+              this.isLoading = false;
+              setTimeout(() => {
+                // Waiting for end *ngIf works
+                this.setsCreateForm
+                  .get('name')
+                  ?.setErrors({ alreadytaken: true });
+              }, 0);
+            }
+          },
         });
     }
     if (!this.oldSet) {
@@ -120,8 +134,22 @@ export class SetsCreateComponent implements OnInit {
       this.setsService
         .addSet(newSet)
         .pipe(take(1))
-        .subscribe(() => {
-          this.router.navigate(['/sets']);
+        .subscribe({
+          next: () => {
+            this.isLoading = false;
+            this.router.navigate(['/sets']);
+          },
+          error: (err: HttpErrorResponse) => {
+            if (err.status === 409) {
+              this.isLoading = false;
+              setTimeout(() => {
+                // Waiting for end *ngIf works
+                this.setsCreateForm
+                  .get('name')
+                  ?.setErrors({ alreadytaken: true });
+              }, 0);
+            }
+          },
         });
     }
   }

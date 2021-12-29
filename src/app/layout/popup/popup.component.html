@@ -1,10 +1,12 @@
-<div class="popup" *ngIf="data$ | async as data">
-    <div class="popup__box" *ngIf="data.isShow">
-        <p class="popup__heading">{{ data.content?.heading }}</p>
-        <p class="popup__text" *ngIf="data.content?.text">{{ data.content?.text }}</p>
-        <div class="popup__buttons">
-            <button class="popup__buttons-item button button--reverse" (click)="onConfirm(false)">Nie</button>
-            <button class="popup__buttons-item button" (click)="onConfirm(true)">Tak</button>
+<ng-container *ngIf="data$ | async as data">
+    <div class="popup flex-center" *ngIf="data.isShow">
+        <div class="popup__box wrapper flex-center" >
+            <p class="popup__heading">{{ data.content?.heading }}</p>
+            <p class="popup__text" *ngIf="data.content?.text">{{ data.content?.text }}</p>
+            <div class="popup__buttons">
+                <button class="popup__buttons-item button button--reverse" (click)="onConfirm(false)">Nie</button>
+                <button class="popup__buttons-item button" (click)="onConfirm(true)">Tak</button>
+            </div>
         </div>
     </div>
-</div>
+</ng-container>

@@ -12,6 +12,9 @@
                     <app-error *ngIf="name.errors?.required && name.touched">To pole jest obowiązkowe</app-error>
                     <app-error *ngIf="name.errors?.minlength">Nazwa musi mieć co najmniej 3 znaki</app-error>
                     <app-error *ngIf="name.errors?.maxlength">Nazwa może mieć maksymalnie 25 znaków</app-error>
+                    <app-error *ngIf="name.errors?.alreadytaken">
+                        Ta nazwa zestawu jest już zajęta.
+                    </app-error>
                 </div>
             </div>
         </div>
