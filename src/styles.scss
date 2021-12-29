@@ -29,14 +29,17 @@ button {
 
 button:disabled {
     opacity: 0.7;
+    cursor: default;
 }
 
 body {
     font-size: 1.8rem;
     color: $black;
     font-family: "Montserrat", sans-serif;
-    position: relative;
-    min-height: clamp(500px, 100vh, 100vh);
+}
+
+.block-scroll {
+    overflow: hidden;
 }
 
 .wrapper {

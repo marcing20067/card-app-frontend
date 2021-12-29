@@ -7,7 +7,7 @@
                         Poligiot
                     </a>
                 </h1>
-                <button class="hamburger hamburger--3dx" type="button" (click)="onToggleActive()"
+                <button class="hamburger hamburger--3dx" type="button" (click)="onActive(!isActive)"
                     [ngClass]="{'is-active': isActive}">
                     <span class="hamburger-box">
                         <span class="hamburger-inner"></span>
@@ -17,20 +17,20 @@
             <ul class="nav__list" [ngClass]="{'nav__list--active': isActive}"
                 *ngIf="{ isAuth: isAuth$ | async } as authData">
                 <li class="nav__list-item" *ngIf="!authData.isAuth">
-                    <a routerLink="/auth/login" class="nav__list-item-link" (click)="onToggleActive()">Zaloguj się</a>
+                    <a routerLink="/auth/login" class="nav__list-item-link" (click)="onActive(false)">Zaloguj się</a>
                 </li>
                 <li class="nav__list-item nav__list-item--reverse" *ngIf="!authData.isAuth">
                     <a routerLink="/auth/signup" class="nav__list-item-link nav__list-item-link--reverse"
-                        (click)="onToggleActive()">Zarejestruj się</a>
+                        (click)="onActive(false)">Zarejestruj się</a>
                 </li>
                 <li class="nav__list-item" *ngIf="authData.isAuth">
-                    <a routerLink="/sets" class="nav__list-item-link" (click)="onToggleActive()">Panel główny</a>
+                    <a routerLink="/sets" class="nav__list-item-link" (click)="onActive(false)">Panel główny</a>
                 </li>
                 <li class="nav__list-item" *ngIf="authData.isAuth">
-                    <a routerLink="/user" class="nav__list-item-link" (click)="onToggleActive()">Dane użytkownika</a>
+                    <a routerLink="/user" class="nav__list-item-link" (click)="onActive(false)">Dane użytkownika</a>
                 <li class="nav__list-item nav__list-item--button" *ngIf="authData.isAuth">
                     <button class="nav__list-item-link nav__list-item-link--button nav__list-item-link--reverse"
-                        (click)="onToggleActive(); onLogout()">Wyloguj się</button>
+                        (click)="onActive(false); onLogout()">Wyloguj się</button>
                 </li>
             </ul>
         </div>

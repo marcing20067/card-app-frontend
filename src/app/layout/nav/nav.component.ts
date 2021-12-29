@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
+import { ScrollService } from 'src/app/shared/services/scroll/scroll.service';
 import { TokenService } from 'src/app/shared/services/token/token.service';
 import { LayoutService } from '../layout.service';
 
@@ -22,7 +23,8 @@ export class NavComponent implements OnInit, OnDestroy {
     private tokenService: TokenService,
     private popupService: PopupService,
     private layoutService: LayoutService,
-    private authService: AuthService
+    private authService: AuthService,
+    private scrollService: ScrollService
   ) {}
 
   ngOnInit() {
@@ -35,10 +37,16 @@ export class NavComponent implements OnInit, OnDestroy {
       });
     });
   }
+  onActive(value: boolean) {
+    this.isActive = value;
+    if(this.isActive) {
+      this.scrollService.blockScroll();
+    }
 
-  onToggleActive() {
-    this.isActive = !this.isActive;
-  }
+    if(!this.isActive) {
+      this.scrollService.unLockScroll();
+    }
+  } 
 
   onLogout() {
     this.popupService

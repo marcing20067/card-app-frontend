@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { newUser } from '../../models/newUser.model';
 import { User } from '../../models/user.model';
-import { switchMap, take, tap } from 'rxjs/operators';
+import { catchError, switchMap, take, tap } from 'rxjs/operators';
 import { TokenService } from '../token/token.service';
 import { Router } from '@angular/router';
 import { UserStatus } from '../../models/userStatus.model';
@@ -27,19 +27,24 @@ export class AuthService {
 
   refresh() {
     return this.http
-      .post<{ error?: string; accessToken: string; accessTokenExpiresIn: number }>(
-        environment.BACKEND_URL + 'refresh',
-        {}
-      )
+      .post<{
+        error?: string;
+        accessToken: string;
+        accessTokenExpiresIn: number;
+      }>(environment.BACKEND_URL + 'refresh', {})
       .pipe(
         switchMap((tokenData) => {
-          if(tokenData.error) {
+          if (tokenData.error) {
             this.isRefreshCalled$.next(true);
-            return of(true)
+            return of(true);
           }
           this.tokenService.changeIsAuth(true);
           this.isRefreshCalled$.next(true);
           this.tokenService.setTokenData(tokenData);
+          return of(true);
+        }),
+        catchError(() => {
+          this.isRefreshCalled$.next(true);
           return of(true);
         })
       );
@@ -51,7 +56,7 @@ export class AuthService {
         accessToken: string;
         accessTokenExpiresIn: number;
       }>(environment.BACKEND_URL + 'auth/login', user, {
-        params: { rememberMe: rememberMe }
+        params: { rememberMe: rememberMe },
       })
       .pipe(
         tap((tokenData) => {

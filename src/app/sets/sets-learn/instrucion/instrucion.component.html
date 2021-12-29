@@ -1,0 +1,20 @@
+<div class="instruction flex-center section-padding" *ngIf="show">
+    <div class="wrapper instruction__container">
+        <div class="instruction__box">
+            <p class="instruction__box-heading">Jak grać?</p>
+            <p class="instruction__box-text">Z jednej strony fiszki zapisane jest pojęcie, z drugiej definicja i
+                opcjonalnie przykłady użycia w zdaniu. Poświęć choćby 5-10 minut dziennie a w dość szybkim tempie
+                zobaczysz postępy.</p>
+        </div>
+        <div class="instruction__box">
+            <p class="instruction__box-heading">Poziomy</p>
+            <p class="instruction__box-text">Każda fiszka początkowo jest na poziomie znajomości “nieznane”. Przeciągaj ją do sekcji “wiem”, aby przełożyć ją o poziom wyżej. Powtarzaj tą czynność do uzyskania poziomu “bardzo dobrze znane”. Analogicznie jeśli przełożysz fiszkę do sekcji “nie wiem” przejdzie ona o poziom niżej.</p>
+        </div>
+        <div class="instruction__box">
+            <p class="instruction__box-heading">Sterowanie</p>
+            <p class="instruction__box-text">Na komputerze możesz przekładać fiszki za pomocą klawiszy strzałek “←” i “→”, “a” i “d” lub “1” i “2”. Zmieniaj tryb przy pomocy klawisza tabulatora.</p>
+        </div>
+
+        <button class="instruction__button button" (click)="onClose()">Zamknij</button>
+    </div>
+</div>

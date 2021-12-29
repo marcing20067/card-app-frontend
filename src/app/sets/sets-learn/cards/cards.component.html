@@ -1,10 +1,12 @@
+<app-instrucion #instrucion></app-instrucion>
+
 <div class="cards">
     <div class="cards__box">
-        <app-card [isActivate]="false" [setName]="setName" [card]="cardsView.deactive[1]"
+        <app-card [isActivate]="false" [setName]="setName" [card]="cardsView.deactive[1]" (showInstrucion)="instrucion.onShow()"
             class="cards__box-item cards__box-item--three"></app-card>
-        <app-card [isActivate]="false" [setName]="setName" [card]="cardsView.deactive[0]"
+        <app-card [isActivate]="false" [setName]="setName" [card]="cardsView.deactive[0]" (showInstrucion)="instrucion.onShow()"
             class="cards__box-item cards__box-item--two"></app-card>
-        <app-card [isActivate]="true" [setName]="setName" [card]="cardsView.active" #activate
+        <app-card [isActivate]="true" [setName]="setName" [card]="cardsView.active" (showInstrucion)="instrucion.onShow()" #activate
             class="cards__box-item cards__box-item--one"></app-card>
     </div>
     

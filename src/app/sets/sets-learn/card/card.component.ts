@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Card } from 'src/app/shared/models/card.model';
 
 @Component({
@@ -11,7 +11,14 @@ export class CardComponent {
   @Input() setName: string = '';
   @Input() isActivate: boolean = false;
   isConceptSide = true;
+
+  @Output() showInstrucion = new EventEmitter<void>();
+
   onSwitch() {
     this.isConceptSide = !this.isConceptSide;
+  }
+
+  onInstrucionShow() {
+    this.showInstrucion.emit();
   }
 }

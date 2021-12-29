@@ -9,8 +9,22 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
-  declarations: [FieldComponent, InputDirective, IconComponent, CirclesComponent, LoaderComponent, ErrorComponent],
+  declarations: [
+    FieldComponent,
+    InputDirective,
+    IconComponent,
+    CirclesComponent,
+    LoaderComponent,
+    ErrorComponent,
+  ],
   imports: [CommonModule, RouterModule],
-  exports: [FieldComponent, InputDirective, IconComponent, CirclesComponent, LoaderComponent, ErrorComponent],
+  exports: [
+    FieldComponent,
+    InputDirective,
+    IconComponent,
+    CirclesComponent,
+    LoaderComponent,
+    ErrorComponent,
+  ],
 })
 export class SharedModule {}
