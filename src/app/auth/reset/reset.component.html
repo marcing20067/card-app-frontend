@@ -6,7 +6,7 @@
                 <app-field class="form__field">
                     <input type="text" formControlName="newUsername" id="new-username" appInput>
                     <label for="new-username" label>Nazwa użytkownika</label>
-                    <app-icon src="../../assets/icons/user.svg" alt="" left inputId="new-username"></app-icon>
+                    <app-icon src="/assets/icons/user.svg" alt="" left inputId="new-username"></app-icon>
                 </app-field>
 
                 <div *ngIf="resetForm.get('newUsername') as newUsername">
@@ -32,7 +32,7 @@
                 <app-field class="form__field">
                     <input type="password" formControlName="newPassword" id="new-password" appInput>
                     <label for="new-password" label>Hasło</label>
-                    <app-icon src="../../assets/icons/key.svg" alt="" left inputId="new-password"></app-icon>
+                    <app-icon src="/assets/icons/key.svg" alt="" left inputId="new-password"></app-icon>
                 </app-field>
 
                 <div *ngIf="resetForm.get('newPassword') as newPassword">
@@ -45,7 +45,7 @@
                 <app-field class="form__field">
                     <input type="password" formControlName="repeatNewPassword" id="repeat-new-password" appInput>
                     <label for="repeat-new-password" label>Powtórz hasło</label>
-                    <app-icon src="../../assets/icons/key.svg" alt="" left inputId="repeat-new-password"></app-icon>
+                    <app-icon src="/assets/icons/key.svg" alt="" left inputId="repeat-new-password"></app-icon>
                 </app-field>
 
                 <div *ngIf="resetForm.get('repeatNewPassword') as repeatNewPassword">
