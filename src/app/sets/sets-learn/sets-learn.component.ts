@@ -50,7 +50,7 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
     this.updateCardSub = this.updateCardEvent$
       .pipe(debounceTime(500))
       .subscribe(() => {
-        this.setsService.editSet(this.set).pipe(take(1)).subscribe();
+        this.setsService.editSet(this.set, 'false').pipe(take(1)).subscribe();
       });
   }
 
