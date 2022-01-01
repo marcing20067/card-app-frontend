@@ -1,0 +1,15 @@
+@import '../shared/styles/variables';
+
+.server-error {
+    &__title {
+        margin-bottom: 3.2rem;
+    }
+
+    &__text {
+        margin-bottom: 1rem;
+    }
+
+    &__sorry-span {
+        font-weight: 500;
+    }
+}

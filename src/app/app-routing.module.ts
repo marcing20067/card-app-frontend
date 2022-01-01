@@ -36,6 +36,12 @@ const routes: Routes = [
     canLoad: [RefreshGuard],
   },
   {
+    path: 'server-error',
+    loadChildren: () =>
+      import('./server-error/server-error.module').then((m) => m.ServerErrorModule),
+    canLoad: [RefreshGuard],
+  },
+  {
     path: '**',
     redirectTo: 'not-found',
     pathMatch: 'prefix',

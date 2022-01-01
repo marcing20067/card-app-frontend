@@ -4,7 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../auth/auth.interceptor';
 import { CoreComponent } from './core.component';
 import { LayoutModule } from '../layout/layout.module';
-import { ServerErrorInterceptor } from '../shared/interceptors/server-error.interceptor';
+import { ServerErrorInterceptor } from '../server-error/server-error.interceptor';
 
 @NgModule({
   declarations: [CoreComponent],
