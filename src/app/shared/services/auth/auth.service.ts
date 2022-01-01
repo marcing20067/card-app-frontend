@@ -33,20 +33,20 @@ export class AuthService {
         accessTokenExpiresIn: number;
       }>(environment.BACKEND_URL + 'refresh', {})
       .pipe(
-        switchMap((tokenData) => {
-          if (tokenData.error) {
+        tap(
+          (tokenData) => {
+            if (tokenData.error) {
+              this.isRefreshCalled$.next(true);
+              return;
+            }
+            this.tokenService.changeIsAuth(true);
             this.isRefreshCalled$.next(true);
-            return of(true);
+            this.tokenService.setTokenData(tokenData);
+          },
+          () => {
+            this.isRefreshCalled$.next(true);
           }
-          this.tokenService.changeIsAuth(true);
-          this.isRefreshCalled$.next(true);
-          this.tokenService.setTokenData(tokenData);
-          return of(true);
-        }),
-        catchError(() => {
-          this.isRefreshCalled$.next(true);
-          return of(true);
-        })
+        ),
       );
   }
 

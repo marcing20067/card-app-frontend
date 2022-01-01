@@ -1,8 +1,5 @@
-import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ActualRoute } from 'src/app/shared/types/actualRoute.type';
-import { FooterExtraFeaturesForRoute } from '../../shared/enums/layout.enums';
 import { LayoutService } from '../layout.service';
 
 type FooterExtraFeature =
@@ -26,6 +23,9 @@ export class FooterComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.layoutService.onUrlChange('Footer').subscribe((feature) => {
+      if (!feature) {
+        return;
+      }
       this.class = ['footer'];
       feature.split(' ').forEach((f) => {
         if (!f) return;

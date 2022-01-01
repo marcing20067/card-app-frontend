@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
@@ -30,6 +29,9 @@ export class NavComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.tokenService.isAuth();
     this.sub = this.layoutService.onUrlChange('Nav').subscribe((feature) => {
+      if (!feature) {
+        return;
+      }
       this.class = ['nav'];
       feature.split(' ').forEach((f) => {
         if (!f) return;
@@ -39,14 +41,14 @@ export class NavComponent implements OnInit, OnDestroy {
   }
   onActive(value: boolean) {
     this.isActive = value;
-    if(this.isActive) {
+    if (this.isActive) {
       this.scrollService.blockScroll();
     }
 
-    if(!this.isActive) {
+    if (!this.isActive) {
       this.scrollService.unLockScroll();
     }
-  } 
+  }
 
   onLogout() {
     this.popupService

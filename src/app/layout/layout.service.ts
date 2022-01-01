@@ -12,13 +12,16 @@ import { ActualRoute } from '../shared/types/actualRoute.type';
 })
 export class LayoutService {
   private urlChangeEvent$ = new Subject<
-    FooterExtraFeaturesForRoute | NavExtraFeaturesForRoute
+    FooterExtraFeaturesForRoute | NavExtraFeaturesForRoute 
   >();
 
   constructor(private location: Location) {}
 
   onUrlChange(enumType: 'Nav' | 'Footer') {
     this.location.onUrlChange((path) => {
+      if(path === '/') {
+        return;
+      }
       const actualRoute = this.transformPath(path);
       const extraFeatures = this.getExtraFeatures(enumType, actualRoute);
       this.urlChangeEvent$.next(extraFeatures);

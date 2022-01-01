@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanLoad } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { switchMap, take } from 'rxjs/operators';
+import { catchError, switchMap, take } from 'rxjs/operators';
 import { AuthService } from '../../services/auth/auth.service';
 
 @Injectable({
@@ -14,8 +14,16 @@ export class RefreshGuard implements CanLoad {
       take(1),
       switchMap((isCalled) => {
         if (!isCalled) {
-          return this.authService.refresh().pipe(take(1));
+          return this.authService.refresh().pipe(
+            take(1),
+            switchMap(() => {
+              return of(true);
+            })
+          );
         }
+        return of(true);
+      }),
+      catchError(() => {
         return of(true);
       })
     );
