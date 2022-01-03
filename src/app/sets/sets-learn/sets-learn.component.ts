@@ -50,7 +50,7 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
     this.updateCardSub = this.updateCardEvent$
       .pipe(debounceTime(500))
       .subscribe(() => {
-        this.setsService.editSet(this.set, 'false').pipe(take(1)).subscribe();
+        this.setsService.editSet(this.set).pipe(take(1)).subscribe();
       });
   }
 
@@ -62,6 +62,16 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
       ...activeCard,
       group: isKnow ? activeCard.group + 1 : 1,
     };
+  
+    const oldGroup = `group${activeCard.group}` as 'group1' | 'group2' | 'group3' | 'group4' | 'group5';
+    if(isKnow) {
+      const newGroup = `group${activeCard.group + 1}` as 'group1' | 'group2' | 'group3' | 'group4' | 'group5' 
+      this.set.stats[oldGroup] =  this.set.stats[oldGroup] - 1;
+      this.set.stats[newGroup] =  this.set.stats[newGroup] + 1;
+    } else {
+      this.set.stats.group1 = this.set.stats.group1 + 1;
+      this.set.stats[oldGroup] =  this.set.stats[oldGroup] - 1;
+    }
 
     this.updateCardEvent$.next();
 

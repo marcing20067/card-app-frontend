@@ -84,11 +84,7 @@ export class SetsService {
     return this.http.post(environment.BACKEND_URL + 'sets', set);
   }
 
-  editSet(set: Set, handleAlreadyTakenErrorInName: 'true' | 'false' = 'true') {
-    return this.http.put(environment.BACKEND_URL + 'sets/' + set._id, set, {
-      params: {
-        handleName: handleAlreadyTakenErrorInName
-      }
-    });
+  editSet(set: Set) {
+    return this.http.put(environment.BACKEND_URL + 'sets/' + set._id, set);
   }
 }

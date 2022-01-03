@@ -6,13 +6,12 @@ import {
   HttpInterceptor,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
-import { PopupService } from '../shared/services/popup/popup.service';
+import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Injectable()
 export class ServerErrorInterceptor implements HttpInterceptor {
-  constructor(private popupService: PopupService, private router: Router) {}
+  constructor(private router: Router) {}
 
   intercept(
     request: HttpRequest<unknown>,
@@ -21,9 +20,11 @@ export class ServerErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       tap({
         error: (err) => {
-          setTimeout(() => {
-            this.router.navigate(['/server-error']);
-          }, 0);
+          if (err.status === 500) {
+            setTimeout(() => {
+              this.router.navigate(['/server-error']);
+            }, 0);
+          }
         },
       })
     );
