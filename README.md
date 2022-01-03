@@ -1,4 +1,4 @@
-# Card App Frontend
+# Poliglot frontend
 
 ## Live
 
