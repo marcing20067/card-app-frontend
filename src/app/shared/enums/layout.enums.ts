@@ -13,7 +13,7 @@ export enum NavExtraFeaturesForRoute {
   '/not-found' = '',
   '/server-error' = ''
 }
-
+    
 export enum FooterExtraFeaturesForRoute {
   '/home' = '',
   '/auth/login' = 'desktop-pill-items',

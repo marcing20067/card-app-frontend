@@ -28,11 +28,12 @@ export class NavComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.tokenService.isAuth();
-    this.sub = this.layoutService.onUrlChange('Nav').subscribe((feature) => {
+    this.sub = this.layoutService.onUrlChange('nav').subscribe((feature) => {
+      this.class = ['nav'];
       if (!feature) {
+        // No features; set default styles
         return;
       }
-      this.class = ['nav'];
       feature.split(' ').forEach((f) => {
         if (!f) return;
         this.class.push(`nav--${f}`);

@@ -22,11 +22,12 @@ export class FooterComponent implements OnInit, OnDestroy {
   constructor(private layoutService: LayoutService) {}
 
   ngOnInit() {
-    this.sub = this.layoutService.onUrlChange('Footer').subscribe((feature) => {
+    this.sub = this.layoutService.onUrlChange('footer').subscribe((feature) => {
+      this.class = ['footer'];
       if (!feature) {
+        // No features; set default styles
         return;
       }
-      this.class = ['footer'];
       feature.split(' ').forEach((f) => {
         if (!f) return;
         this.class.push(`footer--${f}`);
