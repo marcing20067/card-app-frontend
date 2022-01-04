@@ -1,10 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { ScrollService } from 'src/app/shared/services/scroll/scroll.service';
-import { TokenService } from 'src/app/shared/services/token/token.service';
 import { LayoutService } from '../layout.service';
 
 @Component({
@@ -15,19 +11,14 @@ import { LayoutService } from '../layout.service';
 export class NavComponent implements OnInit, OnDestroy {
   private sub!: Subscription;
   class = ['nav'];
-  isAuth$ = this.tokenService.getIsAuthListener();
-  isActive = false;
+  isActive!: boolean;
 
   constructor(
-    private tokenService: TokenService,
-    private popupService: PopupService,
     private layoutService: LayoutService,
-    private authService: AuthService,
     private scrollService: ScrollService
   ) {}
 
   ngOnInit() {
-    this.tokenService.isAuth();
     this.sub = this.layoutService.onUrlChange('nav').subscribe((feature) => {
       this.class = ['nav'];
       if (!feature) {
@@ -40,33 +31,9 @@ export class NavComponent implements OnInit, OnDestroy {
       });
     });
   }
-  onActive(value: boolean) {
-    this.isActive = value;
-    if (this.isActive) {
-      this.scrollService.blockScroll();
-    }
 
-    if (!this.isActive) {
-      this.scrollService.unLockScroll();
-    }
-  }
-
-  onLogout() {
-    this.popupService
-      .getConfirmEventListener()
-      .pipe(take(1))
-      .subscribe((isConfirm) => {
-        if (isConfirm) {
-          this.authService.logout().pipe(take(1)).subscribe();
-        }
-      });
-
-    this.popupService.display({
-      isShow: true,
-      content: {
-        heading: 'Czy na pewno chcesz się wylogować?',
-      },
-    });
+  onNav(isActive: boolean) {
+    this.isActive = isActive;
   }
 
   ngOnDestroy() {

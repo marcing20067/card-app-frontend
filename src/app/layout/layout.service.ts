@@ -36,7 +36,6 @@ export class LayoutService {
   onUrlChange(enumType: 'nav' | 'footer') {
     return this.urlChangeEvent$.asObservable().pipe(
       switchMap((featuresData) => {
-        console.log(featuresData);
         return of(featuresData[enumType]);
       })
     );

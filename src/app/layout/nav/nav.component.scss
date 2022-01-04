@@ -1,7 +1,6 @@
 @import "../../shared/styles/variables";
 @import "./hamburger";
 
-$nav-list-color: #fb9962;
 .header {
     &__h1 {
         font-size: 2.4rem;
@@ -32,52 +31,7 @@ $nav-list-color: #fb9962;
         display: flex;
         justify-content: space-between;
         align-items: center;
-    }
-
-    &__list {
-        position: fixed;
-        z-index: 100;
-        top: 7.6rem;
-        left: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
         width: 100%;
-        height: calc(100vh - 7.6rem);
-        list-style: none;
-        background-color: $nav-list-color;
-        transition: 0.7s transform;
-
-        &--active {
-            transform: translateX(-100%);
-        }
-
-        &-item {
-            margin: 1.6rem 0;
-
-            &-link {
-                display: block;
-                padding: 0.8rem 1.6rem;
-                font-weight: 600;
-                color: $white;
-                text-decoration: none;
-
-                &--button {
-                    font-weight: 600;
-                    border: none;
-                    font-size: inherit;
-                    font-family: inherit;
-                    text-transform: uppercase;
-                }
-
-                &--reverse {
-                    background-color: $white;
-                    border-radius: 50px;
-                    color: $orange;
-                }
-            }
-        }
     }
 
     // extraFeatures
@@ -102,29 +56,18 @@ $nav-list-color: #fb9962;
             display: flex;
         }
 
-        &__list {
-            position: static;
-            flex-direction: row;
-            justify-content: flex-end;
-            height: auto;
-            background: none;
-            transform: none;
-
-            &-item {
-                margin: 0 3.2rem 0 3.2rem;
-
-                &:last-child {
-                    margin-right: 0;
-                }
-            }
-        }
         // extraFeatures
         &--banner &__box {
             justify-content: center;
         }
 
+        &--banner app-nav-list {
+            display: none;
+        }
+
         &--desktop-no-bgc {
-            background: none;
+            background-image: none;
+            background-color: $white;
         }
 
         &--desktop-no-bgc .header__h1-link {

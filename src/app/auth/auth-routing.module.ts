@@ -6,6 +6,11 @@ import { ResetComponent } from './reset/reset.component';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'prefix',
+  },
+  {
     path: 'login',
     component: AuthComponent,
   },
@@ -24,11 +29,6 @@ const routes: Routes = [
   {
     path: 'reset/password/:token',
     component: ResetComponent,
-  },
-  {
-    path: '',
-    redirectTo: '/login',
-    pathMatch: 'prefix',
   },
 ];
 

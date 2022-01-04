@@ -1,0 +1,75 @@
+@import "../../../shared/styles/variables";
+
+:host {
+    position: fixed;
+}
+
+.nav-list {
+    position: fixed;
+    z-index: 100;
+    top: 7.6rem;
+    left: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: calc(100vh - 7.6rem);
+    list-style: none;
+    background-color: $nav-list-color;
+    transition: 0.7s transform;
+
+    &--active {
+        transform: translateX(-100%);
+    }
+
+    &__item {
+        margin: 1.6rem 0;
+
+        &-link {
+            display: block;
+            padding: 0.8rem 1.6rem;
+            font-weight: 600;
+            color: $white;
+            text-decoration: none;
+
+            &--button {
+                font-weight: 600;
+                border: none;
+                font-size: inherit;
+                font-family: inherit;
+                text-transform: uppercase;
+            }
+
+            &--reverse {
+                background-color: $white;
+                border-radius: 50px;
+                color: $orange;
+            }
+        }
+    }
+}
+
+@media (min-width: 1050px) {
+    :host {
+        position: static;
+        width: 100%;
+    }
+
+    .nav-list {
+        position: static;
+        flex-direction: row;
+        justify-content: flex-end;
+        height: auto;
+        background: none;
+        transform: none;
+
+        &__item {
+            margin: 0 1.6rem 0 1.6rem;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}
