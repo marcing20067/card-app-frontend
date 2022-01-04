@@ -14,7 +14,7 @@ export class SetsPanelComponent implements OnInit {
   selectedSet: Set | null = null;
   sets$ = this.setsService.getSetsListener();
   setName!: string;
-  
+
   constructor(
     private setsService: SetsService,
     private popupService: PopupService,
@@ -45,10 +45,13 @@ export class SetsPanelComponent implements OnInit {
               this.isLoading = false;
             });
         }
+        
+        if (!isConfirm) {
+          this.isLoading = false;
+        }
       });
 
     this.popupService.display({
-      isShow: true,
       content: {
         heading: `Czy na pewno chcesz usunąć zestaw "${set.name}"?`,
         text: 'Wybrany zestaw zostanie nieodwracalnie usunięty.',
@@ -62,8 +65,11 @@ export class SetsPanelComponent implements OnInit {
 
   onLoadMore() {
     this.isLoading = true;
-    this.setsService.loadMore().pipe(take(1)).subscribe(() => {
-      this.isLoading = false;
-    });
+    this.setsService
+      .loadMore()
+      .pipe(take(1))
+      .subscribe(() => {
+        this.isLoading = false;
+      });
   }
 }

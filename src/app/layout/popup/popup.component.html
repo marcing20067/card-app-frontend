@@ -1,18 +1,16 @@
-<ng-container *ngIf="data$ | async as data">
-    <div class="popup flex-center" *ngIf="data.isShow">
-        <div class="popup__box wrapper flex-center">
-            <p class="popup__heading">{{ data.content?.heading }}</p>
-            <p class="popup__text" *ngIf="data.content?.text">{{ data.content?.text }}</p>
-            <div class="popup__buttons" *ngIf="!data.buttons">
-                <button class="popup__buttons-item button button--reverse" (click)="onConfirm(false)">Nie</button>
-                <button class="popup__buttons-item button" (click)="onConfirm(true)">Tak</button>
-            </div>
-            <div class="popup__buttons" *ngIf="data.buttons">
-                <button class="popup__buttons-item button button--reverse" *ngIf="data.buttons.one"
-                    (click)="onConfirm(false)">{{ data.buttons.one }}</button>
-                <button class="popup__buttons-item button" *ngIf="data.buttons.two" (click)="onConfirm(true)">{{
-                    data.buttons.two }}</button>
-            </div>
+<div class="popup flex-center" *ngIf="data$ | async as data">
+    <div class="popup__box wrapper flex-center">
+        <p class="popup__heading">{{ data.content?.heading }}</p>
+        <p class="popup__text" *ngIf="data.content?.text">{{ data.content?.text }}</p>
+        <div class="popup__buttons" *ngIf="!data.buttons">
+            <button class="popup__buttons-item button button--reverse" (click)="onConfirm(false)">Nie</button>
+            <button class="popup__buttons-item button" (click)="onConfirm(true)">Tak</button>
+        </div>
+        <div class="popup__buttons" *ngIf="data.buttons">
+            <button class="popup__buttons-item button button--reverse" *ngIf="data.buttons.one"
+                (click)="onConfirm(false)">{{ data.buttons.one }}</button>
+            <button class="popup__buttons-item button" *ngIf="data.buttons.two" (click)="onConfirm(true)">{{
+                data.buttons.two }}</button>
         </div>
     </div>
-</ng-container>
+</div>

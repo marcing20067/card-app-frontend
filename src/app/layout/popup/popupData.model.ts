@@ -1,5 +1,4 @@
 export interface PopupData {
-    isShow: boolean;
     content?: {
         heading: string,
         text?: string

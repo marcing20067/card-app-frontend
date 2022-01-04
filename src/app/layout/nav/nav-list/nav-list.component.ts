@@ -47,7 +47,6 @@ export class NavListComponent {
       });
 
     this.popupService.display({
-      isShow: true,
       content: {
         heading: 'Czy na pewno chcesz się wylogować?',
       },
