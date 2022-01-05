@@ -8,7 +8,7 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { Card } from 'src/app/shared/models/card.model';
+import { Card } from 'src/app/shared/models/set/card.model';
 
 @Component({
   selector: 'app-cards',

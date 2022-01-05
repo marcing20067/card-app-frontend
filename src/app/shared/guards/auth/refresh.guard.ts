@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanLoad } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { catchError, switchMap, take } from 'rxjs/operators';
 import { AuthService } from '../../services/auth/auth.service';
 
@@ -9,7 +9,7 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class RefreshGuard implements CanLoad {
   constructor(private authService: AuthService) {}
-  canLoad(): Observable<boolean> {
+  canLoad() {
     return this.authService.getIsRefreshCalledListener().pipe(
       take(1),
       switchMap((isCalled) => {

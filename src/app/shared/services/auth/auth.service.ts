@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { newUser } from '../../models/newUser.model';
-import { User } from '../../models/user.model';
-import { catchError, switchMap, take, tap } from 'rxjs/operators';
+import { newUser } from './newUser.model';
+import { User } from './user.model';
+import { take, tap } from 'rxjs/operators';
 import { TokenService } from '../token/token.service';
 import { Router } from '@angular/router';
 import { UserStatus } from '../../models/userStatus.model';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -29,8 +29,8 @@ export class AuthService {
     return this.http
       .post<{
         error?: string;
-        accessToken: string;
-        accessTokenExpiresIn: number;
+        accessToken?: string;
+        accessTokenExpiresIn?: number;
       }>(environment.BACKEND_URL + 'refresh', {})
       .pipe(
         tap(
@@ -39,14 +39,22 @@ export class AuthService {
               this.isRefreshCalled$.next(true);
               return;
             }
-            this.tokenService.changeIsAuth(true);
-            this.isRefreshCalled$.next(true);
-            this.tokenService.setTokenData(tokenData);
+
+            const { accessToken, accessTokenExpiresIn } = tokenData;
+
+            if (accessToken && accessTokenExpiresIn) {
+              this.tokenService.changeIsAuth(true);
+              this.isRefreshCalled$.next(true);
+              this.tokenService.setTokenData({
+                accessToken,
+                accessTokenExpiresIn,
+              });
+            }
           },
           () => {
             this.isRefreshCalled$.next(true);
           }
-        ),
+        )
       );
   }
 
@@ -60,10 +68,7 @@ export class AuthService {
       })
       .pipe(
         tap((tokenData) => {
-          this.tokenService.setTokenData({
-            accessToken: tokenData.accessToken,
-            accessTokenExpiresIn: tokenData.accessTokenExpiresIn,
-          });
+          this.tokenService.setTokenData(tokenData);
           this.router.navigate(['/sets']);
         })
       );

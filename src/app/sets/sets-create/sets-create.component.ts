@@ -8,9 +8,10 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { take, tap } from 'rxjs/operators';
-import { Card } from 'src/app/shared/models/card.model';
-import { Set } from 'src/app/shared/models/set.model';
+import { take } from 'rxjs/operators';
+import { Card } from 'src/app/shared/models/set/card.model';
+import { Set } from 'src/app/shared/models/set/set.model';
+import { Stats } from 'src/app/shared/models/set/stats.model';
 import { SetsService } from '../sets.service';
 
 @Component({
@@ -48,14 +49,7 @@ export class SetsCreateComponent implements OnInit {
         .subscribe({
           next: (set) => {
             this.oldSet = set;
-            for (let i = 0; i < set.cards.length; i++) {
-              this.addCard();
-            }
-
-            this.setsCreateForm.patchValue({
-              name: set.name,
-              cards: set.cards,
-            });
+            this.setValuesOnForm();
             this.mode = 'edit';
             this.isLoading = false;
           },
@@ -65,21 +59,34 @@ export class SetsCreateComponent implements OnInit {
             }
           },
         });
-    } else {
+    }
+
+    if (!id) {
       this.mode = 'create';
       this.addCard();
     }
   }
 
+  private setValuesOnForm() {
+    for (let i = 0; i < this.oldSet.cards.length; i++) {
+      this.addCard();
+    }
+
+    this.setsCreateForm.patchValue({
+      name: this.oldSet.name,
+      cards: this.oldSet.cards,
+    });
+  }
+
   addCard() {
-    const newCardGroup = this.fb.group({
+    const newCard = this.fb.group({
       concept: ['', [Validators.required, Validators.maxLength(50)]],
       definition: ['', [Validators.required, Validators.maxLength(100)]],
       example: [null, [Validators.maxLength(100)]],
       group: 1,
     });
 
-    this.cards.push(newCardGroup);
+    this.cards.push(newCard);
   }
 
   get cards() {
@@ -112,17 +119,12 @@ export class SetsCreateComponent implements OnInit {
           error: (err: HttpErrorResponse) => {
             this.isLoading = false;
             if (err.status === 409) {
-              this.isLoading = false;
-              setTimeout(() => {
-                // Waiting for end *ngIf works
-                this.setsCreateForm
-                  .get('name')
-                  ?.setErrors({ alreadytaken: true });
-              }, 0);
+              this.setNameAlreadyTakenError();
             }
           },
         });
     }
+
     if (!this.oldSet) {
       newSet.stats = {
         group1: newSet.cards.length,
@@ -140,21 +142,23 @@ export class SetsCreateComponent implements OnInit {
             this.router.navigate(['/sets']);
           },
           error: (err: HttpErrorResponse) => {
+            this.isLoading = false;
             if (err.status === 409) {
-              this.isLoading = false;
-              setTimeout(() => {
-                // Waiting for end *ngIf works
-                this.setsCreateForm
-                  .get('name')
-                  ?.setErrors({ alreadytaken: true });
-              }, 0);
+              this.setNameAlreadyTakenError();
             }
           },
         });
     }
   }
 
-  private checkDuplicates(cards: Card[]): boolean {
+  private setNameAlreadyTakenError() {
+    setTimeout(() => {
+      // Waiting for end *ngIf works
+      this.setsCreateForm.get('name')?.setErrors({ alreadytaken: true });
+    }, 0);
+  }
+
+  private checkDuplicates(cards: Card[]) {
     let isDuplicate = false;
     cards.forEach((el, i) => {
       const duplicatedCards = cards.filter((c) => c.concept === el.concept);
@@ -172,25 +176,27 @@ export class SetsCreateComponent implements OnInit {
         .filter((i) => i.nativeElement.value === duplicateConcept);
       const duplicatedInput = duplicatedInputs[0].nativeElement;
 
-      const scrollMargin = 150;
-      window.scrollTo(
-        0,
-        window.scrollY +
-          duplicatedInput.getBoundingClientRect().top -
-          scrollMargin
-      );
+      this.scrollToInput(duplicatedInput);
 
       const controlsWithDuplicatedValue = this.cards.controls.filter(
         (c) => c.value.concept === duplicateConcept
       );
       controlsWithDuplicatedValue[0]
         .get('concept')
-        ?.setErrors({ duplicated: 'concept' });
+        ?.setErrors({ duplicated: true });
     }
     return isDuplicate;
   }
 
-  private computeStats(cards: Card[]): Set['stats'] {
+  private scrollToInput(input: HTMLElement) {
+    const scrollMargin = 150;
+    window.scrollTo(
+      0,
+      window.scrollY + input.getBoundingClientRect().top - scrollMargin
+    );
+  }
+
+  private computeStats(cards: Card[]) {
     const stats = {
       group1: 0,
       group2: 0,
@@ -199,20 +205,18 @@ export class SetsCreateComponent implements OnInit {
       group5: 0,
     };
 
-    cards.forEach((newEl) => {
-      const notChangedElIndex = this.oldSet.cards.findIndex((el) => {
-        return (
-          el.concept === newEl.concept && el.definition === newEl.definition
-        );
-      });
+    cards.forEach((c) => {
+      const notChangedElIndex = this.oldSet.cards.findIndex(
+        (oldC) => oldC.concept === c.concept && oldC.definition === c.definition
+      );
 
       if (notChangedElIndex >= 0) {
-        const notChangedEl = this.oldSet.cards[notChangedElIndex] as Card;
-        const elGroupFullName = ('group' +
-          notChangedEl.group) as keyof Set['stats'];
+        const notChangedEl = this.oldSet.cards[notChangedElIndex];
+        const elGroupFullName =
+          `group${notChangedEl.group}` as keyof Stats;
         stats[elGroupFullName] = stats[elGroupFullName] + 1;
       } else {
-        newEl.group = 1;
+        c.group = 1;
         stats.group1++;
       }
     });

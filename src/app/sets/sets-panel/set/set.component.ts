@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Set } from 'src/app/shared/models/set.model';
+import { Set } from 'src/app/shared/models/set/set.model';
 @Component({
   selector: 'app-set',
   templateUrl: './set.component.html',

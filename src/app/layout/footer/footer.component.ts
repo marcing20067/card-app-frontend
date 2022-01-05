@@ -2,13 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { LayoutService } from '../layout.service';
 
-type FooterExtraFeature =
-  | 'no-footer'
-  | 'creamy-bgc'
-  | 'desktop-pill-items'
-  | 'mobile-no-footer'
-  | 'creamy-bgc mobile-no-footer';
-
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -17,7 +10,6 @@ type FooterExtraFeature =
 export class FooterComponent implements OnInit, OnDestroy {
   private sub!: Subscription;
   class = ['footer'];
-  extraFeature: FooterExtraFeature | '' = '';
 
   constructor(private layoutService: LayoutService) {}
 

@@ -12,6 +12,7 @@ export class PopupService {
   display(data: PopupData) {
     this.displayEvent$.next(data);
   }
+  
   getDisplayListener() {
     return this.displayEvent$.asObservable();
   }

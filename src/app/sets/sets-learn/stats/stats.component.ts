@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Set } from 'src/app/shared/models/set.model';
+import { Stats } from 'src/app/shared/models/set/stats.model';
 
 @Component({
   selector: 'app-stats',
@@ -8,7 +8,7 @@ import { Set } from 'src/app/shared/models/set.model';
 })
 export class StatsComponent {
   @Input() data!: {
-    groups: Set['stats'];
+    stats: Stats;
     currentGroup: number;
   }
 }

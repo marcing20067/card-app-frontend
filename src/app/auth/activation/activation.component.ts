@@ -14,7 +14,7 @@ export class ActivationComponent implements OnInit {
   
   constructor(private route: ActivatedRoute, private authService: AuthService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     const activationToken = this.route.snapshot.params.activationToken;
     this.authService
       .activation(activationToken)

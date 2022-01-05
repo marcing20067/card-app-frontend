@@ -22,7 +22,7 @@ export class ResetComponent implements OnInit, OnDestroy {
     private authService: AuthService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.mode = this.route.snapshot.url[1].path;
     if (this.mode === 'username') {
       this.resetForm = this.fb.group({
@@ -52,7 +52,7 @@ export class ResetComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     if (this.formSub) {
       this.formSub.unsubscribe();
     }

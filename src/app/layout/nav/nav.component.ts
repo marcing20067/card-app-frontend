@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ScrollService } from 'src/app/shared/services/scroll/scroll.service';
 import { LayoutService } from '../layout.service';
 
 @Component({
@@ -15,7 +14,6 @@ export class NavComponent implements OnInit, OnDestroy {
 
   constructor(
     private layoutService: LayoutService,
-    private scrollService: ScrollService
   ) {}
 
   ngOnInit() {

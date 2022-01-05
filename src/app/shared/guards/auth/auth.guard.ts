@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, UrlTree } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { CanActivate, Router } from '@angular/router';
+import { of } from 'rxjs';
 import { TokenService } from '../../services/token/token.service';
 
 @Injectable({
@@ -8,7 +8,7 @@ import { TokenService } from '../../services/token/token.service';
 })
 export class AuthGuard implements CanActivate {
   constructor(private tokenService: TokenService, private router: Router) {}
-  canActivate(): Observable<boolean | UrlTree> {
+  canActivate() {
     const isAuth = this.tokenService.isAuth();
     if (isAuth) {
       return of(true);

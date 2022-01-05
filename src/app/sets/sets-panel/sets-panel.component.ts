@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SetsService } from '../sets.service';
-import { Set } from 'src/app/shared/models/set.model';
-import { filter, map, take } from 'rxjs/operators';
+import { Set } from 'src/app/shared/models/set/set.model';
+import { take } from 'rxjs/operators';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { ActivatedRoute } from '@angular/router';
 @Component({
@@ -45,7 +45,7 @@ export class SetsPanelComponent implements OnInit {
               this.isLoading = false;
             });
         }
-        
+
         if (!isConfirm) {
           this.isLoading = false;
         }

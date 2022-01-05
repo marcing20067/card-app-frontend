@@ -2,8 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, take } from 'rxjs/operators';
-import { Card } from 'src/app/shared/models/card.model';
-import { Set } from 'src/app/shared/models/set.model';
+import { Card } from 'src/app/shared/models/set/card.model';
+import { Set } from 'src/app/shared/models/set/set.model';
+import { Stats } from 'src/app/shared/models/set/stats.model';
 import { SetsService } from '../sets.service';
 
 @Component({
@@ -40,9 +41,7 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
           this.learnEnd = true;
           return;
         }
-        this.cardsWithCurrentGroup = this.set.cards.filter(
-          (c) => c.group === cardWithSmallestGroup.group
-        );
+        this.cardsWithCurrentGroup = this.getCardsByGroup(cardWithSmallestGroup.group);
 
         this.initializeCardsView();
       });
@@ -54,6 +53,10 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
       });
   }
 
+  private getCardsByGroup(group: number) {
+    return this.set.cards.filter((c) => c.group === group);
+  }
+
   onLearn(isKnow: boolean) {
     const activeCard = this.cardsView.active;
     const cardIndex = this.set.cards.indexOf(activeCard);
@@ -62,15 +65,15 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
       ...activeCard,
       group: isKnow ? activeCard.group + 1 : 1,
     };
-  
-    const oldGroup = `group${activeCard.group}` as 'group1' | 'group2' | 'group3' | 'group4' | 'group5';
-    if(isKnow) {
-      const newGroup = `group${activeCard.group + 1}` as 'group1' | 'group2' | 'group3' | 'group4' | 'group5' 
-      this.set.stats[oldGroup] =  this.set.stats[oldGroup] - 1;
-      this.set.stats[newGroup] =  this.set.stats[newGroup] + 1;
+
+    const oldGroup = `group${activeCard.group}` as keyof Stats;
+    if (isKnow) {
+      const newGroup = `group${activeCard.group + 1}` as keyof Stats;
+      this.set.stats[oldGroup] = this.set.stats[oldGroup] - 1;
+      this.set.stats[newGroup] = this.set.stats[newGroup] + 1;
     } else {
       this.set.stats.group1 = this.set.stats.group1 + 1;
-      this.set.stats[oldGroup] =  this.set.stats[oldGroup] - 1;
+      this.set.stats[oldGroup] = this.set.stats[oldGroup] - 1;
     }
 
     this.updateCardEvent$.next();
@@ -78,18 +81,24 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
     if (this.wasLastCardUsed()) {
       const cardWithSmallestGroup = this.getCardWithSmallestGroup();
 
-      if (cardWithSmallestGroup.group === 6) {
+      if (cardWithSmallestGroup.group > 5) {
         this.learnEnd = true;
       }
 
-      this.cardsWithCurrentGroup = this.set.cards.filter(
-        (c) => c.group === cardWithSmallestGroup.group
-      );
-
+      this.cardsWithCurrentGroup = this.getCardsByGroup(cardWithSmallestGroup.group);
       this.resetData();
       return;
     }
 
+    this.nextCard();
+    this.activateCardIndex++;
+  }
+
+  private wasLastCardUsed() {
+    return this.activateCardIndex + 1 === this.cardsWithCurrentGroup.length;
+  }
+
+  private nextCard() {
     this.cardsView = {
       active: this.cardsView.deactive[0],
       deactive: [
@@ -97,12 +106,6 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
         this.cardsWithCurrentGroup[this.activateCardIndex + 3],
       ],
     };
-
-    this.activateCardIndex++;
-  }
-
-  private wasLastCardUsed() {
-    return this.activateCardIndex + 1 === this.cardsWithCurrentGroup.length;
   }
 
   private getCardWithSmallestGroup() {
@@ -119,7 +122,6 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
 
   private resetData() {
     this.activateCardIndex = 0;
-
     this.initializeCardsView();
   }
 

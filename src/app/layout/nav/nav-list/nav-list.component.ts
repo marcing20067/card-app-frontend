@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
@@ -12,8 +12,8 @@ import { TokenService } from 'src/app/shared/services/token/token.service';
 })
 export class NavListComponent {
   isActive = false;
-  @Output() navEvent = new EventEmitter<boolean>();
   isAuth$ = this.tokenService.getIsAuthListener();
+  @Output() navEvent = new EventEmitter<boolean>();
 
   constructor(
     private authService: AuthService,

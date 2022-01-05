@@ -13,7 +13,7 @@
 
         <div *ngIf="set && set.stats as stats">
             <app-stats class="learn__stats" [data]="{
-            groups: stats,
+            stats: stats,
             currentGroup: cardsWithCurrentGroup[0].group
         }"></app-stats>
         </div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { switchMap, take, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 })
 export class AuthResolver implements Resolve<boolean> {
   constructor(private authService: AuthService) {}
-  resolve(): Observable<boolean> {
+  resolve() {
     return this.authService.getIsRefreshCalledListener().pipe(
       take(1),
       switchMap((isCalled) => {

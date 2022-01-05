@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Set } from '../shared/models/set.model';
+import { Set } from '../shared/models/set/set.model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,29 +21,34 @@ export class SetsService {
     return this.sets$.asObservable().pipe(
       map((sets) => {
         return sets.map((item) => {
-          let formattedName = (
-            item.name[0].toUpperCase() + item.name.slice(1)
-          ).replace(' ', '');
-          if (formattedName.length > 9) {
-            formattedName = formattedName.slice(0, 7) + '..';
-          }
-          const updatedSet = { ...item, name: formattedName };
-          return updatedSet;
+          item.name = this.formatName(item.name);
+          return item;
         });
       })
     );
+  }
+
+  private formatName(name: string) {
+    const nameWithFirstCapitalLetter = name[0].toUpperCase() + name.slice(1);
+    let formattedName = nameWithFirstCapitalLetter.replace(/ /g, '');
+    if (formattedName.length > 9) {
+      formattedName = formattedName.slice(0, 7) + '..';
+    }
+    return formattedName;
   }
 
   getSets(name?: string) {
     this.page = 1;
     return this.http.get<Set[]>(environment.BACKEND_URL + 'sets').pipe(
       map((sets) => {
-        if (!name) {
-          return sets;
+        if (name) {
+          sets = sets.filter((s) => {
+            const sName = s.name.replace(/ /g, '').toLowerCase();
+            const sNameFilter = name.replace(/ /g, '').toLowerCase();
+            return sName.includes(sNameFilter);
+          });
         }
-        return sets.filter((s) =>
-          s.name.toUpperCase().includes(name.toUpperCase())
-        );
+        return sets;
       }),
       tap((sets) => {
         this.sets$.next(sets);
