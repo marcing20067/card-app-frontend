@@ -1,22 +1,21 @@
 <section class="learn section-padding">
-    <div class="learn__box" *ngIf="!learnEnd">
-        <div class="learn__slider" *ngIf="cardsWithCurrentGroup?.length as cardsLength">
-            <p class="learn__slider-text">{{ activateCardIndex + 1 }}/{{ cardsLength }}</p>
+    <div class="learn__box" *ngIf="!learnEnd && state">
+        <div class="learn__slider">
+            <p class="learn__slider-text">{{ state.cardIndex }}/{{ state.cardsLength }}</p>
             <div class="learn__slider-box">
                 <div class="learn__slider-box-line"></div>
-                <div class="learn__slider-box-dot" [style.left]="100/(cardsLength - 1) * activateCardIndex + '%'"></div>
+                <div class="learn__slider-box-dot" [style.left]="100/(state.cardsLength - 1) * (state.cardIndex - 1) + '%'">
+                </div>
             </div>
         </div>
 
-        <app-cards [setName]="set.name" [cardsView]="cardsView" *ngIf="cardsView" (learnEvent)="onLearn($event)">
+        <app-cards [setName]="set.name" [cardsView]="state.cardsView" (learnEvent)="onLearn($event)">
         </app-cards>
 
-        <div *ngIf="set && set.stats as stats">
-            <app-stats class="learn__stats" [data]="{
-            stats: stats,
-            currentGroup: cardsWithCurrentGroup[0].group
+        <app-stats class="learn__stats" [data]="{
+            stats: set.stats,
+            currentGroup: state.cardsView.active.group
         }"></app-stats>
-        </div>
     </div>
     <div *ngIf="learnEnd" class="learn__complete">
         <p class="learn__complete-heading">Gratulację!</p>
