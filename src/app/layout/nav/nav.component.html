@@ -1,6 +1,6 @@
 <header class="header">
     <nav [class]="class">
-        <div class="nav__box wrapper">
+        <div class="nav__box wrapper" *ngIf="gotFeatures">
             <div class="nav__container">
                 <h1 class="header__h1">
                     <a routerLink="/home" class="header__h1-link">
