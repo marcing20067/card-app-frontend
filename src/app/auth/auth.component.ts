@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -82,8 +83,19 @@ export class AuthComponent implements OnDestroy {
             this.isLoading = false;
             this.signupSuccessfully = true;
           },
-          error: () => {
+          error: (err: HttpErrorResponse) => {
             this.isLoading = false;
+            if (err.status === 409) {
+              const message = err.error.message.toLowerCase();
+              const takenProperty = message.includes('username')
+                ? 'username'
+                : 'email';
+              setTimeout(() => {
+                this.authForm
+                  .get(takenProperty)
+                  ?.setErrors({ alreadyTaken: true });
+              }, 0);
+            }
           },
         });
     }
