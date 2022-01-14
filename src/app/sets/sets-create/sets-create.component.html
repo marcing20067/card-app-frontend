@@ -29,8 +29,9 @@
 
                         <div class="form__cards-container-concept">
                             <app-field>
-                                <input type="text" formControlName="concept" id="concept" appInput #concept>
-                                <label for="concept" label>Pojęcie</label>
+                                <input type="text" formControlName="concept"
+                                    [id]="'concept' + i" appInput #concept>
+                                <label [for]="'concept' + i" label>Pojęcie</label>
                             </app-field>
                             <div *ngIf="card.controls.concept as concept">
                                 <app-error *ngIf="concept.touched && concept.errors?.required">

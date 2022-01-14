@@ -67,17 +67,6 @@ export class SetsCreateComponent implements OnInit {
     }
   }
 
-  private setValuesOnForm() {
-    for (let i = 0; i < this.oldSet.cards.length; i++) {
-      this.addCard();
-    }
-
-    this.setsCreateForm.patchValue({
-      name: this.oldSet.name,
-      cards: this.oldSet.cards,
-    });
-  }
-
   addCard() {
     const newCard = this.fb.group({
       concept: ['', [Validators.required, Validators.maxLength(50)]],
@@ -89,12 +78,23 @@ export class SetsCreateComponent implements OnInit {
     this.cards.push(newCard);
   }
 
+  private setValuesOnForm() {
+    for (let i = 0; i < this.oldSet.cards.length; i++) {
+      this.addCard();
+    }
+
+    this.setsCreateForm.patchValue({
+      name: this.oldSet.name,
+      cards: this.oldSet.cards,
+    });
+  }
+
   get cards() {
-    interface Cards extends Omit<FormArray, 'controls'> {
+    interface FormCardsGroup extends Omit<FormArray, 'controls'> {
       controls: FormGroup[];
     }
 
-    return this.setsCreateForm.get('cards') as unknown as Cards;
+    return this.setsCreateForm.get('cards') as unknown as FormCardsGroup;
   }
 
   onSubmit() {
@@ -153,7 +153,6 @@ export class SetsCreateComponent implements OnInit {
 
   private setNameAlreadyTakenError() {
     setTimeout(() => {
-      // Waiting for end *ngIf works
       this.setsCreateForm.get('name')?.setErrors({ alreadytaken: true });
     }, 0);
   }
@@ -174,14 +173,17 @@ export class SetsCreateComponent implements OnInit {
       const duplicatedInputs = this.inputs
         .toArray()
         .filter((i) => i.nativeElement.value === duplicateConcept);
-      const duplicatedInput = duplicatedInputs[0].nativeElement;
 
+      const lastDuplicatedInputIndex = duplicatedInputs.length - 1;
+      const duplicatedInput =
+        duplicatedInputs[lastDuplicatedInputIndex].nativeElement;
       this.scrollToInput(duplicatedInput);
 
       const controlsWithDuplicatedValue = this.cards.controls.filter(
         (c) => c.value.concept === duplicateConcept
       );
-      controlsWithDuplicatedValue[0]
+
+      controlsWithDuplicatedValue[lastDuplicatedInputIndex]
         .get('concept')
         ?.setErrors({ duplicated: true });
     }
@@ -212,8 +214,7 @@ export class SetsCreateComponent implements OnInit {
 
       if (notChangedElIndex >= 0) {
         const notChangedEl = this.oldSet.cards[notChangedElIndex];
-        const elGroupFullName =
-          `group${notChangedEl.group}` as keyof Stats;
+        const elGroupFullName = `group${notChangedEl.group}` as keyof Stats;
         stats[elGroupFullName] = stats[elGroupFullName] + 1;
       } else {
         c.group = 1;
