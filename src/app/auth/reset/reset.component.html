@@ -1,4 +1,6 @@
-<section class="reset wrapper section-padding">
+
+<app-loader *ngIf="isLoading"></app-loader>
+<section class="reset wrapper section-padding" *ngIf="!isLoading">
     <div class="reset__username" *ngIf="mode === 'username'">
         <h2 class="reset__title title">Zamiana nazwy użytkownika</h2>
         <form class="form" [formGroup]="resetForm" (ngSubmit)="onSubmit()">
@@ -17,6 +19,8 @@
                         Nie może zawierać polskich liter.</app-error>
                     <app-error *ngIf="newUsername.errors?.minlength">
                         Nazwa musi być dłuższa niż 4.</app-error>
+                    <app-error *ngIf="newUsername.errors?.alreadyTaken">
+                       Taki użytkownik już istnieje.</app-error>
                 </div>
             </div>
 

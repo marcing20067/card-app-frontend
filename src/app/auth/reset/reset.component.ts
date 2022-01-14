@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -15,6 +16,7 @@ export class ResetComponent implements OnInit, OnDestroy {
   private formSub!: Subscription;
   resetForm!: FormGroup;
   mode!: string;
+  isLoading = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,17 +41,31 @@ export class ResetComponent implements OnInit, OnDestroy {
 
     this.formSub = this.resetForm.valueChanges.subscribe((value) => {
       const isSimilar = value.newPassword === value.repeatNewPassword;
-      this.resetForm.get('repeatNewPassword')?.setErrors(isSimilar ? null : { similar: 'false' });
+      this.resetForm
+        .get('repeatNewPassword')
+        ?.setErrors(isSimilar ? null : { similar: 'false' });
     });
   }
 
   onSubmit() {
+    this.isLoading = true;
     const token = this.route.snapshot.params.token as string;
     const mode = this.mode as 'username' | 'password';
     this.authService
       .resetWithToken(mode, token, this.resetForm.value)
       .pipe(take(1))
-      .subscribe();
+      .subscribe({
+        error: (err: HttpErrorResponse) => {
+          this.isLoading = false;
+          if (err.status === 409) {
+            setTimeout(() => {
+              this.resetForm
+                .get('newUsername')!
+                .setErrors({ alreadyTaken: true });
+            }, 0);
+          }
+        },
+      });
   }
 
   ngOnDestroy() {
