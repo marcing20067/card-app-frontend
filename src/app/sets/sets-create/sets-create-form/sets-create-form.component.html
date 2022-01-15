@@ -1,0 +1,89 @@
+<form class="form" [formGroup]="setsCreateForm" (ngSubmit)="onSubmit()">
+    <div class="form__set-data">
+        <div class="form__set-data-box wrapper">
+            <app-field>
+                <input type="text" formControlName="name" id="name" appInput>
+                <label for="name" label>Tytuł zestawu</label>
+            </app-field>
+            <div *ngIf="setsCreateForm.get('name') as name">
+                <app-error *ngIf="name.errors?.alreadytaken">
+                    Ta nazwa zestawu jest już zajęta.
+                </app-error>
+                <app-error *ngIf="name.errors?.required && name.touched">To pole jest obowiązkowe</app-error>
+                <app-error *ngIf="name.errors?.minlength">Nazwa musi mieć co najmniej 3 znaki</app-error>
+                <app-error *ngIf="name.errors?.maxlength">Nazwa może mieć maksymalnie 25 znaków</app-error>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper form__box">
+        <div class="form__cards" formArrayName="cards">
+            <div *ngFor="let card of cards.controls; index as i">
+                <div [formGroupName]="i" class="form__cards-container">
+                    <p class="form__cards-container-heading">
+                        Fiszka <span>{{ i < 10 ? '0' : '' }}{{ i + 1 }}</span>
+                    </p>
+
+                    <div class="form__cards-container-concept">
+                        <app-field>
+                            <input type="text" formControlName="concept" [id]="'concept' + i" appInput #concept>
+                            <label [for]="'concept' + i" label>Pojęcie</label>
+                        </app-field>
+                        <div *ngIf="card.controls.concept as concept">
+                            <app-error *ngIf="concept.touched && concept.errors?.required">
+                                To pole jest obowiązkowe.
+                            </app-error>
+                            <app-error *ngIf="concept.errors?.duplicated">
+                                Taka fiszka już istnieje.
+                            </app-error>
+                            <app-error *ngIf="concept.errors?.maxlength">
+                                To pole może mieć maksymalnie 50 znaków.
+                            </app-error>
+                        </div>
+                    </div>
+
+                    <div class="form__cards-container-definition">
+                        <app-field>
+                            <input type="text" formControlName="definition" id="definition" appInput>
+                            <label for="definition" label>Definicja</label>
+                        </app-field>
+                        <div *ngIf="card.controls.definition as definition">
+                            <app-error *ngIf="definition.touched && definition.errors?.required ">
+                                To pole jest obowiązkowe.
+                            </app-error>
+
+                            <app-error *ngIf="definition.errors?.maxlength">
+                                To pole może mieć maksymalnie 100 znaki.
+                            </app-error>
+                        </div>
+                    </div>
+
+                    <div class="form__cards-container-example">
+                        <app-field>
+                            <input type="text" id="example" appInput formControlName="example">
+                            <label for="example" label>Przykład użycia(opcjonalne)</label>
+                        </app-field>
+
+                        <div *ngIf="card.controls.example as example">
+                            <app-error *ngIf="example.errors?.maxlength">
+                                To pole może mieć maksymalnie 100 znaki.
+                            </app-error>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <hr class="form__line">
+        <div class="form__buttons">
+            <button class="form__buttons-item form__buttons-item--add-card" type="button" (click)="addCard()">
+                <img src="/assets/icons/plus.svg" alt="">
+                Dodaj fiszkę
+            </button>
+            <button class="form__buttons-item form__buttons-item--submit" type="submit"
+                [disabled]="setsCreateForm.invalid">Zapisz</button>
+        </div>
+    </div>
+</form>

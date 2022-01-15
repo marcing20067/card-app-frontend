@@ -1,12 +1,8 @@
 import {
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   Output,
-  QueryList,
-  ViewChild,
-  ViewChildren,
 } from '@angular/core';
 import { Card } from 'src/app/shared/models/set/card.model';
 
@@ -16,11 +12,6 @@ import { Card } from 'src/app/shared/models/set/card.model';
   styleUrls: ['./cards.component.scss'],
 })
 export class CardsComponent {
-  @ViewChildren('activate', { read: ElementRef })
-  activateCard!: QueryList<ElementRef>;
-  @ViewChild('know') know!: ElementRef;
-  @ViewChild('dontKnow') dontKnow!: ElementRef;
-
   @Input() setName = '';
   @Input() cardsView!: {
     active: Card;
