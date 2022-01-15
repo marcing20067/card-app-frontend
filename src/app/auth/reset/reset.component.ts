@@ -1,11 +1,16 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import * as AuthValidators from '../validators';
+import { ResetUsernameFormComponent } from './reset-username-form/reset-username-form.component';
 
 @Component({
   selector: 'app-reset',
@@ -13,55 +18,35 @@ import * as AuthValidators from '../validators';
   styleUrls: ['./reset.component.scss'],
 })
 export class ResetComponent implements OnInit, OnDestroy {
+  @ViewChildren('resetUsername')
+  resetUsernameForm!: QueryList<ResetUsernameFormComponent>;
+
   private formSub!: Subscription;
-  resetForm!: FormGroup;
   mode!: string;
   isLoading = false;
 
   constructor(
     private route: ActivatedRoute,
-    private fb: FormBuilder,
     private authService: AuthService
   ) {}
 
   ngOnInit() {
     this.mode = this.route.snapshot.url[1].path;
-    if (this.mode === 'username') {
-      this.resetForm = this.fb.group({
-        newUsername: ['', AuthValidators.username],
-      });
-    }
-
-    if (this.mode === 'password') {
-      this.resetForm = this.fb.group({
-        newPassword: ['', AuthValidators.password],
-        repeatNewPassword: ['', AuthValidators.repeatPassword],
-      });
-    }
-
-    this.formSub = this.resetForm.valueChanges.subscribe((value) => {
-      const isSimilar = value.newPassword === value.repeatNewPassword;
-      this.resetForm
-        .get('repeatNewPassword')
-        ?.setErrors(isSimilar ? null : { similar: 'false' });
-    });
   }
 
-  onSubmit() {
+  onSubmit(data: any) {
     this.isLoading = true;
     const token = this.route.snapshot.params.token as string;
     const mode = this.mode as 'username' | 'password';
     this.authService
-      .resetWithToken(mode, token, this.resetForm.value)
+      .resetWithToken(mode, token, data)
       .pipe(take(1))
       .subscribe({
         error: (err: HttpErrorResponse) => {
           this.isLoading = false;
           if (err.status === 409) {
             setTimeout(() => {
-              this.resetForm
-                .get('newUsername')!
-                .setErrors({ alreadyTaken: true });
+              this.resetUsernameForm.first.setAlreadyTakenErrorOnUsername();
             }, 0);
           }
         },

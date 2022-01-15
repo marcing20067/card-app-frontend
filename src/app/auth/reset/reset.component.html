@@ -3,60 +3,10 @@
 <section class="reset wrapper section-padding" *ngIf="!isLoading">
     <div class="reset__username" *ngIf="mode === 'username'">
         <h2 class="reset__title title">Zamiana nazwy użytkownika</h2>
-        <form class="form" [formGroup]="resetForm" (ngSubmit)="onSubmit()">
-            <div class="form__box">
-                <app-field class="form__field">
-                    <input type="text" formControlName="newUsername" id="new-username" appInput>
-                    <label for="new-username" label>Nazwa użytkownika</label>
-                    <app-icon src="/assets/icons/user.svg" alt="" left inputId="new-username"></app-icon>
-                </app-field>
-
-                <div *ngIf="resetForm.get('newUsername') as newUsername">
-                    <app-error *ngIf="newUsername.errors?.required && newUsername.touched">
-                        To pole jest obowiązkowe.</app-error>
-                    <app-error *ngIf="newUsername.errors?.pattern">
-                        Nazwa może się składać jedynie z liter. <br>
-                        Nie może zawierać polskich liter.</app-error>
-                    <app-error *ngIf="newUsername.errors?.minlength">
-                        Nazwa musi być dłuższa niż 4.</app-error>
-                    <app-error *ngIf="newUsername.errors?.alreadyTaken">
-                       Taki użytkownik już istnieje.</app-error>
-                </div>
-            </div>
-
-            <button class="form__submit button" [disabled]="resetForm.invalid" type="submit">Zmień</button>
-        </form>
+        <app-reset-username-form #resetUsername (submitEvent)="onSubmit($event)"></app-reset-username-form>
     </div>
     <div class="reset__password" *ngIf="mode === 'password'">
         <h2 class="reset__title title">Zamiana hasła</h2>
-        <form class="form" [formGroup]="resetForm" (ngSubmit)="onSubmit()">
-            <div class="form__box">
-                <app-field class="form__field">
-                    <input type="password" formControlName="newPassword" id="new-password" appInput>
-                    <label for="new-password" label>Hasło</label>
-                    <app-icon src="/assets/icons/key.svg" alt="" left inputId="new-password"></app-icon>
-                </app-field>
-
-                <div *ngIf="resetForm.get('newPassword') as newPassword">
-                    <app-error *ngIf="newPassword.errors?.required && newPassword.touched">
-                        To pole jest obowiązkowe.</app-error>
-                    <app-error *ngIf="newPassword.errors?.minlength">
-                        Hasło musi być dłuższe niż 8 znaków.</app-error>
-                </div>
-
-                <app-field class="form__field">
-                    <input type="password" formControlName="repeatNewPassword" id="repeat-new-password" appInput>
-                    <label for="repeat-new-password" label>Powtórz hasło</label>
-                    <app-icon src="/assets/icons/key.svg" alt="" left inputId="repeat-new-password"></app-icon>
-                </app-field>
-
-                <div *ngIf="resetForm.get('repeatNewPassword') as repeatNewPassword">
-                    <app-error *ngIf="repeatNewPassword.errors?.similar && repeatNewPassword.value !== ''">
-                        To pole nie jest takie same jak hasło.</app-error>
-                </div>
-            </div>
-
-            <button class="form__submit button" [disabled]="resetForm.invalid" type="submit">Zmień</button>
-        </form>
+        <app-reset-password-form (submitEvent)="onSubmit($event)"></app-reset-password-form>
     </div>
 </section>

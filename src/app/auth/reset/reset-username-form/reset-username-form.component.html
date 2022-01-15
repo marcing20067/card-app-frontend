@@ -1,0 +1,23 @@
+<form class="form" [formGroup]="resetForm" (ngSubmit)="onSubmit()">
+    <div class="form__box">
+        <app-field class="form__field">
+            <input type="text" formControlName="newUsername" id="new-username" appInput>
+            <label for="new-username" label>Nazwa użytkownika</label>
+            <app-icon src="/assets/icons/user.svg" alt="" left inputId="new-username"></app-icon>
+        </app-field>
+
+        <div *ngIf="resetForm.get('newUsername') as newUsername">
+            <app-error *ngIf="newUsername.errors?.required && newUsername.touched">
+                To pole jest obowiązkowe.</app-error>
+            <app-error *ngIf="newUsername.errors?.pattern">
+                Nazwa może się składać jedynie z liter. <br>
+                Nie może zawierać polskich liter.</app-error>
+            <app-error *ngIf="newUsername.errors?.minlength">
+                Nazwa musi być dłuższa niż 4.</app-error>
+            <app-error *ngIf="newUsername.errors?.alreadyTaken">
+               Taki użytkownik już istnieje.</app-error>
+        </div>
+    </div>
+
+    <button class="form__submit button" [disabled]="resetForm.invalid" type="submit">Zmień</button>
+</form>
