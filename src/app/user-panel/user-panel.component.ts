@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { UserStatus } from '../shared/models/userStatus.model';
 import { AuthService } from '../shared/services/auth/auth.service';
@@ -14,7 +13,7 @@ export class UserPanelComponent implements OnInit {
   userStatus!: UserStatus;
   showPopup = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
     this.authService.userStatus().pipe(take(1)).subscribe((status) => {
@@ -32,7 +31,6 @@ export class UserPanelComponent implements OnInit {
   }
 
   onClose() {
-    this.router.navigate(['/auth/login']);
+    this.showPopup = false;
   }
-
 }

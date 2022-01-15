@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 @Directive()
 export abstract class ResetForm {
   abstract resetForm: FormGroup;
+
   @Output() submitEvent = new EventEmitter<any>();
 
   onSubmit() {
