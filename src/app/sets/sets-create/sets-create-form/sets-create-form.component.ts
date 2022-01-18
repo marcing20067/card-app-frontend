@@ -30,7 +30,7 @@ export class SetsCreateFormComponent implements OnInit {
 
   @Input() set!: Set;
   @Input() mode!: string;
-  @Output() submitEvent = new EventEmitter<Set>();
+  @Output() submit = new EventEmitter<Set>();
 
   constructor(private fb: FormBuilder) {}
 
@@ -100,7 +100,7 @@ export class SetsCreateFormComponent implements OnInit {
       };
     }
 
-    this.submitEvent.emit(newSet);
+    this.submit.emit(newSet);
   }
 
   private getDuplicatedCard(cards: Card[]) {

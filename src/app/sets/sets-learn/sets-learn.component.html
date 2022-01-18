@@ -9,7 +9,7 @@
             </div>
         </div>
 
-        <app-cards [setName]="set.name" [cardsView]="state.cardsView" (learnEvent)="onLearn($event)">
+        <app-cards [setName]="set.name" [cardsView]="state.cardsView" (learn)="onLearn($event)">
         </app-cards>
 
         <app-stats class="learn__stats" [data]="{

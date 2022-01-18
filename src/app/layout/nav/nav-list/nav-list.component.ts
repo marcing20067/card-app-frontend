@@ -13,7 +13,7 @@ import { TokenService } from 'src/app/shared/services/token/token.service';
 export class NavListComponent {
   isActive = false;
   isAuth$ = this.tokenService.getIsAuthListener();
-  @Output() navEvent = new EventEmitter<boolean>();
+  @Output() nav = new EventEmitter<boolean>();
 
   constructor(
     private authService: AuthService,
@@ -26,7 +26,7 @@ export class NavListComponent {
 
   onNav(value: boolean) {
     this.isActive = value;
-    this.navEvent.emit(value);
+    this.nav.emit(value);
     if (this.isActive) {
       this.scrollService.blockScroll();
     }
