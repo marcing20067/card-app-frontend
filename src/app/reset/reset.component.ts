@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import * as AuthValidators from '../validators';
+import { AuthValidators } from '../shared/util/user-validators';
 import { ResetPasswordData } from './reset-password-form/reset-password-data.model';
 import { ResetUsernameData } from './reset-username-form/reset-username-data.model';
 
@@ -23,7 +23,7 @@ export class ResetComponent {
     private authService: AuthService,
     private fb: FormBuilder
   ) {
-    this.mode = this.route.snapshot.url[1].path;
+    this.mode = this.route.snapshot.url[0].path;
     if (this.mode === 'username') {
       this.form = this.fb.group({
         newUsername: ['', AuthValidators.username],
@@ -31,7 +31,7 @@ export class ResetComponent {
     }
 
     if (this.mode === 'password') {
-      this.fb.group({
+      this.form = this.fb.group({
         newPassword: ['', AuthValidators.password],
         repeatNewPassword: ['', AuthValidators.repeatPassword],
       });
@@ -59,7 +59,7 @@ export class ResetComponent {
 
   setAlreadyTakenErrorOnUsername() {
     setTimeout(() => {
-      this.form.get('username')!.setErrors({ alreadyTaken: true });
+      this.form.get('newUsername')!.setErrors({ alreadyTaken: true });
     }, 0)
   }
 }

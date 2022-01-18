@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ActivationComponent } from './activation/activation.component';
 import { AuthComponent } from './auth.component';
-import { ResetComponent } from './reset/reset.component';
 
 const routes: Routes = [
   {
@@ -21,14 +20,6 @@ const routes: Routes = [
   {
     path: 'activation/:activationToken',
     component: ActivationComponent,
-  },
-  {
-    path: 'reset/username/:token',
-    component: ResetComponent,
-  },
-  {
-    path: 'reset/password/:token',
-    component: ResetComponent,
   },
 ];
 

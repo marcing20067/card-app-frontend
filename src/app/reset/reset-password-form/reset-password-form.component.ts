@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AuthForm } from '../../auth-form';
+import { Form } from 'src/app/shared/util/form';
 import { ResetPasswordData } from './reset-password-data.model';
 
 @Component({
@@ -9,7 +9,7 @@ import { ResetPasswordData } from './reset-password-data.model';
   styleUrls: ['./reset-password-form.component.scss'],
 })
 export class ResetPasswordFormComponent
-  extends AuthForm<ResetPasswordData>
+  extends Form<ResetPasswordData>
   implements OnDestroy
 {
   formSub!: Subscription;

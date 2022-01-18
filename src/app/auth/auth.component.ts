@@ -4,9 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { AuthService } from '../shared/services/auth/auth.service';
+import { AuthValidators } from '../shared/util/user-validators';
 import { LoginData } from './login-form/login-data.model';
 import { SignupData } from './signup-form/signup-data.model';
-import * as AuthValidators from './validators';
 
 @Component({
   selector: 'app-auth',

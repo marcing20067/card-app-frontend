@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
-import { AuthForm } from '../auth-form';
+import { Form } from '../../shared/util/form';
 import { SignupData } from './signup-data.model';
 
 @Component({
@@ -10,7 +10,7 @@ import { SignupData } from './signup-data.model';
   styleUrls: ['./signup-form.component.scss'],
 })
 export class SignupFormComponent
-  extends AuthForm<SignupData>
+  extends Form<SignupData>
   implements OnDestroy
 {
   private formSub!: Subscription;

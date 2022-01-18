@@ -19,6 +19,11 @@ const routes: Routes = [
     canLoad: [RefreshGuard],
   },
   {
+    path: 'reset',
+    loadChildren: () =>
+      import('./reset/reset.module').then((m) => m.ResetModule),
+  },
+  {
     path: 'sets',
     loadChildren: () => import('./sets/sets.module').then((m) => m.SetsModule),
     canLoad: [RefreshGuard],
@@ -38,7 +43,9 @@ const routes: Routes = [
   {
     path: 'server-error',
     loadChildren: () =>
-      import('./server-error/server-error.module').then((m) => m.ServerErrorModule),
+      import('./server-error/server-error.module').then(
+        (m) => m.ServerErrorModule
+      ),
     canLoad: [RefreshGuard],
   },
   {

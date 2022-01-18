@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthForm } from '../../auth-form';
+import { Form } from 'src/app/shared/util/form';
 import { ResetUsernameData } from './reset-username-data.model';
 
 @Component({
@@ -7,7 +7,7 @@ import { ResetUsernameData } from './reset-username-data.model';
   templateUrl: './reset-username-form.component.html',
   styleUrls: ['./reset-username-form.component.scss'],
 })
-export class ResetUsernameFormComponent extends AuthForm<ResetUsernameData> {
+export class ResetUsernameFormComponent extends Form<ResetUsernameData> {
   constructor() {
     super();
   }

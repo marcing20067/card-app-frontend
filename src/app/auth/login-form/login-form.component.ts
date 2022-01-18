@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthForm } from '../auth-form';
+import { Form } from '../../shared/util/form';
 import { LoginData } from './login-data.model';
 
 @Component({
@@ -7,7 +7,7 @@ import { LoginData } from './login-data.model';
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss'],
 })
-export class LoginFormComponent extends AuthForm<LoginData> {
+export class LoginFormComponent extends Form<LoginData> {
   constructor() {
     super();
   }
