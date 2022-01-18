@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { NewUser } from './new-user.model';
 import { User } from './user.model';
-import { take, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { TokenService } from '../token/token.service';
 import { Router } from '@angular/router';
 import { UserStatus } from '../../models/user-status.model';
@@ -92,12 +92,6 @@ export class AuthService {
       );
   }
 
-  reset(mode: 'password' | 'username', username: string) {
-    return this.http.post(environment.BACKEND_URL + `reset/${mode}`, {
-      username: username,
-    });
-  }
-
   logout() {
     return this.http.get(environment.BACKEND_URL + 'auth/logout').pipe(
       tap(() => {
@@ -108,13 +102,9 @@ export class AuthService {
     );
   }
 
-  resetWithToken(mode: 'password' | 'username', token: string, data: any) {
-    return this.http
-      .put(environment.BACKEND_URL + `reset/${mode}/${token}`, data)
-      .pipe(
-        tap(() => {
-          this.logout().pipe(take(1)).subscribe();
-        })
-      );
+  reset(mode: 'password' | 'username', username: string) {
+    return this.http.post(environment.BACKEND_URL + `reset/${mode}`, {
+      username: username,
+    });
   }
 }

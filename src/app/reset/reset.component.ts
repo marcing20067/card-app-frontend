@@ -3,10 +3,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { AuthValidators } from '../shared/util/user-validators';
 import { ResetPasswordData } from './reset-password-form/reset-password-data.model';
 import { ResetUsernameData } from './reset-username-form/reset-username-data.model';
+import { ResetService } from './reset.service';
 
 @Component({
   selector: 'app-reset',
@@ -20,7 +20,7 @@ export class ResetComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private authService: AuthService,
+    private resetService: ResetService,
     private fb: FormBuilder
   ) {
     this.mode = this.route.snapshot.url[0].path;
@@ -42,7 +42,7 @@ export class ResetComponent {
     this.isLoading = true;
     const token = this.route.snapshot.params.token as string;
     const mode = this.mode as 'username' | 'password';
-    this.authService
+    this.resetService
       .resetWithToken(mode, token, data)
       .pipe(take(1))
       .subscribe({
