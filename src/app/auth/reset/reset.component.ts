@@ -1,40 +1,44 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  QueryList,
-  ViewChildren,
-} from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { ResetUsernameFormComponent } from './reset-username-form/reset-username-form.component';
+import * as AuthValidators from '../validators';
+import { ResetPasswordData } from './reset-password-form/reset-password-data.model';
+import { ResetUsernameData } from './reset-username-form/reset-username-data.model';
 
 @Component({
   selector: 'app-reset',
   templateUrl: './reset.component.html',
   styleUrls: ['./reset.component.scss'],
 })
-export class ResetComponent implements OnInit, OnDestroy {
-  @ViewChildren('resetUsername')
-  resetUsernameForm!: QueryList<ResetUsernameFormComponent>;
-
-  private formSub!: Subscription;
+export class ResetComponent {
+  form!: FormGroup;
   mode!: string;
   isLoading = false;
 
   constructor(
     private route: ActivatedRoute,
-    private authService: AuthService
-  ) {}
-
-  ngOnInit() {
+    private authService: AuthService,
+    private fb: FormBuilder
+  ) {
     this.mode = this.route.snapshot.url[1].path;
+    if (this.mode === 'username') {
+      this.form = this.fb.group({
+        newUsername: ['', AuthValidators.username],
+      });
+    }
+
+    if (this.mode === 'password') {
+      this.fb.group({
+        newPassword: ['', AuthValidators.password],
+        repeatNewPassword: ['', AuthValidators.repeatPassword],
+      });
+    }
   }
 
-  onSubmit(data: any) {
+  onSubmit(data: ResetPasswordData | ResetUsernameData) {
     this.isLoading = true;
     const token = this.route.snapshot.params.token as string;
     const mode = this.mode as 'username' | 'password';
@@ -46,16 +50,16 @@ export class ResetComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           if (err.status === 409) {
             setTimeout(() => {
-              this.resetUsernameForm.first.setAlreadyTakenErrorOnUsername();
+              this.setAlreadyTakenErrorOnUsername();
             }, 0);
           }
         },
       });
   }
 
-  ngOnDestroy() {
-    if (this.formSub) {
-      this.formSub.unsubscribe();
-    }
+  setAlreadyTakenErrorOnUsername() {
+    setTimeout(() => {
+      this.form.get('username')!.setErrors({ alreadyTaken: true });
+    }, 0)
   }
 }

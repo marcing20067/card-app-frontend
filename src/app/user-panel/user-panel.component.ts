@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
-import { UserStatus } from '../shared/models/userStatus.model';
+import { UserStatus } from '../shared/models/user-status.model';
 import { AuthService } from '../shared/services/auth/auth.service';
 
 @Component({

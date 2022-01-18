@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FieldService } from '../field.service';
-import { FieldState } from '../fieldState.model';
+import { FieldState } from '../field-state.model';
 
 @Component({
   selector: 'app-icon',

@@ -6,7 +6,7 @@ import {
   switchMap,
   take,
 } from 'rxjs/operators';
-import { FieldsState, FieldState } from './fieldState.model';
+import { FieldsState, FieldState } from './field-state.model';
 
 @Injectable({
   providedIn: 'root',

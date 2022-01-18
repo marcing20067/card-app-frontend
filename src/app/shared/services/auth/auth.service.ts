@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { newUser } from './newUser.model';
+import { NewUser } from './new-user.model';
 import { User } from './user.model';
 import { take, tap } from 'rxjs/operators';
 import { TokenService } from '../token/token.service';
 import { Router } from '@angular/router';
-import { UserStatus } from '../../models/userStatus.model';
+import { UserStatus } from '../../models/user-status.model';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -74,7 +74,7 @@ export class AuthService {
       );
   }
 
-  signup(user: newUser) {
+  signup(user: NewUser) {
     return this.http.post(environment.BACKEND_URL + 'auth/signup', user);
   }
 

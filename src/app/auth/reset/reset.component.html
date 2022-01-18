@@ -3,10 +3,10 @@
 <section class="reset wrapper section-padding" *ngIf="!isLoading">
     <div class="reset__username" *ngIf="mode === 'username'">
         <h2 class="reset__title title">Zamiana nazwy użytkownika</h2>
-        <app-reset-username-form #resetUsername (submitEvent)="onSubmit($event)"></app-reset-username-form>
+        <app-reset-username-form [form]="form" (submit)="onSubmit($event)"></app-reset-username-form>
     </div>
     <div class="reset__password" *ngIf="mode === 'password'">
         <h2 class="reset__title title">Zamiana hasła</h2>
-        <app-reset-password-form (submitEvent)="onSubmit($event)"></app-reset-password-form>
+        <app-reset-password-form [form]="form" (submit)="onSubmit($event)"></app-reset-password-form>
     </div>
 </section>

@@ -3,84 +3,9 @@
     <div class="auth__box" *ngIf="!signupSuccessfully">
         <app-circles [class]="'auth__box-circles auth__box-circles--' + mode"></app-circles>
         <h2 class="auth__title title">{{ this.mode === 'login' ? 'Logowanie' : 'Rejestracja' }}</h2>
-        <form [formGroup]="authForm" class="form" (ngSubmit)="onSubmit()">
-            <div class="form__box">
-                <app-field>
-                    <input type="text" formControlName="username" id="username" appInput>
-                    <label for="username" label>Nazwa użytkownika</label>
-                    <app-icon src="/assets/icons/user.svg" alt="" left inputId="username"></app-icon>
-                </app-field>
 
-                <div *ngIf="mode === 'signup' && authForm.get('username') as username">
-                    <app-error *ngIf="username.errors?.required && username.touched">
-                        To pole jest obowiązkowe.</app-error>
-                    <app-error *ngIf="username.errors?.pattern">
-                        Nazwa może się składać jedynie z liter. <br>
-                        Nie może zawierać polskich liter.</app-error>
-                    <app-error *ngIf="username.errors?.minlength">
-                        Nazwa musi być dłuższa niż 4.</app-error>
-                    <app-error *ngIf="username.errors?.alreadyTaken">
-                        Taki użytkownik już istnieje.</app-error>
-                </div>
-            </div>
-
-            <div class="form__box" *ngIf="mode === 'signup'">
-                <app-field>
-                    <input type="text" formControlName="email" id="email" appInput>
-                    <label for="email" label>E-mail</label>
-                    <app-icon src="/assets/icons/mail.svg" alt="" left inputId="email"></app-icon>
-                </app-field>
-
-                <div *ngIf="authForm.get('email') as email">
-                    <app-error *ngIf="email.errors?.required && email.touched">
-                        To pole jest obowiązkowe.</app-error>
-                    <app-error *ngIf="email.errors?.pattern">
-                        Podaj poprawny email.</app-error>
-                        <app-error *ngIf="email.errors?.alreadyTaken">
-                            Ten email jest już zajęty.</app-error>
-                </div>
-            </div>
-
-            <div class="form__box">
-                <app-field>
-                    <input type="password" formControlName="password" id="password" #password appInput>
-                    <label for="password" label>Hasło</label>
-                    <app-icon src="/assets/icons/key.svg" alt="" left inputId="password"></app-icon>
-                </app-field>
-
-                <div *ngIf="mode === 'signup' && authForm.get('password') as password">
-                    <app-error *ngIf="password.errors?.required && password.touched">
-                        To pole jest obowiązkowe.</app-error>
-                    <app-error *ngIf="password.errors?.minlength">
-                        Hasło musi być dłuższe niż 8 znaków.</app-error>
-                </div>
-            </div>
-
-
-            <div class="form__box" *ngIf="mode === 'signup'">
-                <app-field>
-                    <input type="password" formControlName="repeatPassword" id="repeat-password" #repeatPassword
-                        appInput>
-                    <label for="repeat-password" label>Powtórz hasło</label>
-                    <app-icon src="/assets/icons/key.svg" alt="" left inputId="repeat-password"></app-icon>
-                </app-field>
-
-                <div *ngIf="authForm.get('repeatPassword') as repeatPassword">
-                    <app-error *ngIf="repeatPassword.errors?.similar && repeatPassword.value !== ''">
-                        To pole nie jest takie same jak hasło.</app-error>
-                </div>
-            </div>
-
-            <div class="form__box form__box--checkbox" *ngIf="mode === 'login'">
-                <input type="checkbox" formControlName="rememberMe" id="remember-me" class="form__box-checkbox">
-                <label for="remember-me" class="form__box-label--checkbox">Zapamiętaj mnie</label>
-            </div>
-
-            <button type="submit" class="form__button button button--orange"
-                [disabled]="authForm.invalid">
-                {{ mode === 'login' ? 'Zaloguj się' : 'Zarejestuj się' }}
-            </button>
-        </form>
+        <app-login-form [form]="form" *ngIf="mode === 'login'" (submit)="onSubmit($event)"></app-login-form>
+        <app-signup-form [form]="form" *ngIf="mode === 'signup'" (submit)="onSubmit($event)"></app-signup-form>
 
         <a [routerLink]="[ '/auth', mode === 'login' ? 'signup' : 'login']" class="auth__link">
             {{ mode === 'login' ? 'Zarejestuj się' : 'Zaloguj się' }}

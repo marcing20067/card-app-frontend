@@ -1,10 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { distinctUntilChanged, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { AuthService } from '../shared/services/auth/auth.service';
+import { LoginData } from './login-form/login-data.model';
+import { SignupData } from './signup-form/signup-data.model';
 import * as AuthValidators from './validators';
 
 @Component({
@@ -12,60 +13,43 @@ import * as AuthValidators from './validators';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
 })
-export class AuthComponent implements OnDestroy {
-  private formSub!: Subscription;
+export class AuthComponent {
+  form!: FormGroup;
   isLoading = false;
   mode!: string;
   signupSuccessfully = false;
-  authForm!: FormGroup;
 
   constructor(
-    private fb: FormBuilder,
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private fb: FormBuilder
   ) {
     this.mode = this.route.snapshot.url[0].path;
 
-    if (this.mode === 'login') {
-      this.authForm = this.fb.group({
-        username: ['', AuthValidators.username],
-        password: ['', AuthValidators.password],
-        rememberMe: [false, Validators.required],
-      });
-    }
-
     if (this.mode === 'signup') {
-      this.authForm = this.fb.group({
+      this.form = this.fb.group({
         username: ['', AuthValidators.username],
         password: ['', AuthValidators.password],
         email: ['', AuthValidators.email],
         repeatPassword: ['', AuthValidators.repeatPassword],
       });
+    }
 
-      this.formSub = this.authForm.valueChanges
-        .pipe(
-          distinctUntilChanged((prev, next) => {
-            return (
-              prev.repeatPassword === next.repeatPassword &&
-              prev.password === next.password
-            );
-          })
-        )
-        .subscribe((value) => {
-          const isSimilar = value.password === value.repeatPassword;
-          this.authForm
-            .get('repeatPassword')
-            ?.setErrors(isSimilar ? null : { similar: 'false' });
-        });
+    if (this.mode === 'login') {
+      this.form = this.fb.group({
+        username: ['', AuthValidators.username],
+        password: ['', AuthValidators.password],
+        rememberMe: [false, Validators.required],
+      });
     }
   }
 
-  onSubmit() {
+  onSubmit(data: LoginData | SignupData) {
     this.isLoading = true;
-    const data = this.authForm.value;
     if (this.mode === 'login') {
+      const loginData = data as LoginData;
       this.authService
-        .login(data, data.rememberMe)
+        .login(loginData, loginData.rememberMe)
         .pipe(take(1))
         .subscribe({
           error: () => {
@@ -75,8 +59,9 @@ export class AuthComponent implements OnDestroy {
     }
 
     if (this.mode === 'signup') {
+      const signupData = data as SignupData;
       this.authService
-        .signup(data)
+        .signup(signupData)
         .pipe(take(1))
         .subscribe({
           next: () => {
@@ -90,20 +75,16 @@ export class AuthComponent implements OnDestroy {
               const takenProperty = message.includes('username')
                 ? 'username'
                 : 'email';
-              setTimeout(() => {
-                this.authForm
-                  .get(takenProperty)
-                  ?.setErrors({ alreadyTaken: true });
-              }, 0);
+              this.setAlreadyTakenError(takenProperty);
             }
           },
         });
     }
   }
 
-  ngOnDestroy() {
-    if (this.formSub) {
-      this.formSub.unsubscribe();
-    }
+  setAlreadyTakenError(key: 'username' | 'email') {
+    setTimeout(() => {
+      this.form.get(key)!.setErrors({ alreadyTaken: true });
+    }, 0);
   }
 }

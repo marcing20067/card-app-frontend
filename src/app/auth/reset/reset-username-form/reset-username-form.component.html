@@ -1,4 +1,4 @@
-<form class="form" [formGroup]="resetForm" (ngSubmit)="onSubmit()">
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="form__box">
         <app-field class="form__field">
             <input type="text" formControlName="newUsername" id="new-username" appInput>
@@ -6,7 +6,7 @@
             <app-icon src="/assets/icons/user.svg" alt="" left inputId="new-username"></app-icon>
         </app-field>
 
-        <div *ngIf="resetForm.get('newUsername') as newUsername">
+        <div *ngIf="form.get('newUsername') as newUsername">
             <app-error *ngIf="newUsername.errors?.required && newUsername.touched">
                 To pole jest obowiązkowe.</app-error>
             <app-error *ngIf="newUsername.errors?.pattern">
@@ -19,5 +19,5 @@
         </div>
     </div>
 
-    <button class="form__submit button" [disabled]="resetForm.invalid" type="submit">Zmień</button>
+    <button class="form__submit button" [disabled]="form.invalid" type="submit">Zmień</button>
 </form>

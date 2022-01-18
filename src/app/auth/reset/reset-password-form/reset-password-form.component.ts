@@ -1,28 +1,25 @@
 import { Component, OnDestroy } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import * as AuthValidators from '../../validators';
-import { ResetForm } from '../reset-form';
+import { AuthForm } from '../../auth-form';
+import { ResetPasswordData } from './reset-password-data.model';
 
 @Component({
   selector: 'app-reset-password-form',
   templateUrl: './reset-password-form.component.html',
   styleUrls: ['./reset-password-form.component.scss'],
 })
-export class ResetPasswordFormComponent extends ResetForm implements OnDestroy {
-  resetForm = this.fb.group({
-    newPassword: ['', AuthValidators.password],
-    repeatNewPassword: ['', AuthValidators.repeatPassword],
-  });
-
+export class ResetPasswordFormComponent
+  extends AuthForm<ResetPasswordData>
+  implements OnDestroy
+{
   formSub!: Subscription;
 
-  constructor(private fb: FormBuilder) {
+  constructor() {
     super();
 
-    this.formSub = this.resetForm.valueChanges.subscribe((value) => {
+    this.formSub = this.form.valueChanges.subscribe((value) => {
       const isSimilar = value.newPassword === value.repeatNewPassword;
-      this.resetForm
+      this.form
         .get('repeatNewPassword')
         ?.setErrors(isSimilar ? null : { similar: 'false' });
     });
