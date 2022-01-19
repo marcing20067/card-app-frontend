@@ -1,6 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { AuthService } from '../shared/services/auth/auth.service';
@@ -54,6 +59,7 @@ export class AuthComponent {
         .subscribe({
           error: () => {
             this.isLoading = false;
+            this.setFormError({ loginfailed: true })
           },
         });
     }
@@ -75,16 +81,20 @@ export class AuthComponent {
               const takenProperty = message.includes('username')
                 ? 'username'
                 : 'email';
-              this.setAlreadyTakenError(takenProperty);
+              this.setFormError({ alreadyTaken: true }, takenProperty);
             }
           },
         });
     }
   }
 
-  setAlreadyTakenError(key: 'username' | 'email') {
+  private setFormError(error: ValidationErrors, controlName?: string) {
     setTimeout(() => {
-      this.form.get(key)!.setErrors({ alreadyTaken: true });
+      if (controlName) {
+        this.form.get(controlName)!.setErrors(error);
+        return;
+      }
+      this.form.setErrors(error);
     }, 0);
   }
 }
