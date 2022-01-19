@@ -13,11 +13,22 @@
     text-transform: uppercase;
 
     &__box {
+        position: relative;
         display: flex;
         flex-direction: column;
         justify-content: center;
         flex-grow: 1;
         border-top: 0.05rem solid $gray;
+
+        &-button {
+            z-index: 10;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: none;
+            color: $white;
+            border: none;
+        }
     }
 
     &__learn {

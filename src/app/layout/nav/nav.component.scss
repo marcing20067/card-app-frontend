@@ -39,6 +39,10 @@
     &--banner .hamburger {
         display: none;
     }
+    
+    &--banner app-nav-list {
+        display: none;
+    }
 
     &--banner &__container {
         justify-content: center;
@@ -59,10 +63,6 @@
         // extraFeatures
         &--banner &__box {
             justify-content: center;
-        }
-
-        &--banner app-nav-list {
-            display: none;
         }
 
         &--desktop-no-bgc {

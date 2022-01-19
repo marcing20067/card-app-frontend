@@ -24,7 +24,12 @@ export class NavListComponent {
     this.tokenService.isAuth();
   }
 
+  on() {
+    console.log('dsadsad');
+  }
+
   onNav(value: boolean) {
+    console.log(value);
     this.isActive = value;
     this.nav.emit(value);
     if (this.isActive) {

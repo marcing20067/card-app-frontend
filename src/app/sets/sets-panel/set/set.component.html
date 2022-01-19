@@ -1,6 +1,7 @@
 <div class="set">
     <a [routerLink]="[ '/sets/learn', set._id ]" class="set__learn">Ucz się zestawu</a>
-    <div class="set__box" (click)="onSelectSet(set)">
+    <div class="set__box">
+        <button class="set__box-button" (click)="onSelectSet(set)">Wybierz zestaw</button>
         <p class="set__name">{{ set.name }}</p>
         <p class="set__cards-length">({{ set.cards.length}} fiszek)</p>
     </div>

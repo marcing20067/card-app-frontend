@@ -8,7 +8,6 @@
 
     <button class="sets-panel__load-more" (click)="onLoadMore()">Załaduj więcej</button>
 
-
     <div class="sets-panel__box">
         <div class="wrapper" *ngIf="(sets$ | async) as sets">
             <div class="sets-panel__empty-state" *ngIf="sets.length === 0">
