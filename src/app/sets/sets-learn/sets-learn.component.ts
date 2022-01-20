@@ -32,7 +32,6 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((set) => {
         this.set = set;
-
         const learnEndSub = this.setsLearnService
           .getLearnEndListener()
           .subscribe(() => {

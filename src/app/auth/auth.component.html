@@ -4,8 +4,8 @@
         <app-circles [class]="'auth__box-circles auth__box-circles--' + mode"></app-circles>
         <h2 class="auth__title title">{{ this.mode === 'login' ? 'Logowanie' : 'Rejestracja' }}</h2>
 
-        <app-login-form [form]="form" *ngIf="mode === 'login'" (submit)="onSubmit($event)"></app-login-form>
-        <app-signup-form [form]="form" *ngIf="mode === 'signup'" (submit)="onSubmit($event)"></app-signup-form>
+        <app-login-form [form]="form" *ngIf="mode === 'login'" (submitForm)="onSubmit($event)"></app-login-form>
+        <app-signup-form [form]="form" *ngIf="mode === 'signup'" (submitForm)="onSubmit($event)"></app-signup-form>
 
         <a [routerLink]="[ '/auth', mode === 'login' ? 'signup' : 'login']" class="auth__link">
             {{ mode === 'login' ? 'Zarejestuj się' : 'Zaloguj się' }}

@@ -3,69 +3,37 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormGroup } from '@angular/forms';
 import { Card } from 'src/app/shared/models/set/card.model';
 import { Set } from 'src/app/shared/models/set/set.model';
 import { Stats } from 'src/app/shared/models/set/stats.model';
+import { Form } from 'src/app/shared/util/form';
 
 @Component({
   selector: 'app-sets-create-form',
   templateUrl: './sets-create-form.component.html',
   styleUrls: ['./sets-create-form.component.scss'],
 })
-export class SetsCreateFormComponent implements OnInit {
+export class SetsCreateFormComponent extends Form<Set> {
   @ViewChildren('concept', { read: ElementRef }) inputs!: QueryList<ElementRef>;
-  setsCreateForm = this.fb.group({
-    name: [
-      '',
-      [Validators.required, Validators.minLength(3), Validators.maxLength(25)],
-    ],
-    cards: this.fb.array([]),
-  });
-
-  @Input() set!: Set;
+  @Output() addCard = new EventEmitter<void>();
   @Input() mode!: string;
-  @Output() submit = new EventEmitter<Set>();
+  @Input() set!: Set;
 
-  constructor(private fb: FormBuilder) {}
+  constructor() {
+    super();
+  }
+
+  onAddCard() {
+    this.addCard.emit();
+  }
 
   setNameAlreadyTakenError() {
-    this.setsCreateForm.get('name')?.setErrors({ alreadytaken: true });
-  }
-
-  ngOnInit() {
-    if (this.set) {
-      this.setValuesOnForm();
-      return;
-    }
-    this.addCard();
-  }
-
-  addCard() {
-    const newCard = this.fb.group({
-      concept: ['', [Validators.required, Validators.maxLength(50)]],
-      definition: ['', [Validators.required, Validators.maxLength(100)]],
-      example: [null, [Validators.maxLength(100)]],
-      group: 1,
-    });
-
-    this.cards.push(newCard);
-  }
-
-  private setValuesOnForm() {
-    for (let i = 0; i < this.set.cards.length; i++) {
-      this.addCard();
-    }
-
-    this.setsCreateForm.patchValue({
-      name: this.set.name,
-      cards: this.set.cards,
-    });
+    this.form.get('name')?.setErrors({ alreadytaken: true });
   }
 
   get cards() {
@@ -73,11 +41,11 @@ export class SetsCreateFormComponent implements OnInit {
       controls: FormGroup[];
     }
 
-    return this.setsCreateForm.get('cards') as unknown as FormCardsGroup;
+    return this.form.get('cards') as unknown as FormCardsGroup;
   }
 
-  onSubmit() {
-    const newSet: Set = this.setsCreateForm.value;
+  override onSubmit() {
+    const newSet: Set = this.form.value;
     const duplicatedCard = this.getDuplicatedCard([...newSet.cards]);
     if (duplicatedCard) {
       const conceptInput = this.getConceptInputByCard(duplicatedCard);
@@ -86,11 +54,11 @@ export class SetsCreateFormComponent implements OnInit {
       return;
     }
 
-    if (this.set) {
+    if (this.mode === 'edit') {
       newSet.stats = this.computeStats([...newSet.cards]);
     }
 
-    if (!this.set) {
+    if (this.mode === 'create') {
       newSet.stats = {
         group1: newSet.cards.length,
         group2: 0,
@@ -99,8 +67,7 @@ export class SetsCreateFormComponent implements OnInit {
         group5: 0,
       };
     }
-
-    this.submit.emit(newSet);
+    this.submitForm.emit(newSet);
   }
 
   private getDuplicatedCard(cards: Card[]) {
@@ -130,9 +97,11 @@ export class SetsCreateFormComponent implements OnInit {
       (c) => c.value.concept === card.concept
     );
     const lastControlIndex = controlsWithDuplicatedValue.length - 1;
-    controlsWithDuplicatedValue[lastControlIndex]
-      .get('concept')
-      ?.setErrors({ duplicated: true });
+    setTimeout(() => {
+      controlsWithDuplicatedValue[lastControlIndex]
+        .get('concept')
+        ?.setErrors({ duplicated: true });
+    }, 0);
   }
 
   private scrollToInput(input: HTMLElement) {
@@ -154,7 +123,8 @@ export class SetsCreateFormComponent implements OnInit {
 
     cards.forEach((c) => {
       const notChangedElIndex = this.set.cards.findIndex(
-        (oldC) => oldC.concept === c.concept && oldC.definition === c.definition
+        (oldC: Card) =>
+          oldC.concept === c.concept && oldC.definition === c.definition
       );
 
       if (notChangedElIndex >= 0) {

@@ -1,10 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
+import { Card } from 'src/app/shared/models/set/card.model';
 import { Set } from 'src/app/shared/models/set/set.model';
 import { SetsService } from '../sets.service';
-import { SetsCreateFormComponent } from './sets-create-form/sets-create-form.component';
 
 @Component({
   selector: 'app-sets-create',
@@ -12,8 +13,14 @@ import { SetsCreateFormComponent } from './sets-create-form/sets-create-form.com
   styleUrls: ['./sets-create.component.scss'],
 })
 export class SetsCreateComponent implements OnInit {
-  @ViewChildren('createForm')
-  formComponentQueryList!: QueryList<SetsCreateFormComponent>;
+  form = this.fb.group({
+    name: [
+      '',
+      [Validators.required, Validators.minLength(3), Validators.maxLength(25)],
+    ],
+    cards: this.fb.array([]),
+  });
+  id = '';
   isLoading = false;
   mode = '';
   set!: Set;
@@ -21,20 +28,23 @@ export class SetsCreateComponent implements OnInit {
   constructor(
     private setsService: SetsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
-    const id = this.route.snapshot.params.id;
-    if (id) {
+    this.id = this.route.snapshot.params.id;
+    if (this.id) {
       this.isLoading = true;
       this.setsService
-        .getSet(id)
+        .getSet(this.id)
         .pipe(take(1))
         .subscribe({
           next: (set) => {
             this.set = set;
             this.mode = 'edit';
+            this.setCardsOnForm(set);
+            this.form.get('name')?.setValue(set.name);
             this.isLoading = false;
           },
           error: (res: HttpErrorResponse) => {
@@ -45,17 +55,42 @@ export class SetsCreateComponent implements OnInit {
         });
     }
 
-    if (!id) {
+    if (!this.id) {
+      this.addCardToForm();
       this.mode = 'create';
     }
+  }
+
+  private setCardsOnForm(set: Set) {
+    const cards = set.cards;
+    for (const card of cards) {
+      this.addCardToForm(card);
+    }
+  }
+
+  addCardToForm(card?: Card) {
+    const newCard = this.createCardGroup(card);
+    (this.form.get('cards')! as FormArray).push(newCard);
+  }
+
+  private createCardGroup(card?: Card) {
+    const cardGroup = this.fb.group({
+      concept: [card?.concept, [Validators.required, Validators.maxLength(50)]],
+      definition: [
+        card?.definition,
+        [Validators.required, Validators.maxLength(100)],
+      ],
+      example: [card?.example, [Validators.maxLength(100)]],
+      group: card?.group || 1,
+    });
+    return cardGroup;
   }
 
   onSubmit(set: Set) {
     this.isLoading = true;
     if (this.mode === 'edit') {
-      this.set = { ...set, _id: this.set._id };
       this.setsService
-        .editSet(this.set)
+        .editSet({ ...set, _id: this.id })
         .pipe(take(1))
         .subscribe({
           next: () => {
@@ -71,9 +106,8 @@ export class SetsCreateComponent implements OnInit {
     }
 
     if (this.mode === 'create') {
-      this.set = set;
       this.setsService
-        .addSet(this.set)
+        .addSet(set)
         .pipe(take(1))
         .subscribe({
           next: () => {
@@ -92,7 +126,7 @@ export class SetsCreateComponent implements OnInit {
 
   private setNameAlreadyTakenError() {
     setTimeout(() => {
-      this.formComponentQueryList.first.setNameAlreadyTakenError();
+      this.form.get('name')!.setErrors({ alreadytaken: true });
     }, 0);
   }
 }

@@ -5,10 +5,10 @@ import { FormGroup } from '@angular/forms';
 export abstract class Form<T extends object> {
   @Input() form!: FormGroup;
 
-  @Output() submit = new EventEmitter<T>();
+  @Output() submitForm = new EventEmitter<T>();
 
   onSubmit() {
-    this.submit.emit(this.form.value);
+    this.submitForm.emit(this.form.value);
   }
 }
 

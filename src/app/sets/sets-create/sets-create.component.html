@@ -1,4 +1,4 @@
 <app-loader *ngIf="isLoading"></app-loader>
 <section class="sets-create section-padding" *ngIf="!isLoading">
-    <app-sets-create-form #createForm [set]="set" [mode]="mode" (submit)="onSubmit($event)"></app-sets-create-form>
+    <app-sets-create-form [form]="form" [set]="set" [mode]="mode" (addCard)="addCardToForm()" (submitForm)="onSubmit($event)"></app-sets-create-form>
 </section>

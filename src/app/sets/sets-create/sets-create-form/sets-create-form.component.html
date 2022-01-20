@@ -1,11 +1,11 @@
-<form class="form" [formGroup]="setsCreateForm" (ngSubmit)="onSubmit()">
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="form__set-data">
         <div class="form__set-data-box wrapper">
             <app-field>
                 <input type="text" formControlName="name" id="name" appInput>
                 <label for="name" label>Tytuł zestawu</label>
             </app-field>
-            <div *ngIf="setsCreateForm.get('name') as name">
+            <div *ngIf="form.get('name') as name">
                 <app-error *ngIf="name.errors?.alreadytaken">
                     Ta nazwa zestawu jest już zajęta.
                 </app-error>
@@ -75,15 +75,14 @@
             </div>
         </div>
 
-
         <hr class="form__line">
         <div class="form__buttons">
-            <button class="form__buttons-item form__buttons-item--add-card" type="button" (click)="addCard()">
+            <button class="form__buttons-item form__buttons-item--add-card" type="button" (click)="onAddCard()">
                 <img src="/assets/icons/plus.svg" alt="">
                 Dodaj fiszkę
             </button>
             <button class="form__buttons-item form__buttons-item--submit" type="submit"
-                [disabled]="setsCreateForm.invalid">Zapisz</button>
+                [disabled]="form.invalid || form.pristine">Zapisz</button>
         </div>
     </div>
 </form>

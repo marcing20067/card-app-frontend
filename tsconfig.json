@@ -20,7 +20,8 @@
       "es2018",
       "dom"
     ],
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "noImplicitOverride": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
