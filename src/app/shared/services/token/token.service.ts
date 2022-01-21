@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import {
-  distinctUntilChanged,
-} from 'rxjs/operators';
+import { distinctUntilChanged } from 'rxjs/operators';
 import { TokenData } from '../../models/tokenData.model';
 
 @Injectable({

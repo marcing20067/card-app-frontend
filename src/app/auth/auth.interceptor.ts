@@ -12,7 +12,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const isAuth = this.tokenService.isAuth();
-    if(!isAuth) {
+    if (!isAuth) {
       return next.handle(req);
     }
     const accessToken = this.tokenService.getAccessToken();

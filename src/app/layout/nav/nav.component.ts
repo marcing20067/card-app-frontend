@@ -13,22 +13,17 @@ export class NavComponent implements OnInit, OnDestroy {
   gotFeatures!: boolean;
   isActive!: boolean;
 
-  constructor(
-    private layoutService: LayoutService,
-  ) {}
+  constructor(private layoutService: LayoutService) {}
 
   ngOnInit() {
     this.sub = this.layoutService.onUrlChange('nav').subscribe((feature) => {
       this.class = ['nav'];
-      if (!feature) {
-        // No features; set default styles
-        this.gotFeatures = true;
-        return;
+      if (feature) {
+        feature.split(' ').forEach((f) => {
+          if (!f) return;
+          this.class.push(`nav--${f}`);
+        });
       }
-      feature.split(' ').forEach((f) => {
-        if (!f) return;
-        this.class.push(`nav--${f}`);
-      });
       this.gotFeatures = true;
     });
   }

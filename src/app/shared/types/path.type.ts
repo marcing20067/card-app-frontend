@@ -1,4 +1,7 @@
-import { FooterExtraFeaturesForRoute, NavExtraFeaturesForRoute } from "../enums/layout.enums";
+import {
+  FooterExtraFeaturesForRoute,
+  NavExtraFeaturesForRoute,
+} from '../enums/layout.enums';
 
 export type Path =
   | keyof typeof NavExtraFeaturesForRoute

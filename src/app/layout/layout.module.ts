@@ -7,11 +7,13 @@ import { PopupComponent } from './popup/popup.component';
 import { NavListComponent } from './nav/nav-list/nav-list.component';
 
 @NgModule({
-  declarations: [NavComponent, FooterComponent, PopupComponent, NavListComponent],
-  imports: [
-    CommonModule,
-    RouterModule
+  declarations: [
+    NavComponent,
+    FooterComponent,
+    PopupComponent,
+    NavListComponent,
   ],
+  imports: [CommonModule, RouterModule],
   exports: [NavComponent, FooterComponent, PopupComponent],
 })
-export class LayoutModule { }
+export class LayoutModule {}

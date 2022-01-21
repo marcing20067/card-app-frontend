@@ -1,45 +1,45 @@
-@import "../../styles/variables";
+@import '../../styles/variables';
 
 .field {
-    position: relative;
-    margin: 0 auto;
-    width: 100%;
-    overflow: hidden;
-    color: $gray;
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  overflow: hidden;
+  color: $gray;
 }
 
 .field input {
-    display: block;
-    padding: 1.6rem 4.2rem 1.6rem 4.2rem;
-    width: 100%;
-    font-size: 1.2rem;
-    font-family: inherit;
-    color: $gray;
-    border-radius: 10rem;
-    border: 1px solid $gray;
+  display: block;
+  padding: 1.6rem 4.2rem 1.6rem 4.2rem;
+  width: 100%;
+  font-size: 1.2rem;
+  font-family: inherit;
+  color: $gray;
+  border-radius: 10rem;
+  border: 1px solid $gray;
 
-    &:focus {
-        color: $black;
-        border: 1px solid $orange;
-        outline: none;
-    }
+  &:focus {
+    color: $black;
+    border: 1px solid $orange;
+    outline: none;
+  }
 }
 
 .field label {
-    position: absolute;
-    z-index: 1;
-    top: 50%;
-    left: 0;
-    padding: 0 4.2rem;
-    transform: translateY(-50%);
-    width: 100%;
-    height: fit-content;
-    font-size: 1.2rem;
-    font-weight: 500;
-    pointer-events: none;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 0;
+  padding: 0 4.2rem;
+  transform: translateY(-50%);
+  width: 100%;
+  height: fit-content;
+  font-size: 1.2rem;
+  font-weight: 500;
+  pointer-events: none;
 }
 
 .field input:focus ~ label,
 .input--not-empty ~ label {
-    display: none;
+  display: none;
 }

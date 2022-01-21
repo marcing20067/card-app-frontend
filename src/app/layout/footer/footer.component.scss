@@ -1,51 +1,51 @@
-@import "../../shared/styles/variables";
+@import '../../shared/styles/variables';
 
 .footer {
-    color: $gray;
-    text-align: center;
+  color: $gray;
+  text-align: center;
 
-    &--no-footer {
-        display: none;
-    }
+  &--no-footer {
+    display: none;
+  }
 
-    &--mobile-no-footer {
-        display: none;
-    }
+  &--mobile-no-footer {
+    display: none;
+  }
 
-    &__box {
-        display: grid;
-        grid-template-columns: 1fr;
-        row-gap: 0.4rem;
-    }
+  &__box {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 0.4rem;
+  }
 
-    &__text-dev {
-        font-weight: 500;
-        color: $black;
-        text-decoration: underline;
-    }
+  &__text-dev {
+    font-weight: 500;
+    color: $black;
+    text-decoration: underline;
+  }
 
-    &--creamy-bgc {
-        padding: 0.8rem 0;
-        background-color: $creamy;
-    }
+  &--creamy-bgc {
+    padding: 0.8rem 0;
+    background-color: $creamy;
+  }
 }
 
 @media (min-width: 1024px) {
-    .footer {
-        &__box {
-            display: flex;
-            justify-content: space-between;
-            padding: 2rem 0;
-        }
-
-        &--desktop-pill-items &__text {
-            padding: 0.8rem 1.6rem;
-            background-color: $white;
-            border-radius: 50px;
-        }
-
-        &--mobile-no-footer {
-            display: block;
-        }
+  .footer {
+    &__box {
+      display: flex;
+      justify-content: space-between;
+      padding: 2rem 0;
     }
+
+    &--desktop-pill-items &__text {
+      padding: 0.8rem 1.6rem;
+      background-color: $white;
+      border-radius: 50px;
+    }
+
+    &--mobile-no-footer {
+      display: block;
+    }
+  }
 }

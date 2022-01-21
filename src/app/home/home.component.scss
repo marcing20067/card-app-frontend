@@ -1,143 +1,143 @@
-@import "../shared/styles/variables";
+@import '../shared/styles/variables';
 
 .shapes {
-    display: none;
+  display: none;
 }
 
 .home {
-    color: $gray;
-    &__cards {
-        display: none;
+  color: $gray;
+  &__cards {
+    display: none;
+  }
+
+  app-field {
+    max-width: 32.5rem;
+  }
+
+  &__header {
+    position: relative;
+
+    &-icon {
+      position: absolute;
+      top: 0;
+      left: clamp(12rem, 40%, 16.5rem);
+      width: 1.8rem;
+      transform: translate(-50%, -50%);
     }
 
-    app-field {
-        max-width: 32.5rem;
+    &-title {
+      font-size: 3.2rem;
+      line-height: 150%;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: $black;
+
+      &-span {
+        display: block;
+      }
+    }
+  }
+
+  &__text {
+    margin: 3.2rem 0;
+    line-height: 160%;
+  }
+
+  &__paragraph {
+    text-align: center;
+
+    &-span {
+      display: block;
+      margin: 2.4rem 0;
+      font-size: 2.4rem;
+      text-transform: uppercase;
     }
 
-    &__header {
-        position: relative;
-
-        &-icon {
-            position: absolute;
-            top: 0;
-            left: clamp(12rem, 40%, 16.5rem);
-            width: 1.8rem;
-            transform: translate(-50%, -50%);
-        }
-
-        &-title {
-            font-size: 3.2rem;
-            line-height: 150%;
-            font-weight: 800;
-            text-transform: uppercase;
-            color: $black;
-            
-            &-span {
-                display: block;
-            }
-        }
+    &-link {
+      font-size: 2.8rem;
+      color: inherit;
+      text-decoration: underline;
     }
-
-    &__text {
-        margin: 3.2rem 0;
-        line-height: 160%;
-    }
-
-    &__paragraph {
-        text-align: center;
-
-        &-span {
-            display: block;
-            margin: 2.4rem 0;
-            font-size: 2.4rem;
-            text-transform: uppercase;
-        }
-
-        &-link {
-            font-size: 2.8rem;
-            color: inherit;
-            text-decoration: underline;
-        }
-    }
+  }
 }
 
 @media (min-width: 1024px) {
-    .shapes {
+  .shapes {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    &__top {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: -1;
+      width: 50%;
+      height: auto;
+    }
+  }
+
+  .home {
+    &__box {
+      display: flex;
+      align-items: center;
+    }
+
+    &__cards {
+      position: relative;
+      display: block;
+      width: 40%;
+
+      &-img {
+        width: 100%;
+      }
+
+      app-circles {
         position: absolute;
         z-index: -1;
-        top: 0;
-        right: 0;
-        display: block;
-        width: 100%;
-        height: 100%;
-
-        &__top {
-            position: absolute;
-            top: 0;
-            right: 0;
-            z-index: -1;
-            width: 50%;
-            height: auto;
-        }
+        bottom: 0;
+        right: -5%;
+      }
     }
 
-    .home {
-        &__box {
-            display: flex;
-            align-items: center;
-        }
+    &__header {
+      &-title {
+        font-size: 4.8rem;
+      }
 
-        &__cards {
-            position: relative;
-            display: block;
-            width: 40%;
-
-            &-img {
-                width: 100%;
-            }
-
-            app-circles {
-                position: absolute;
-                z-index: -1;
-                bottom: 0;
-                right: -5%;
-            }
-        }
-
-        &__header {
-            &-title {
-                font-size: 4.8rem;
-            }
-
-            &-icon {
-                width: 3.4rem;
-            }
-        }
-
-        &__text {
-            font-size: 2.4rem;
-        }
-
-        &__paragraph-span {
-            font-size: 3.6rem;
-        }
-
-        &__paragraph-link {
-            font-size: 1.8rem;
-        }
-
-        &__container {
-            width: 60%;
-        }
+      &-icon {
+        width: 3.4rem;
+      }
     }
+
+    &__text {
+      font-size: 2.4rem;
+    }
+
+    &__paragraph-span {
+      font-size: 3.6rem;
+    }
+
+    &__paragraph-link {
+      font-size: 1.8rem;
+    }
+
+    &__container {
+      width: 60%;
+    }
+  }
 }
 
 @media (min-width: 2000px) {
-    .shapes {
-        &__top {
-            width: auto;
-            height: 90vh;
-            max-height: 1700px;
-        }
+  .shapes {
+    &__top {
+      width: auto;
+      height: 90vh;
+      max-height: 1700px;
     }
+  }
 }

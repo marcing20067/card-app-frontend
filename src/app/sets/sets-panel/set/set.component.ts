@@ -3,7 +3,7 @@ import { Set } from 'src/app/shared/models/set/set.model';
 @Component({
   selector: 'app-set',
   templateUrl: './set.component.html',
-  styleUrls: ['./set.component.scss']
+  styleUrls: ['./set.component.scss'],
 })
 export class SetComponent {
   @Output() private selectSet = new EventEmitter<Set>();
@@ -17,5 +17,4 @@ export class SetComponent {
   onDeleteSet(set: Set) {
     this.deleteSet.emit(set);
   }
-
 }

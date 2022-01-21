@@ -1,24 +1,24 @@
 .circles {
-    position: relative;
-    width: 20rem;
-    height: 12rem;
+  position: relative;
+  width: 20rem;
+  height: 12rem;
 
-    &__circle {
-        position: absolute;
+  &__circle {
+    position: absolute;
 
-        &--one {
-            top: 0;
-            right: 0;
-        }
-
-        &--two {
-            left: 40%;
-            bottom: 0;
-        }
-
-        &--three {
-            left: 0;
-            bottom: 25%;
-        }
+    &--one {
+      top: 0;
+      right: 0;
     }
+
+    &--two {
+      left: 40%;
+      bottom: 0;
+    }
+
+    &--three {
+      left: 0;
+      bottom: 25%;
+    }
+  }
 }

@@ -55,7 +55,7 @@ export class SetsLearnService {
           return of({
             cardsView: cardsView,
             cardIndex: this.cardIndex,
-            cardsLength: this.cardsWithCurrentGroup.length
+            cardsLength: this.cardsWithCurrentGroup.length,
           });
         }
         return of(null);

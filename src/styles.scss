@@ -1,98 +1,98 @@
-@import "./app/shared/styles/variables";
+@import './app/shared/styles/variables';
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
-    font-size: 62.5%;
+  font-size: 62.5%;
 }
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 p,
 a,
 label,
 h2 {
-    line-height: 150%;
+  line-height: 150%;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 button:disabled {
-    opacity: 0.7;
-    cursor: default;
+  opacity: 0.7;
+  cursor: default;
 }
 
 body {
-    font-size: 1.8rem;
-    color: $black;
-    font-family: "Montserrat", sans-serif;
+  font-size: 1.8rem;
+  color: $black;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .block-scroll {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .wrapper {
-    margin: 0 auto;
-    width: 90%;
-    max-width: 1200px;
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1200px;
 }
 
 .section-padding {
-    padding: 12rem 0;
+  padding: 12rem 0;
 }
 
 .title {
-    font-family: "Raleway", sans-serif;
-    font-weight: 700;
-    color: $black;
-    text-align: center;
-    text-transform: uppercase;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  color: $black;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .button {
-    display: block;
-    margin: 0 auto;
-    width: fit-content;
-    font-weight: 700;
-    color: $white;
-    background-color: $orange;
-    border-radius: 50px;
-    border: 1px solid $orange;
-    text-transform: uppercase;
+  display: block;
+  margin: 0 auto;
+  width: fit-content;
+  font-weight: 700;
+  color: $white;
+  background-color: $orange;
+  border-radius: 50px;
+  border: 1px solid $orange;
+  text-transform: uppercase;
 
-    &--reverse {
-        font-family: inherit;
-        color: $gray;
-        background-color: $white;
-        border: 1px solid;
-    }
+  &--reverse {
+    font-family: inherit;
+    color: $gray;
+    background-color: $white;
+    border: 1px solid;
+  }
 }
 
 .flex-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (min-width: 768px) {
-    .wrapper {
-        width: 75%;
-    }
+  .wrapper {
+    width: 75%;
+  }
 }
 
 @media (min-width: 1024px) {
-    .wrapper {
-        width: 80%;
-    }
+  .wrapper {
+    width: 80%;
+  }
 }

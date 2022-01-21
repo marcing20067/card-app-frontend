@@ -13,6 +13,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     ResetUsernameFormComponent,
     ResetPasswordFormComponent,
   ],
-  imports: [CommonModule, ResetRoutingModule, SharedModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ResetRoutingModule,
+    SharedModule,
+    ReactiveFormsModule,
+  ],
 })
 export class ResetModule {}

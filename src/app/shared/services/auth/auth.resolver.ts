@@ -16,7 +16,7 @@ export class AuthResolver implements Resolve<boolean> {
         if (!isCalled) {
           return this.authService.refresh().pipe(
             take(1),
-            switchMap(() => of(true)),
+            switchMap(() => of(true))
           );
         }
         return of(true);

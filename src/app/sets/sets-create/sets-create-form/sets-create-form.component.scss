@@ -1,115 +1,115 @@
-@import "../../../shared/styles/variables";
+@import '../../../shared/styles/variables';
 
 .form {
-    &__set-data {
-        padding: 3.2rem 0;
-        background-color: $whitesmoke;
+  &__set-data {
+    padding: 3.2rem 0;
+    background-color: $whitesmoke;
+  }
+
+  &__cards {
+    margin: 2.8rem 0 0 0;
+    text-align: center;
+
+    &-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto 1fr 1fr;
+      grid-template-areas:
+        'heading heading'
+        'concept definition'
+        'example example';
+      row-gap: 3.2rem;
+      column-gap: 1.6rem;
+      margin-bottom: 6.4rem;
+
+      &-heading {
+        grid-area: heading;
+        font-size: 1.6rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      &-concept {
+        grid-area: concept;
+      }
+
+      &-definition {
+        grid-area: definition;
+      }
+
+      &-example {
+        grid-area: example;
+      }
     }
+  }
 
-    &__cards {
-        margin: 2.8rem 0 0 0;
-        text-align: center;
+  &__line {
+    border: 1px dashed rgba(0, 0, 0, 0.6);
+  }
 
-        &-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto 1fr 1fr;
-            grid-template-areas:
-                "heading heading"
-                "concept definition"
-                "example example";
-            row-gap: 3.2rem;
-            column-gap: 1.6rem;
-            margin-bottom: 6.4rem;
+  &__buttons {
+    display: flex;
+    flex-direction: column;
 
-            &-heading {
-                grid-area: heading;
-                font-size: 1.6rem;
-                font-weight: 700;
-                text-transform: uppercase;
-            }
+    &-item {
+      padding: 0.8rem 3.2rem;
+      font-size: 2.4rem;
+      font-family: inherit;
+      font-weight: 600;
+      border: none;
+      text-transform: uppercase;
 
-            &-concept {
-                grid-area: concept;
-            }
+      &--add-card {
+        background: none;
+        color: $gray;
+        margin: 3.2rem 0;
+      }
 
-            &-definition {
-                grid-area: definition;
-            }
-
-            &-example {
-                grid-area: example;
-            }
-        }
+      &--submit {
+        margin-bottom: 9.2rem;
+        color: $white;
+        background-color: $orange;
+        border-radius: 3.3rem;
+      }
     }
-
-    &__line {
-        border: 1px dashed rgba(0, 0, 0, 0.6);
-    }
-
-    &__buttons {
-        display: flex;
-        flex-direction: column;
-
-        &-item {
-            padding: 0.8rem 3.2rem;
-            font-size: 2.4rem;
-            font-family: inherit;
-            font-weight: 600;
-            border: none;
-            text-transform: uppercase;
-
-            &--add-card {
-                background: none;
-                color: $gray;
-                margin: 3.2rem 0;
-            }
-
-            &--submit {
-                margin-bottom: 9.2rem;
-                color: $white;
-                background-color: $orange;
-                border-radius: 3.3rem;
-            }
-        }
-    }
+  }
 }
 
 @media (max-width: 1024px) {
-    .form {
-        &__box {
-            max-width: 50rem;
-        }
-
-        &__set-data-box {
-            max-width: 50rem;
-        }
+  .form {
+    &__box {
+      max-width: 50rem;
     }
+
+    &__set-data-box {
+      max-width: 50rem;
+    }
+  }
 }
 
 @media (min-width: 1024px) {
-    .form {
-        &__cards {
-            margin-top: 6.4rem;
-            label,
-            input {
-                text-align: left;
-            }
-        }
-
-        &__buttons {
-            margin: 3.2rem 0 0 0;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-
-            &-item {
-                margin: 0;
-            }
-
-            &-item--submit {
-                margin-left: 3.2rem;
-            }
-        }
+  .form {
+    &__cards {
+      margin-top: 6.4rem;
+      label,
+      input {
+        text-align: left;
+      }
     }
+
+    &__buttons {
+      margin: 3.2rem 0 0 0;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      &-item {
+        margin: 0;
+      }
+
+      &-item--submit {
+        margin-left: 3.2rem;
+      }
+    }
+  }
 }

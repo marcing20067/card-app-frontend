@@ -17,8 +17,8 @@ export class IconComponent {
   inputState$!: Observable<FieldState>;
 
   constructor(private fieldService: FieldService) {}
-  
-  ngOnInit(): void {
+
+  ngOnInit() {
     const splitedSrc = this.src.split(this.ICON_EXT);
     this.srcWithoutExt = splitedSrc[0];
     this.inputState$ = this.fieldService.getFieldStateListener(this.inputId);

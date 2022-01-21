@@ -1,95 +1,95 @@
-@import "../../shared/styles/variables";
+@import '../../shared/styles/variables';
 .sets-panel {
-    &__title {
-        padding: 1.6rem 0;
-        text-align: center;
-        text-transform: uppercase;
+  &__title {
+    padding: 1.6rem 0;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  &__load-more {
+    font-weight: 600;
+    display: block;
+    margin: 0 auto 1.6rem auto;
+    font-size: 1.8rem;
+    color: $gray;
+    background: none;
+    border: none;
+    text-transform: uppercase;
+    text-decoration: underline;
+  }
+
+  &__empty-state {
+    padding: 3.2rem;
+    text-align: center;
+
+    &-heading {
+      margin-bottom: 1.6rem;
+      font-size: 2.4rem;
+      font-weight: 700;
+      text-transform: uppercase;
     }
 
-    &__load-more {
-        font-weight: 600;
-        display: block;
-        margin: 0 auto 1.6rem auto;
-        font-size: 1.8rem;
-        color: $gray;
-        background: none;
-        border: none;
-        text-transform: uppercase;
-        text-decoration: underline;
+    &-text {
+      font-size: 1.8rem;
+      font-family: 'Raleway', sans-serif;
+    }
+  }
+
+  &__box {
+    background-color: $whitesmoke;
+  }
+
+  &__sets {
+    padding: 3.2rem 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3.6rem;
+    margin: 0 auto;
+    width: fit-content;
+  }
+
+  &__set {
+    &--even {
+      grid-column: 1/2;
     }
 
-    &__empty-state {
-        padding: 3.2rem;
-        text-align: center;
-
-        &-heading {
-            margin-bottom: 1.6rem;
-            font-size: 2.4rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        &-text {
-            font-size: 1.8rem;
-            font-family: "Raleway", sans-serif;
-        }
+    &--odd {
+      grid-column: 2/3;
     }
 
-    &__box {
-        background-color: $whitesmoke;
+    &--last {
+      grid-column: 1/3;
+      margin: 0 auto;
     }
+  }
 
-    &__sets {
-        padding: 3.2rem 0;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 3.6rem;
-        margin: 0 auto;
-        width: fit-content;
-    }
-
-    &__set {
-        &--even {
-            grid-column: 1/2;
-        }
-
-        &--odd {
-            grid-column: 2/3;
-        }
-
-        &--last {
-            grid-column: 1/3;
-            margin: 0 auto;
-        }
-    }
-
-    &__create {
-        display: block;
-        padding: 0.8rem 1.6rem;
-        margin: 0 auto 1.6rem auto;
-        width: fit-content;
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: $gray;
-        border: 1px solid $gray;
-        border-radius: 1.5rem;
-        text-transform: uppercase;
-        text-decoration: none;
-    }
+  &__create {
+    display: block;
+    padding: 0.8rem 1.6rem;
+    margin: 0 auto 1.6rem auto;
+    width: fit-content;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $gray;
+    border: 1px solid $gray;
+    border-radius: 1.5rem;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
 }
 
 @media (min-width: 1024px) {
-    .sets-panel {
-        &__sets {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: center;
-            width: 100%;
-        }
-
-        &__set--last {
-            margin: 0;
-        }
+  .sets-panel {
+    &__sets {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
     }
+
+    &__set--last {
+      margin: 0;
+    }
+  }
 }

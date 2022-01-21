@@ -26,8 +26,8 @@ export class LayoutService {
       const path = this.transformPath(originalPath) as Path;
       const extraFeatures = {
         nav: NavExtraFeaturesForRoute[path],
-        footer: FooterExtraFeaturesForRoute[path]
-      }
+        footer: FooterExtraFeaturesForRoute[path],
+      };
 
       this.urlChangeEvent$.next(extraFeatures);
     });

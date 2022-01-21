@@ -27,7 +27,7 @@ import { WavesComponent } from './components/waves/waves.component';
     CirclesComponent,
     LoaderComponent,
     ErrorComponent,
-    WavesComponent
+    WavesComponent,
   ],
 })
 export class SharedModule {}

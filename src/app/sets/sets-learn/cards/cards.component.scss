@@ -1,57 +1,57 @@
-@import "../../../shared/styles/variables";
+@import '../../../shared/styles/variables';
 
 .cards {
-    margin: 0 auto;
-    width: clamp(20rem, 80%, 31rem);
+  margin: 0 auto;
+  width: clamp(20rem, 80%, 31rem);
 
-    &__box {
-        position: relative;
-        height: calc(48rem + 2.4rem + 2.4rem);
+  &__box {
+    position: relative;
+    height: calc(48rem + 2.4rem + 2.4rem);
 
-        &-item {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
+    &-item {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
 
-            &--three {
-                top: 0;
-                z-index: 0;
-            }
+      &--three {
+        top: 0;
+        z-index: 0;
+      }
 
-            &--two {
-                top: 2.4rem;
-                z-index: 1;
-            }
+      &--two {
+        top: 2.4rem;
+        z-index: 1;
+      }
 
-            &--one {
-                top: 4.8rem;
-                z-index: 2;
-            }
-        }
+      &--one {
+        top: 4.8rem;
+        z-index: 2;
+      }
     }
+  }
 }
 
 .buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 4rem;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4rem;
+  width: 100%;
 
-    &-item {
-        padding: 1.5rem 3rem;
-        color: $white;
-        font-size: 1.6rem;
-        font-weight: 500;
-        font-family: inherit;
-        border: none;
-        border-radius: 1rem;
-        
-        &--dont-know {
-            background-color: $red;
-        }
+  &-item {
+    padding: 1.5rem 3rem;
+    color: $white;
+    font-size: 1.6rem;
+    font-weight: 500;
+    font-family: inherit;
+    border: none;
+    border-radius: 1rem;
 
-        &--know {
-            background-color: $green;
-        }
+    &--dont-know {
+      background-color: $red;
     }
+
+    &--know {
+      background-color: $green;
+    }
+  }
 }

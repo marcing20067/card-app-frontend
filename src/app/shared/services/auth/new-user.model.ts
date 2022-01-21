@@ -1,6 +1,6 @@
 export interface NewUser {
-    username: string;
-    password: string;
-    email: string;
-    repeatPassword: string;
+  username: string;
+  password: string;
+  email: string;
+  repeatPassword: string;
 }

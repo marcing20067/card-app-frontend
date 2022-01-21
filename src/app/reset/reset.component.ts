@@ -60,6 +60,6 @@ export class ResetComponent {
   setAlreadyTakenErrorOnUsername() {
     setTimeout(() => {
       this.form.get('newUsername')!.setErrors({ alreadyTaken: true });
-    }, 0)
+    }, 0);
   }
 }

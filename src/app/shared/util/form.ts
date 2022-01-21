@@ -11,4 +11,3 @@ export abstract class Form<T extends object> {
     this.submitForm.emit(this.form.value);
   }
 }
-

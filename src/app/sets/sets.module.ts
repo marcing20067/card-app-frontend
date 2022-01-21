@@ -14,14 +14,19 @@ import { CardsComponent } from './sets-learn/cards/cards.component';
 import { InstrucionComponent } from './sets-learn/instrucion/instrucion.component';
 import { SetsCreateFormComponent } from './sets-create/sets-create-form/sets-create-form.component';
 
-
 @NgModule({
-  declarations: [SetsCreateComponent, SetsCreateFormComponent, SetsLearnComponent, SetsPanelComponent, SetComponent, SetViewComponent, CardComponent, StatsComponent, CardsComponent, InstrucionComponent],
-  imports: [
-    CommonModule,
-    SetsRoutingModule,
-    ReactiveFormsModule,
-    SharedModule
-  ]
+  declarations: [
+    SetsCreateComponent,
+    SetsCreateFormComponent,
+    SetsLearnComponent,
+    SetsPanelComponent,
+    SetComponent,
+    SetViewComponent,
+    CardComponent,
+    StatsComponent,
+    CardsComponent,
+    InstrucionComponent,
+  ],
+  imports: [CommonModule, SetsRoutingModule, ReactiveFormsModule, SharedModule],
 })
-export class SetsModule { }
+export class SetsModule {}

@@ -3,5 +3,5 @@ export type FieldsState = {
 };
 
 export type FieldState = {
-    isFocus: boolean;
-}
+  isFocus: boolean;
+};

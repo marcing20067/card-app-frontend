@@ -21,5 +21,5 @@ export const AuthValidators = {
   username,
   password,
   email,
-  repeatPassword
-}
+  repeatPassword,
+};

@@ -1,4 +1,4 @@
-import { Card } from "../../../shared/models/set/card.model";
+import { Card } from '../../../shared/models/set/card.model';
 
 export interface CardsView {
   active: Card;

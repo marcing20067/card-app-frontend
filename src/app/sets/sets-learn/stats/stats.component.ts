@@ -10,5 +10,5 @@ export class StatsComponent {
   @Input() data!: {
     stats: Stats;
     currentGroup: number;
-  }
+  };
 }

@@ -8,9 +8,8 @@ describe('ResetUsernameFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ResetUsernameFormComponent ]
-    })
-    .compileComponents();
+      declarations: [ResetUsernameFormComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

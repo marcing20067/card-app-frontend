@@ -9,16 +9,13 @@ import { SignupData } from './signup-data.model';
   templateUrl: './signup-form.component.html',
   styleUrls: ['./signup-form.component.scss'],
 })
-export class SignupFormComponent
-  extends Form<SignupData>
-  implements OnDestroy
-{
+export class SignupFormComponent extends Form<SignupData> implements OnDestroy {
   private formSub!: Subscription;
   constructor() {
     super();
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.formSub = this.form.valueChanges
       .pipe(
         distinctUntilChanged((prev, next) => {

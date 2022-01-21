@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  BACKEND_URL: '/api/'
+  BACKEND_URL: '/api/',
 };
 
 /*

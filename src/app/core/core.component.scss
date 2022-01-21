@@ -1,13 +1,13 @@
 .core {
-    position: relative;
-    overflow: hidden;
-    min-height: clamp(500px, 100vh, 100vh);
+  position: relative;
+  overflow: hidden;
+  min-height: clamp(500px, 100vh, 100vh);
 
-    &__box {
-        display: flex;
-        min-height: 100vh;
-        justify-content: space-between;
-        flex-direction: column;
-        padding-top: 7.6rem;
-    }
+  &__box {
+    display: flex;
+    min-height: 100vh;
+    justify-content: space-between;
+    flex-direction: column;
+    padding-top: 7.6rem;
+  }
 }

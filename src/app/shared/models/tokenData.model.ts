@@ -1,4 +1,4 @@
 export interface TokenData {
-    accessToken: string;
-    accessTokenEndValidity: number;
+  accessToken: string;
+  accessTokenEndValidity: number;
 }

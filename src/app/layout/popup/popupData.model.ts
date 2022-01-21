@@ -1,10 +1,10 @@
 export interface PopupData {
-    content?: {
-        heading: string,
-        text?: string
-    },
-    buttons?: {
-        one?: string,
-        two?: string
-    } 
+  content?: {
+    heading: string;
+    text?: string;
+  };
+  buttons?: {
+    one?: string;
+    two?: string;
+  };
 }

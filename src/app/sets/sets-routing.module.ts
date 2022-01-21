@@ -9,23 +9,23 @@ const routes: Routes = [
   {
     path: '',
     component: SetsPanelComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'create',
     component: SetsCreateComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'create/:id',
     component: SetsCreateComponent,
-    canActivate: [AuthGuard]
-  }, {
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'learn/:id',
     component: SetsLearnComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
-  
 ];
 
 @NgModule({

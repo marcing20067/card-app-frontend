@@ -9,9 +9,9 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
 export class PopupComponent {
   data$ = this.popupService.getDisplayListener();
   isShow = false;
-  
+
   constructor(private popupService: PopupService) {}
-  
+
   onConfirm(isConfirm: boolean) {
     this.popupService.confirm(isConfirm);
   }

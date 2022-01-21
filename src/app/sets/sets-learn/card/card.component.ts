@@ -4,7 +4,7 @@ import { Card } from 'src/app/shared/models/set/card.model';
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
-  styleUrls: ['./card.component.scss']
+  styleUrls: ['./card.component.scss'],
 })
 export class CardComponent {
   @Input() card!: Card;

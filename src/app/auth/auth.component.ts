@@ -59,7 +59,7 @@ export class AuthComponent {
         .subscribe({
           error: () => {
             this.isLoading = false;
-            this.setFormError({ loginfailed: true })
+            this.setFormError({ loginfailed: true });
           },
         });
     }
@@ -81,7 +81,7 @@ export class AuthComponent {
               const takenProperty = message.includes('username')
                 ? 'username'
                 : 'email';
-              this.setFormError({ alreadyTaken: true }, takenProperty);
+              this.setFormError({ alreadytaken: true }, takenProperty);
             }
           },
         });

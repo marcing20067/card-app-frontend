@@ -1,40 +1,40 @@
-@import "../../shared/styles/variables";
+@import '../../shared/styles/variables';
 
 .popup {
-    position: fixed;
-    z-index: 101;
-    top: 0;
-    left: 0;
+  position: fixed;
+  z-index: 101;
+  top: 0;
+  left: 0;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: $white;
+
+  &__box {
     flex-direction: column;
-    width: 100%;
-    height: 100vh;
-    background-color: $white;
+    text-align: center;
+  }
 
-    &__box {
-        flex-direction: column;
-        text-align: center;
+  &__heading {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 3.2rem;
+  }
+
+  &__text {
+    margin-bottom: 3.2rem;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 3.2rem;
+
+    &-item {
+      padding: 1.15rem 5.75rem;
+      font-weight: 600;
+      font-size: 2.4rem;
     }
-
-    &__heading {
-        font-size: 2.4rem;
-        font-weight: 700;
-        margin-bottom: 3.2rem;
-    }
-
-    &__text {
-        margin-bottom: 3.2rem;
-    }
-
-    &__buttons {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 3.2rem;
-
-        &-item {
-            padding: 1.15rem 5.75rem;
-            font-weight: 600;
-            font-size: 2.4rem;
-        }
-    }
+  }
 }

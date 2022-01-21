@@ -11,10 +11,7 @@ import { Router } from '@angular/router';
 export class ServerErrorInterceptor implements HttpInterceptor {
   constructor(private router: Router) {}
 
-  intercept(
-    request: HttpRequest<unknown>,
-    next: HttpHandler
-  ) {
+  intercept(request: HttpRequest<unknown>, next: HttpHandler) {
     return next.handle(request).pipe(
       tap({
         error: (err) => {
