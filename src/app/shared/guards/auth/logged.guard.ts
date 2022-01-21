@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
-import { of } from 'rxjs';
+import { CanActivate, Router, UrlTree } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { TokenService } from '../../services/token/token.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class LoggedGuard implements CanActivate {
   constructor(private tokenService: TokenService, private router: Router) {}
-  canActivate() {
+
+  canActivate(): Observable<boolean | UrlTree> {
     const isAuth = this.tokenService.isAuth();
     if (isAuth) {
-      return of(true);
+      return of(this.router.parseUrl('/sets'));
     }
-    return of(this.router.parseUrl('/auth/login'));
+    return of(true);
   }
 }
