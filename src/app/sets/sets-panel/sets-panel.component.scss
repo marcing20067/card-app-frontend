@@ -7,30 +7,31 @@
     }
 
     &__load-more {
+        font-weight: 600;
+        display: block;
+        margin: 0 auto 1.6rem auto;
+        font-size: 1.8rem;
+        color: $gray;
+        background: none;
         border: none;
         text-transform: uppercase;
         text-decoration: underline;
-        color: $gray;
-        margin: 0 auto 1.6rem auto;
-        display: block;
-        background: none;
-        font-size: 1.8rem;
-        font-weight: 600;
     }
 
     &__empty-state {
-        text-align: center;
         padding: 3.2rem;
+        text-align: center;
+
         &-heading {
-            font-weight: 700;
-            text-transform: uppercase;
             margin-bottom: 1.6rem;
             font-size: 2.4rem;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
         &-text {
-            font-family: "Raleway", sans-serif;
             font-size: 1.8rem;
+            font-family: "Raleway", sans-serif;
         }
     }
 
@@ -41,10 +42,10 @@
     &__sets {
         padding: 3.2rem 0;
         display: grid;
-        width: fit-content;
         grid-template-columns: 1fr 1fr;
         gap: 3.6rem;
         margin: 0 auto;
+        width: fit-content;
     }
 
     &__set {
@@ -67,16 +68,15 @@
         padding: 0.8rem 1.6rem;
         margin: 0 auto 1.6rem auto;
         width: fit-content;
-        border-radius: 1.5rem;
-        text-decoration: none;
-        text-transform: uppercase;
         font-size: 1.2rem;
         font-weight: 600;
         color: $gray;
         border: 1px solid $gray;
+        border-radius: 1.5rem;
+        text-transform: uppercase;
+        text-decoration: none;
     }
 }
-
 
 @media (min-width: 1024px) {
     .sets-panel {

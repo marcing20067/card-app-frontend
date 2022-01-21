@@ -17,9 +17,9 @@ $loader-size: 10rem;
 }
 
 .lds-ring div {
-    box-sizing: border-box;
     display: block;
     position: absolute;
+    box-sizing: border-box;
     width: calc(#{$loader-size} * 0.8);
     height: calc(#{$loader-size} * 0.8);
     margin: calc(#{$loader-size} * 0.1);

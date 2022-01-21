@@ -19,8 +19,8 @@
     }
 
     &__text-dev {
-        color: $black;
         font-weight: 500;
+        color: $black;
         text-decoration: underline;
     }
 
@@ -39,9 +39,9 @@
         }
 
         &--desktop-pill-items &__text {
+            padding: 0.8rem 1.6rem;
             background-color: $white;
             border-radius: 50px;
-            padding: 0.8rem 1.6rem;
         }
 
         &--mobile-no-footer {

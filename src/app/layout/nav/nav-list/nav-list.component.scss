@@ -15,8 +15,8 @@
     align-items: center;
     width: 100%;
     height: calc(100vh - 7.6rem);
-    list-style: none;
     background-color: $nav-list-color;
+    list-style: none;
     transition: 0.7s transform;
 
     &--active {
@@ -35,16 +35,16 @@
 
             &--button {
                 font-weight: 600;
-                border: none;
                 font-size: inherit;
                 font-family: inherit;
+                border: none;
                 text-transform: uppercase;
             }
 
             &--reverse {
+                color: $orange;
                 background-color: $white;
                 border-radius: 50px;
-                color: $orange;
             }
         }
     }
@@ -61,8 +61,8 @@
         flex-direction: row;
         justify-content: flex-end;
         height: auto;
-        background: none;
         transform: none;
+        background: none;
 
         &__item {
             margin: 0 1.6rem 0 1.6rem;

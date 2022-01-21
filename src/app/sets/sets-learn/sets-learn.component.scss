@@ -1,8 +1,8 @@
 @import "../../shared/styles/variables";
 
 :host {
-    flex-grow: 1;
     display: flex;
+    flex-grow: 1;
     flex-direction: column;
     justify-content: center;
 }
@@ -10,14 +10,14 @@
 .learn {
     &__slider {
         &-text {
-            text-align: center;
             font-size: 1.6rem;
+            text-align: center;
         }
 
         &-box {
             position: relative;
-            width: 75%;
             margin: 0 auto;
+            width: 75%;
             height: 1.6rem;
 
             &-line {
@@ -32,12 +32,11 @@
 
             &-dot {
                 position: absolute;
-                left: 0;
                 z-index: 1;
-                height: 100%;
+                left: 0;
                 width: 1.6rem;
+                height: 100%;
                 background-color: $orange;
-
                 border-radius: 50%;
             }
         }
@@ -51,9 +50,9 @@
         text-align: center;
 
         &-heading {
-            font-weight: 700;
-            font-size: 2.4rem;
             margin-bottom: 1.6rem;
+            font-size: 2.4rem;
+            font-weight: 700;
         }
     }
 }
@@ -63,8 +62,7 @@
         padding: 0;
 
         &__box {
-            padding-top: 12rem;
-            padding-bottom: 3.2rem;
+            padding: 12rem 0 3.2rem 0;
         }
 
         &__stats {

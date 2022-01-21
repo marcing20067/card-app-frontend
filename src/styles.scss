@@ -43,8 +43,8 @@ body {
 }
 
 .wrapper {
-    width: 90%;
     margin: 0 auto;
+    width: 90%;
     max-width: 1200px;
 }
 
@@ -55,28 +55,27 @@ body {
 .title {
     font-family: "Raleway", sans-serif;
     font-weight: 700;
-    text-transform: uppercase;
     color: $black;
     text-align: center;
+    text-transform: uppercase;
 }
 
 .button {
-    margin: 0 auto;
     display: block;
+    margin: 0 auto;
     width: fit-content;
-    border-radius: 50px;
-    border: none;
-    background-color: $orange;
-    border: 1px solid $orange;
-    color: $white;
     font-weight: 700;
+    color: $white;
+    background-color: $orange;
+    border-radius: 50px;
+    border: 1px solid $orange;
     text-transform: uppercase;
 
     &--reverse {
-        color: $gray;
-        border: 1px solid;
         font-family: inherit;
+        color: $gray;
         background-color: $white;
+        border: 1px solid;
     }
 }
 

@@ -1,8 +1,8 @@
 @import "../../../shared/styles/variables";
 
 .cards {
-    width: clamp(20rem, 80%, 31rem);
     margin: 0 auto;
+    width: clamp(20rem, 80%, 31rem);
 
     &__box {
         position: relative;
@@ -39,12 +39,12 @@
 
     &-item {
         padding: 1.5rem 3rem;
-        border-radius: 1rem;
         color: $white;
-        font-weight: 500;
         font-size: 1.6rem;
-        border: none;
+        font-weight: 500;
         font-family: inherit;
+        border: none;
+        border-radius: 1rem;
         
         &--dont-know {
             background-color: $red;

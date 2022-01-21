@@ -6,19 +6,19 @@
 }
 
 .card {
+    position: relative;
+    width: 100%;
+    min-height: 48rem;
+    overflow: hidden;
     font-weight: 700;
     text-transform: uppercase;
     font-size: 1.4rem;
-    position: relative;
-    cursor: pointer;
-    width: 100%;
-    min-height: 48rem;
     color: $white;
-    text-align: center;
     border-top-left-radius: 2.5rem;
     border-bottom-right-radius: 2.5rem;
-    overflow: hidden;
     box-shadow: 0px -4px 16px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    cursor: pointer;
 
     &__btn {
         position: absolute;
@@ -27,11 +27,11 @@
         height: 100%;
         top: 0;
         left: 0;
-        border: none;
         background: none;
-        text-indent: -200vw;
+        border: none;
         border-top-left-radius: 2.5rem;
         border-bottom-right-radius: 2.5rem;
+        text-indent: -200vw;
 
         &:focus {
             outline: none;
@@ -58,16 +58,16 @@
     }
 
     &__center {
-        height: 36rem;
+        grid-area: center;
         padding: 3rem;
         width: 100%;
-        grid-area: center;
-        background-color: $white;
+        height: 36rem;
         color: $black;
+        background-color: $white;
 
         &-text {
-            font-weight: 800;
             font-size: 2rem;
+            font-weight: 800;
         }
 
         &-box {
@@ -109,21 +109,20 @@
         &-level {
             width: 6rem;
             height: 100%;
-
             font-size: 1.2rem;
         }
     }
 
     &__bottom {
-        grid-area: bottom;
         position: relative;
+        grid-area: bottom;
 
         &-icon {
             position: absolute;
+            z-index: 3;
             left: 0;
             bottom: 0;
             padding: 2rem;
-            z-index: 3;
         }
 
         &-label {

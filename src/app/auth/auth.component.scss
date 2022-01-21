@@ -1,11 +1,11 @@
 @import "../shared/styles/variables";
 
 :host {
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    height: 100%;
 }
 
 .auth {
@@ -19,19 +19,19 @@
 
     &__link {
         display: block;
-        text-align: center;
         font-size: 1.4rem;
-        text-decoration: none;
         color: $gray;
+        text-align: center;
+        text-decoration: none;
     }
 
     &__signup-info {
+        text-align: center;
         &-heading {
-            font-size: 2.4rem;
             margin-bottom: 3.2rem;
+            font-size: 2.4rem;
             font-weight: 700;
         }
-        text-align: center;
     }
 }
 
@@ -55,10 +55,10 @@
             margin-right: 1.2rem;
             width: 20px;
             height: 20px;
-            appearance: none;
             border-radius: 50%;
-            cursor: pointer;
             border: 1px solid $gray;
+            appearance: none;
+            cursor: pointer;
 
             &:checked {
                 border-color: $black;
@@ -73,11 +73,11 @@
         }
 
         &-label--checkbox {
-            color: $gray;
             position: static;
             width: auto;
             transform: none;
             font-size: 1.4rem;
+            color: $gray;
         }
     }
 }
@@ -86,10 +86,10 @@
     .auth {
         &__box {
             position: relative;
-            width: 35rem;
             margin: 0 auto;
-            border-radius: 5px;
             padding: 3.2rem;
+            width: 35rem;
+            border-radius: 5px;
             box-shadow: -4px 4px 16px rgba(0, 0, 0, 0.25);
 
             &-circles {

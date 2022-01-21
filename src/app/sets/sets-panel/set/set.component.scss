@@ -1,30 +1,30 @@
 @import "../../../shared/styles/variables";
 
 .set {
+    display: flex;
     width: 14rem;
     height: 14rem;
-    display: flex;
     flex-direction: column;
-    box-shadow: 0 0 0.8rem rgba(0, 0, 0, 0.25);
-    border-radius: 1.6rem;
     background-color: $white;
     font-family: "Raleway", sans-serif;
+    border-radius: 1.6rem;
+    box-shadow: 0 0 0.8rem rgba(0, 0, 0, 0.25);
     text-align: center;
     text-transform: uppercase;
 
     &__box {
         position: relative;
         display: flex;
+        flex-grow: 1;
         flex-direction: column;
         justify-content: center;
-        flex-grow: 1;
         border-top: 0.05rem solid $gray;
 
         &-button {
-            z-index: 10;
             position: absolute;
             width: 100%;
             height: 100%;
+            z-index: 10;
             background: none;
             border: none;
             text-indent: -200vw;
@@ -32,20 +32,20 @@
     }
 
     &__learn {
-        text-decoration: none;
-        color: $black;
-        padding: 0.5rem;
         display: block;
-        text-transform: uppercase;
+        padding: 0.5rem;
+        font-size: 1.2rem;
         font-family: "Raleway";
         font-weight: 600;
-        font-size: 1.2rem;
+        color: $black;
+        text-decoration: none;
+        text-transform: uppercase;
     }
 
     &__name {
-        word-break: break-all;
         font-size: 1.4rem;
         font-weight: bold;
+        word-break: break-all;
     }
 
     &__cards-length {
@@ -53,14 +53,14 @@
     }
 
     &__buttons {
-        border-top: 0.05rem solid $gray;
         display: flex;
+        border-top: 0.05rem solid $gray;
 
         &-item {
-            padding: 0.4rem 0;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 0.4rem 0;
             width: 50%;
 
             &--edit {
@@ -68,8 +68,8 @@
             }
 
             &--delete {
-                border: none;
                 background: none;
+                border: none;
             }
         }
     }

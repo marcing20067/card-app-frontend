@@ -7,27 +7,26 @@
     }
 
     &__cards {
-        margin-top: 2.8rem;
-        margin: 2.8rem 0 0;
+        margin: 2.8rem 0 0 0;
         text-align: center;
 
         &-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: auto 1fr 1fr;
-            row-gap: 3.2rem;
-            margin-bottom: 6.4rem;
-            column-gap: 1.6rem;
             grid-template-areas:
                 "heading heading"
                 "concept definition"
                 "example example";
+            row-gap: 3.2rem;
+            column-gap: 1.6rem;
+            margin-bottom: 6.4rem;
 
             &-heading {
-                text-transform: uppercase;
+                grid-area: heading;
                 font-size: 1.6rem;
                 font-weight: 700;
-                grid-area: heading;
+                text-transform: uppercase;
             }
 
             &-concept {
@@ -53,12 +52,12 @@
         flex-direction: column;
 
         &-item {
-            border: none;
             padding: 0.8rem 3.2rem;
-            font-weight: 600;
-            text-transform: uppercase;
             font-size: 2.4rem;
             font-family: inherit;
+            font-weight: 600;
+            border: none;
+            text-transform: uppercase;
 
             &--add-card {
                 background: none;
@@ -67,10 +66,10 @@
             }
 
             &--submit {
-                background-color: $orange;
-                color: $white;
-                border-radius: 3.3rem;
                 margin-bottom: 9.2rem;
+                color: $white;
+                background-color: $orange;
+                border-radius: 3.3rem;
             }
         }
     }
@@ -99,10 +98,10 @@
         }
 
         &__buttons {
+            margin: 3.2rem 0 0 0;
             flex-direction: row;
             align-items: center;
             justify-content: center;
-            margin: 3.2rem 0 0 0;
 
             &-item {
                 margin: 0;

@@ -20,14 +20,14 @@
             margin-right: 1.2rem;
             width: 20px;
             height: 20px;
-            appearance: none;
-            border-radius: 50%;
-            cursor: pointer;
             border: 1px solid $gray;
+            border-radius: 50%;
+            appearance: none;
+            cursor: pointer;
 
             &:checked {
-                border-color: $black;
                 background-color: $orange;
+                border-color: $black;
             }
         }
 
@@ -38,10 +38,10 @@
         }
 
         &-label--checkbox {
-            color: $gray;
             position: static;
             width: auto;
             transform: none;
+            color: $gray;
             font-size: 1.4rem;
         }
     }

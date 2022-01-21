@@ -1,13 +1,13 @@
 @import "../shared/styles/variables";
 
 .user-panel {
-    color: $gray;
     position: relative;
+    color: $gray;
 
     &__title {
-        text-align: left;
-        font-size: 2.4rem;
         margin-bottom: 6.4rem;
+        font-size: 2.4rem;
+        text-align: left;
     }
 
     .status {
@@ -17,11 +17,10 @@
         margin-bottom: 6.4rem;
 
         &__item {
-            font-size: 1.6rem;
-            font-weight: 500;
-
             display: flex;
             justify-content: space-between;
+            font-size: 1.6rem;
+            font-weight: 500;
         }
     }
 
@@ -31,27 +30,27 @@
         row-gap: 3.2rem;
 
         &-item {
-            width: 100%;
             padding: 0.8rem 0;
-            font-family: inherit;
+            width: 100%;
             max-width: 20rem;
+            font-family: inherit;
         }
     }
 
     &__popup {
+        position: absolute;
+        top: 0;
+        left: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        position: absolute;
-        top: 0;
-        left: 0;
+        row-gap: 3.2rem;
         width: 100%;
         height: 100%;
         color: $black;
         background-color: $white;
         text-align: center;
-        row-gap: 3.2rem;
 
         &-heading {
             font-size: 2.4rem;
@@ -60,10 +59,10 @@
 
         &-button {
             display: block;
-            width: 100%;
-            font-size: 2.4rem;
             padding: 0.8rem;
+            width: 100%;
             max-width: 34.2rem;
+            font-size: 2.4rem;
         }
     }
 }
