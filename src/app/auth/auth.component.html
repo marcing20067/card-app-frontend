@@ -1,4 +1,5 @@
 <app-loader *ngIf="isLoading"></app-loader>
+<app-waves class="waves" [rotate]="mode === 'signup'"></app-waves>
 <section class="auth wrapper section-padding" *ngIf="!isLoading">
     <div class="auth__box" *ngIf="!signupSuccessfully">
         <app-circles [class]="'auth__box-circles auth__box-circles--' + mode"></app-circles>

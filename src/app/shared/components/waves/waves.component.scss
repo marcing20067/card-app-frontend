@@ -1,0 +1,41 @@
+.waves {
+    position: relative;
+    height: 100%;
+
+    &__wave {
+        position: absolute;
+        &--big {
+            left: 0;
+            bottom: -10%;
+            height: clamp(1rem, 110%, 110vw);
+            width: auto;
+        }
+
+        &--small {
+            top: 0;
+            right: 0;
+            height: clamp(1rem, 50%, 80vw);
+            width: auto;
+        }
+    }
+
+    &--rotate &__wave {
+        &--big {
+            top: 0;
+            bottom: auto;
+            height: auto;
+            width: clamp(1rem, 100vh, 110vw);
+            transform: rotate(90deg) translateY(-100%);
+            transform-origin: top left;
+        }
+
+        &--small {
+            top: auto;
+            bottom: 0;
+            height: auto;
+            width: clamp(1rem, 40vh, 80vw);
+            transform-origin: bottom right;
+            transform: rotate(90deg) translateY(100%);
+        }
+    }
+}

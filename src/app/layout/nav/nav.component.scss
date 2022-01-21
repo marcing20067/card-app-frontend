@@ -49,7 +49,7 @@
     }
 }
 
-@media (min-width: 1050px) {
+@media (min-width: 1024px) {
     .nav {
         // default
         .hamburger {
@@ -67,7 +67,6 @@
 
         &--desktop-no-bgc {
             background-image: none;
-            background-color: $white;
         }
 
         &--desktop-no-bgc .header__h1-link {

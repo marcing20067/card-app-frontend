@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { CirclesComponent } from './components/circles/circles.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ErrorComponent } from './components/error/error.component';
+import { WavesComponent } from './components/waves/waves.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { ErrorComponent } from './components/error/error.component';
     CirclesComponent,
     LoaderComponent,
     ErrorComponent,
+    WavesComponent,
   ],
   imports: [CommonModule, RouterModule],
   exports: [
@@ -25,6 +27,7 @@ import { ErrorComponent } from './components/error/error.component';
     CirclesComponent,
     LoaderComponent,
     ErrorComponent,
+    WavesComponent
   ],
 })
 export class SharedModule {}

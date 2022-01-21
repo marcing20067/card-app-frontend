@@ -1,5 +1,6 @@
 .core {
     position: relative;
+    overflow: hidden;
     min-height: clamp(500px, 100vh, 100vh);
 
     &__box {

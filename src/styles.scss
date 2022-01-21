@@ -79,14 +79,20 @@ body {
     }
 }
 
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 @media (min-width: 768px) {
     .wrapper {
         width: 75%;
     }
 }
 
-.flex-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+@media (min-width: 1024px) {
+    .wrapper {
+        width: 80%;
+    }
 }
