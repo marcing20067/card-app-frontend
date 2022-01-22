@@ -10,8 +10,8 @@
             <app-error *ngIf="username.errors?.required && username.touched">
                 To pole jest obowiązkowe.</app-error>
             <app-error *ngIf="username.errors?.pattern">
-                Nazwa może się składać jedynie z liter. <br>
-                Nie może zawierać polskich liter.</app-error>
+                Nazwa może się składać jedynie z liter.
+            </app-error>
             <app-error *ngIf="username.errors?.minlength">
                 Nazwa musi być dłuższa niż 4.</app-error>
             <app-error *ngIf="username.errors?.alreadytaken">
