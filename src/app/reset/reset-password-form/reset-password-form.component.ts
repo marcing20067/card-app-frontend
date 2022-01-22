@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Form } from 'src/app/shared/util/form';
 import { ResetPasswordData } from './reset-password-data.model';
@@ -10,13 +10,15 @@ import { ResetPasswordData } from './reset-password-data.model';
 })
 export class ResetPasswordFormComponent
   extends Form<ResetPasswordData>
-  implements OnDestroy
+  implements OnInit, OnDestroy
 {
   formSub!: Subscription;
 
   constructor() {
     super();
+  }
 
+  ngOnInit() {
     this.formSub = this.form.valueChanges.subscribe((value) => {
       const isSimilar = value.newPassword === value.repeatNewPassword;
       this.form
