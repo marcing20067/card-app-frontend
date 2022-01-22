@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
-import { TokenData } from '../../models/tokenData.model';
+import { TokenData } from '../../models/token-data.model';
 
 @Injectable({
   providedIn: 'root',
