@@ -20,8 +20,8 @@ export class ResetPasswordFormComponent
     this.formSub = this.form.valueChanges.subscribe((value) => {
       const isSimilar = value.newPassword === value.repeatNewPassword;
       this.form
-        .get('repeatNewPassword')
-        ?.setErrors(isSimilar ? null : { similar: 'false' });
+        .get('repeatNewPassword')!
+        .setErrors(isSimilar ? null : { similar: 'false' });
     });
   }
 

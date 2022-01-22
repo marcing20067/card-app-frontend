@@ -33,7 +33,7 @@ export class SetsCreateFormComponent extends Form<Set> {
   }
 
   setNameAlreadyTakenError() {
-    this.form.get('name')?.setErrors({ alreadytaken: true });
+    this.form.get('name')!.setErrors({ alreadytaken: true });
   }
 
   get cards() {
@@ -99,8 +99,8 @@ export class SetsCreateFormComponent extends Form<Set> {
     const lastControlIndex = controlsWithDuplicatedValue.length - 1;
     setTimeout(() => {
       controlsWithDuplicatedValue[lastControlIndex]
-        .get('concept')
-        ?.setErrors({ duplicated: true });
+        .get('concept')!
+        .setErrors({ duplicated: true });
     }, 0);
   }
 

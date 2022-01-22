@@ -28,8 +28,8 @@ export class SignupFormComponent extends Form<SignupData> implements OnDestroy {
       .subscribe((value) => {
         const isSimilar = value.password === value.repeatPassword;
         this.form
-          .get('repeatPassword')
-          ?.setErrors(isSimilar ? null : { similar: 'false' });
+          .get('repeatPassword')!
+          .setErrors(isSimilar ? null : { similar: 'false' });
       });
   }
 
