@@ -7,7 +7,7 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormGroup } from '@angular/forms';
 import { Card } from 'src/app/shared/models/set/card.model';
 import { Set } from 'src/app/shared/models/set/set.model';
 import { Stats } from 'src/app/shared/models/set/stats.model';
@@ -37,8 +37,8 @@ export class SetsCreateFormComponent extends Form<Set> {
   }
 
   get cards() {
-    interface FormCardsGroup extends Omit<FormArray, 'controls'> {
-      controls: FormGroup[];
+    interface FormCardsGroup extends Omit<UntypedFormArray, 'controls'> {
+      controls: UntypedFormGroup[];
     }
 
     return this.form.get('cards') as unknown as FormCardsGroup;

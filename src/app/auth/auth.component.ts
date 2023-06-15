@@ -1,8 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   ValidationErrors,
   Validators,
 } from '@angular/forms';
@@ -19,7 +19,7 @@ import { SignupData } from './signup-form/signup-data.model';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   isLoading = false;
   mode!: string;
   signupSuccessfully = false;
@@ -27,7 +27,7 @@ export class AuthComponent {
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {
     this.mode = this.route.snapshot.url[0].path;
 

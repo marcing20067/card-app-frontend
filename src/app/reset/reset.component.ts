@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { AuthValidators } from '../shared/util/user-validators';
@@ -14,14 +14,14 @@ import { ResetService } from './reset.service';
   styleUrls: ['./reset.component.scss'],
 })
 export class ResetComponent {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   mode!: string;
   isLoading = false;
 
   constructor(
     private route: ActivatedRoute,
     private resetService: ResetService,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {
     this.mode = this.route.snapshot.url[0].path;
     if (this.mode === 'username') {

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { Card } from 'src/app/shared/models/set/card.model';
@@ -29,7 +29,7 @@ export class SetsCreateComponent implements OnInit {
     private setsService: SetsService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {}
 
   ngOnInit() {
@@ -70,7 +70,7 @@ export class SetsCreateComponent implements OnInit {
 
   addCardToForm(card?: Card) {
     const newCard = this.createCardGroup(card);
-    (this.form.get('cards')! as FormArray).push(newCard);
+    (this.form.get('cards')! as UntypedFormArray).push(newCard);
   }
 
   private createCardGroup(card?: Card) {

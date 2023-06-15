@@ -1,9 +1,9 @@
 import { Directive, EventEmitter, Input, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 @Directive()
 export abstract class Form<T extends object> {
-  @Input() form!: FormGroup;
+  @Input() form!: UntypedFormGroup;
 
   @Output() submitForm = new EventEmitter<T>();
 
