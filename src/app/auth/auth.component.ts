@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import {
-  UntypedFormBuilder,
+  FormBuilder,
   UntypedFormGroup,
   ValidationErrors,
   Validators,
@@ -27,7 +27,7 @@ export class AuthComponent {
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
-    private fb: UntypedFormBuilder
+    private fb: FormBuilder
   ) {
     this.mode = this.route.snapshot.url[0].path;
 
