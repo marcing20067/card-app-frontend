@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+
 import { of } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 import { AuthService } from './auth.service';
@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthResolver implements Resolve<boolean> {
+export class AuthResolver  {
   constructor(private authService: AuthService) {}
   resolve() {
     return this.authService.getIsRefreshCalledListener().pipe(
