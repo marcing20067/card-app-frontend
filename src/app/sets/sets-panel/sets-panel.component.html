@@ -3,7 +3,7 @@
 <app-loader *ngIf="isLoading"></app-loader>
 
 <section class="sets-panel section-padding" *ngIf="!isLoading">
-    
+
     <h2 class="sets-panel__title">Utworzone zestawy</h2>
 
     <button class="sets-panel__load-more" (click)="onLoadMore()">Załaduj więcej</button>
@@ -16,8 +16,10 @@
             </div>
 
             <div class="sets-panel__sets" *ngIf="sets.length > 0">
+              <!-- TODO: CONSIDER  CASE, dirty ng class -->
                 <app-set class=" sets-panel__set" *ngFor="let set of sets; last as last; even as even; odd as odd"
                     [set]="set" (selectSet)="onSelectSet($event)" (deleteSet)="onDeleteSet($event)"
+
                     [ngClass]="{'sets-panel__set--last': sets.length % 2 !== 0 && last, 'sets-panel__set--even': even, 'sets-panel__set--odd': odd }">
                 </app-set>
             </div>

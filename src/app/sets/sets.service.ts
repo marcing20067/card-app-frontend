@@ -29,8 +29,7 @@ export class SetsService {
   }
 
   private formatName(name: string) {
-    const nameWithFirstCapitalLetter = name[0].toUpperCase() + name.slice(1);
-    let formattedName = nameWithFirstCapitalLetter.replace(/ /g, '');
+    let formattedName = (name[0].toUpperCase() + name.slice(1)).trim();
     if (formattedName.length > 9) {
       formattedName = formattedName.slice(0, 7) + '..';
     }
@@ -39,16 +38,17 @@ export class SetsService {
 
   getSets(name?: string) {
     this.page = 1;
+    // TODO: USE FILTER
     return this.http.get<Set[]>(environment.BACKEND_URL + 'sets').pipe(
       map((sets) => {
-        if (name) {
-          sets = sets.filter((s) => {
-            const sName = s.name.replace(/ /g, '').toLowerCase();
-            const sNameFilter = name.replace(/ /g, '').toLowerCase();
-            return sName.includes(sNameFilter);
-          });
+        if (!name) {
+          return sets;
         }
-        return sets;
+        return sets.filter((s) => {
+          const sName = s.name.trim().toLowerCase();
+          const sNameFilter = name.trim().toLowerCase();
+          return sName.includes(sNameFilter);
+        });
       }),
       tap((sets) => {
         this.sets$.next(sets);
@@ -58,6 +58,7 @@ export class SetsService {
 
   loadMore() {
     this.page++;
+    // TODO: YOU CAN REUSe this.getSets();
     return this.http
       .get<Set[]>(environment.BACKEND_URL + 'sets', {
         params: {
@@ -78,8 +79,8 @@ export class SetsService {
     return this.http.delete(environment.BACKEND_URL + 'sets/' + id).pipe(
       tap(() => {
         this.sets$.pipe(take(1)).subscribe((sets) => {
-          const updatedSet = sets.filter((s) => s._id !== id);
-          this.sets$.next(updatedSet);
+          const updatedSets = sets.filter((s) => s._id !== id);
+          this.sets$.next(updatedSets);
         });
       })
     );

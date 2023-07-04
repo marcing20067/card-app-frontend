@@ -13,6 +13,7 @@ import { ResetService } from './reset.service';
   templateUrl: './reset.component.html',
   styleUrls: ['./reset.component.scss'],
 })
+// TODO: USE TYPED FORM
 export class ResetComponent {
   form!: UntypedFormGroup;
   mode!: string;
@@ -58,6 +59,7 @@ export class ResetComponent {
   }
 
   setAlreadyTakenErrorOnUsername() {
+    // TODO: inconsistent naming
     setTimeout(() => {
       this.form.get('newUsername')!.setErrors({ alreadyTaken: true });
     }, 0);

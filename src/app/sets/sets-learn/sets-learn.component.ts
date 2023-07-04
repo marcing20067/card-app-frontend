@@ -6,7 +6,7 @@ import { Set } from 'src/app/shared/models/set/set.model';
 import { SetsService } from '../sets.service';
 import { CardsState } from '../../shared/models/set/cards-state.model';
 import { SetsLearnService } from './services/sets-learn.service';
-
+// ADD CREATING RANDOM DECK
 @Component({
   selector: 'app-sets-learn',
   templateUrl: './sets-learn.component.html',
@@ -16,7 +16,7 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
   private updateCardEvent$ = new Subject<void>();
   learnEnd = false;
   set!: Set;
-  subs: Subscription[] = [];
+  sub!: Subscription;
   state!: CardsState;
 
   constructor(
@@ -32,27 +32,27 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((set) => {
         this.set = set;
-        const learnEndSub = this.setsLearnService
+        this.setsLearnService
           .getLearnEndListener()
+          .pipe(take(1))
           .subscribe(() => {
             this.learnEnd = true;
           });
 
-        const stateListener = this.setsLearnService
+        this.setsLearnService
           .init(set)
+          .pipe(take(1))
           .subscribe((state) => {
             if (state) {
               this.state = state;
             }
           });
 
-        const updateCardSub = this.updateCardEvent$
+        this.sub = this.updateCardEvent$
           .pipe(debounceTime(500))
           .subscribe(() => {
             this.setsService.editSet(this.set).pipe(take(1)).subscribe();
           });
-
-        this.subs = [stateListener, learnEndSub, updateCardSub];
       });
   }
 
@@ -63,8 +63,6 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subs.forEach((sub) => {
-      sub.unsubscribe();
-    });
+    this.sub.unsubscribe();
   }
 }

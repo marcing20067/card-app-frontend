@@ -12,8 +12,8 @@ import { ActivatedRoute } from '@angular/router';
 export class SetsPanelComponent implements OnInit {
   isLoading = true;
   selectedSet: Set | null = null;
+  // TODO: Consider is listener useful
   sets$ = this.setsService.getSetsListener();
-  setName!: string;
 
   constructor(
     private setsService: SetsService,
@@ -22,9 +22,9 @@ export class SetsPanelComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.setName = this.route.snapshot.queryParams.name;
+    const setName = this.route.snapshot.queryParams.name;
     this.setsService
-      .getSets(this.setName)
+      .getSets(setName)
       .pipe(take(1))
       .subscribe(() => {
         this.isLoading = false;
@@ -36,7 +36,7 @@ export class SetsPanelComponent implements OnInit {
       .getConfirmEventListener()
       .pipe(take(1))
       .subscribe((isConfirm) => {
-        this.isLoading = true;
+        this.isLoading = isConfirm;
         if (isConfirm) {
           this.setsService
             .deleteSet(set._id as string)
@@ -44,10 +44,6 @@ export class SetsPanelComponent implements OnInit {
             .subscribe(() => {
               this.isLoading = false;
             });
-        }
-
-        if (!isConfirm) {
-          this.isLoading = false;
         }
       });
 

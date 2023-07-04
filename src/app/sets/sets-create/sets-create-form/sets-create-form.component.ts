@@ -48,6 +48,7 @@ export class SetsCreateFormComponent extends Form<Set> {
     const newSet: Set = this.form.value;
     const duplicatedCard = this.getDuplicatedCard([...newSet.cards]);
     if (duplicatedCard) {
+      // TODO: YOU CAN DO IT WITHOUT QueryList
       const conceptInput = this.getConceptInputByCard(duplicatedCard);
       this.setDuplicateErrorOnControlByCard(duplicatedCard);
       this.scrollToInput(conceptInput);
@@ -71,15 +72,13 @@ export class SetsCreateFormComponent extends Form<Set> {
   }
 
   private getDuplicatedCard(cards: Card[]) {
-    let duplicatedCard!: Card;
-    cards.forEach((el, i) => {
-      const duplicatedCards = cards.filter((c) => c.concept === el.concept);
+    for (const card of cards) {
+      const duplicatedCards = cards.filter((c) => c.concept === card.concept);
       if (duplicatedCards.length >= 2) {
-        duplicatedCard = el;
-        cards.length = i + 1;
+        return card;
       }
-    });
-    return duplicatedCard;
+    }
+    return null;
   }
 
   private getConceptInputByCard(card: Card) {

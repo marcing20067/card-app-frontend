@@ -1,5 +1,6 @@
 import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
 import { FieldService } from '../field.service';
+// TODO: DO IT CLEANER
 
 @Directive({
   selector: '[appInput]',

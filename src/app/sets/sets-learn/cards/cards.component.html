@@ -1,5 +1,5 @@
 <app-instrucion #instrucion></app-instrucion>
-
+<!-- get animation of rotating  -->
 <div class="cards">
     <div class="cards__box">
         <app-card [isActivate]="false" [setName]="setName" [card]="cardsView.deactive[1]" (showInstrucion)="instrucion.onShow()"
@@ -9,9 +9,9 @@
         <app-card [isActivate]="true" [setName]="setName" [card]="cardsView.active" (showInstrucion)="instrucion.onShow()" #activate
             class="cards__box-item cards__box-item--one"></app-card>
     </div>
-    
+
     <div class="buttons">
-        <button class="buttons-item buttons-item--dont-know" (click)="onLearn(false)" #dontKnow>Nie wiem</button>
-        <button class="buttons-item buttons-item--know" (click)="onLearn(true)" #know>Wiem!</button>
+        <button class="buttons-item buttons-item--dont-know" (click)="onLearn(false)" >Nie wiem</button>
+        <button class="buttons-item buttons-item--know" (click)="onLearn(true)">Wiem!</button>
     </div>
 </div>

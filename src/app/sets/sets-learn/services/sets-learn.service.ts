@@ -6,7 +6,7 @@ import { Set } from 'src/app/shared/models/set/set.model';
 import { Stats } from 'src/app/shared/models/set/stats.model';
 import { CardsState } from '../../../shared/models/set/cards-state.model';
 import { CardsViewService } from './cards-view.service';
-
+// TODO: EVERYTHING IS STUPID AND USELESSS
 @Injectable({
   providedIn: 'root',
 })

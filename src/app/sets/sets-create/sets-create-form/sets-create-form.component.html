@@ -22,7 +22,8 @@
             <div *ngFor="let card of cards.controls; index as i">
                 <div [formGroupName]="i" class="form__cards-container">
                     <p class="form__cards-container-heading">
-                        Fiszka <span>{{ i < 10 ? '0' : '' }}{{ i + 1 }}</span>
+<!-- TODO: IT COULD BE CLEANER -->
+                      Fiszka <span>{{ i < 10 ? '0' : '' }}{{ i + 1 }}</span>
                     </p>
 
                     <div class="form__cards-container-concept">

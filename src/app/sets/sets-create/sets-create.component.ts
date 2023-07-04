@@ -13,6 +13,7 @@ import { SetsService } from '../sets.service';
   styleUrls: ['./sets-create.component.scss'],
 })
 export class SetsCreateComponent implements OnInit {
+  // TODO: USE TYPED FORMS
   form = this.fb.group({
     name: [
       '',
@@ -43,6 +44,7 @@ export class SetsCreateComponent implements OnInit {
           next: (set) => {
             this.set = set;
             this.mode = 'edit';
+            // TODO: => Set form value (set);
             this.setCardsOnForm(set);
             this.form.get('name')?.setValue(set.name);
             this.isLoading = false;
