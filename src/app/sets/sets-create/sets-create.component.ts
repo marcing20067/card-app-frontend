@@ -1,8 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
-  UntypedFormArray,
-  UntypedFormBuilder,
+  FormArray,
+  FormGroup,
+  NonNullableFormBuilder,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +11,8 @@ import { take } from 'rxjs/operators';
 import { Card } from 'src/app/shared/models/set/card.model';
 import { Set } from 'src/app/shared/models/set/set.model';
 import { SetsService } from '../sets.service';
+import { SetsForm } from './sets-form';
+import { SetCardForm } from './set-card-form';
 
 @Component({
   selector: 'app-sets-create',
@@ -17,13 +20,12 @@ import { SetsService } from '../sets.service';
   styleUrls: ['./sets-create.component.scss'],
 })
 export class SetsCreateComponent implements OnInit {
-  // TODO: USE TYPED FORMS
-  form = this.fb.group({
+  form: FormGroup<SetsForm> = this.fb.group({
     name: [
       '',
       [Validators.required, Validators.minLength(3), Validators.maxLength(25)],
     ],
-    cards: this.fb.array([]),
+    cards: this.fb.array<FormGroup<SetCardForm>>([]),
   });
   id = '';
   isLoading = false;
@@ -34,7 +36,7 @@ export class SetsCreateComponent implements OnInit {
     private setsService: SetsService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: UntypedFormBuilder
+    private fb: NonNullableFormBuilder
   ) {}
 
   ngOnInit() {
@@ -79,17 +81,22 @@ export class SetsCreateComponent implements OnInit {
 
   addCardToForm(card?: Card) {
     const newCard = this.createCardGroup(card);
-    (this.form.get('cards')! as UntypedFormArray).push(newCard);
+    (this.form.get('cards') as FormArray<FormGroup<SetCardForm>>)!.push(
+      newCard
+    );
   }
 
   private createCardGroup(card?: Card) {
-    const cardGroup = this.fb.group({
-      concept: [card?.concept, [Validators.required, Validators.maxLength(50)]],
+    const cardGroup: FormGroup<SetCardForm> = this.fb.group({
+      concept: [
+        card?.concept || '',
+        [Validators.required, Validators.maxLength(50)],
+      ],
       definition: [
-        card?.definition,
+        card?.definition || '',
         [Validators.required, Validators.maxLength(100)],
       ],
-      example: [card?.example, [Validators.maxLength(100)]],
+      example: [card?.example || '', [Validators.maxLength(100)]],
       group: card?.group || 1,
     });
     return cardGroup;

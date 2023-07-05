@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { AuthValidators } from '../shared/util/user-validators';
@@ -13,16 +13,15 @@ import { ResetService } from './reset.service';
   templateUrl: './reset.component.html',
   styleUrls: ['./reset.component.scss'],
 })
-// TODO: USE TYPED FORM
 export class ResetComponent {
-  form!: UntypedFormGroup;
+  form!: FormGroup;
   mode!: string;
   isLoading = false;
 
   constructor(
     private route: ActivatedRoute,
     private resetService: ResetService,
-    private fb: UntypedFormBuilder
+    private fb: NonNullableFormBuilder
   ) {
     this.mode = this.route.snapshot.url[0].path;
     if (this.mode === 'username') {
@@ -50,9 +49,7 @@ export class ResetComponent {
         error: (err: HttpErrorResponse) => {
           this.isLoading = false;
           if (err.status === 409) {
-            setTimeout(() => {
-              this.setAlreadyTakenErrorOnUsername();
-            }, 0);
+            this.setAlreadyTakenErrorOnUsername();
           }
         },
       });
