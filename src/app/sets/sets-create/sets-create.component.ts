@@ -1,6 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormArray, UntypedFormBuilder, Validators } from '@angular/forms';
+import {
+  UntypedFormArray,
+  UntypedFormBuilder,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { Card } from 'src/app/shared/models/set/card.model';
@@ -44,10 +48,8 @@ export class SetsCreateComponent implements OnInit {
           next: (set) => {
             this.set = set;
             this.mode = 'edit';
-            // TODO: => Set form value (set);
-            this.setCardsOnForm(set);
-            this.form.get('name')?.setValue(set.name);
             this.isLoading = false;
+            this.setFormValue();
           },
           error: (res: HttpErrorResponse) => {
             if (res.status === 400) {
@@ -63,8 +65,13 @@ export class SetsCreateComponent implements OnInit {
     }
   }
 
-  private setCardsOnForm(set: Set) {
-    const cards = set.cards;
+  private setFormValue() {
+    this.form.get('name')?.setValue(this.set.name);
+    this.setCardsOnForm();
+  }
+
+  private setCardsOnForm() {
+    const cards = this.set.cards;
     for (const card of cards) {
       this.addCardToForm(card);
     }
@@ -128,7 +135,7 @@ export class SetsCreateComponent implements OnInit {
 
   private setNameAlreadyTakenError() {
     setTimeout(() => {
-      this.form.get('name')!.setErrors({ alreadytaken: true });
+      this.form.get('name')!.setErrors({ alreadyTaken: true });
     }, 0);
   }
 }

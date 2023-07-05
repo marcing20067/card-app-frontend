@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import {
   distinctUntilChanged,
+  filter,
   startWith,
   switchMap,
   take,
@@ -17,10 +18,11 @@ export class FieldService {
   getFieldStateListener(inputId: string): Observable<FieldState> {
     return this.fieldsState$.asObservable().pipe(
       startWith({ [inputId]: { isFocus: false } }),
-      switchMap((fState) => {
-        const fieldState = fState[inputId];
+      switchMap((fStates) => {
+        const fieldState = fStates[inputId];
         return of(fieldState);
       }),
+      filter((fStates) => !!fStates),
       distinctUntilChanged()
     );
   }

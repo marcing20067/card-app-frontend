@@ -6,7 +6,7 @@
                 <label for="name" label>Tytuł zestawu</label>
             </app-field>
             <div *ngIf="form.get('name') as name">
-                <app-error *ngIf="name.errors?.alreadytaken">
+                <app-error *ngIf="name.errors?.alreadyTaken">
                     Ta nazwa zestawu jest już zajęta.
                 </app-error>
                 <app-error *ngIf="name.errors?.required && name.touched">To pole jest obowiązkowe</app-error>
@@ -19,10 +19,9 @@
 
     <div class="wrapper form__box">
         <div class="form__cards" formArrayName="cards">
-            <div *ngFor="let card of cards.controls; index as i">
+            <div *ngFor="let card of cards.controls; index as i ">
                 <div [formGroupName]="i" class="form__cards-container">
                     <p class="form__cards-container-heading">
-<!-- TODO: IT COULD BE CLEANER -->
                       Fiszka <span>{{ i < 10 ? '0' : '' }}{{ i + 1 }}</span>
                     </p>
 

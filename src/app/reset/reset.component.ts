@@ -59,7 +59,6 @@ export class ResetComponent {
   }
 
   setAlreadyTakenErrorOnUsername() {
-    // TODO: inconsistent naming
     setTimeout(() => {
       this.form.get('newUsername')!.setErrors({ alreadyTaken: true });
     }, 0);

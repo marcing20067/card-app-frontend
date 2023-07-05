@@ -81,7 +81,7 @@ export class AuthComponent {
               const takenProperty = message.includes('username')
                 ? 'username'
                 : 'email';
-              this.setFormError({ alreadytaken: true }, takenProperty);
+              this.setFormError({ alreadyTaken: true }, takenProperty);
             }
           },
         });

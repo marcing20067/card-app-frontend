@@ -1,2 +1,1 @@
-<!-- TODO: just src$ | async, do logic in component -->
-<img [src]="(inputState$ | async)?.isFocus ? srcWithoutExt + '-orange' + ICON_EXT : srcWithoutExt + ICON_EXT" alt="" class="icon">
+<img [src]="src$ | async" alt="" class="icon">

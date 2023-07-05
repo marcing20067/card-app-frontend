@@ -33,7 +33,7 @@ export class SetsCreateFormComponent extends Form<Set> {
   }
 
   setNameAlreadyTakenError() {
-    this.form.get('name')!.setErrors({ alreadytaken: true });
+    this.form.get('name')!.setErrors({ alreadyTaken: true });
   }
 
   get cards() {

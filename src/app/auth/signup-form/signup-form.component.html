@@ -14,7 +14,7 @@
             </app-error>
             <app-error *ngIf="username.errors?.minlength">
                 Nazwa musi być dłuższa niż 4.</app-error>
-            <app-error *ngIf="username.errors?.alreadytaken">
+            <app-error *ngIf="username.errors?.alreadyTaken">
                 Taki użytkownik już istnieje.</app-error>
         </div>
     </div>
@@ -31,7 +31,7 @@
                 To pole jest obowiązkowe.</app-error>
             <app-error *ngIf="email.errors?.pattern">
                 Podaj poprawny email.</app-error>
-            <app-error *ngIf="email.errors?.alreadytaken">
+            <app-error *ngIf="email.errors?.alreadyTaken">
                 Ten email jest już zajęty.</app-error>
         </div>
     </div>

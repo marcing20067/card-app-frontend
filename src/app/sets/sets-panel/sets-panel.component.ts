@@ -12,8 +12,8 @@ import { ActivatedRoute } from '@angular/router';
 export class SetsPanelComponent implements OnInit {
   isLoading = true;
   selectedSet: Set | null = null;
-  // TODO: Consider is listener useful
   sets$ = this.setsService.getSetsListener();
+  nameFilter = this.route.snapshot.queryParams.name;
 
   constructor(
     private setsService: SetsService,
@@ -22,9 +22,8 @@ export class SetsPanelComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const setName = this.route.snapshot.queryParams.name;
     this.setsService
-      .getSets(setName)
+      .getSets(this.nameFilter)
       .pipe(take(1))
       .subscribe(() => {
         this.isLoading = false;
@@ -62,7 +61,7 @@ export class SetsPanelComponent implements OnInit {
   onLoadMore() {
     this.isLoading = true;
     this.setsService
-      .loadMore()
+      .loadMore(this.nameFilter)
       .pipe(take(1))
       .subscribe(() => {
         this.isLoading = false;

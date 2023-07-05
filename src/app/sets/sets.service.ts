@@ -38,41 +38,30 @@ export class SetsService {
 
   getSets(name?: string) {
     this.page = 1;
-    // TODO: USE FILTER
-    return this.http.get<Set[]>(environment.BACKEND_URL + 'sets').pipe(
-      map((sets) => {
-        if (!name) {
-          return sets;
-        }
-        return sets.filter((s) => {
-          const sName = s.name.trim().toLowerCase();
-          const sNameFilter = name.trim().toLowerCase();
-          return sName.includes(sNameFilter);
-        });
-      }),
-      tap((sets) => {
-        this.sets$.next(sets);
+    return this.loadSets(name).pipe(tap((sets) => this.sets$.next(sets)));
+  }
+
+  loadMore(name?: string) {
+    this.page++;
+    return this.loadSets(name).pipe(
+      tap((newSets) => {
+        this.sets$
+          .pipe(
+            take(1),
+            map((oldSets) => [...oldSets, ...newSets])
+          )
+          .subscribe((sets) => this.sets$.next(sets));
       })
     );
   }
 
-  loadMore() {
-    this.page++;
-    // TODO: YOU CAN REUSe this.getSets();
-    return this.http
-      .get<Set[]>(environment.BACKEND_URL + 'sets', {
-        params: {
-          page: this.page,
-        },
-      })
-      .pipe(
-        tap((newSets) => {
-          this.sets$.pipe(take(1)).subscribe((oldSets) => {
-            const sets = [...oldSets, ...newSets];
-            this.sets$.next(sets);
-          });
-        })
-      );
+  private loadSets(name = '') {
+    return this.http.get<Set[]>(environment.BACKEND_URL + 'sets', {
+      params: {
+        name,
+        page: this.page,
+      },
+    });
   }
 
   deleteSet(id: string) {
