@@ -1,0 +1,14 @@
+<app-loader *ngIf="isLoading"></app-loader>
+<app-waves class="waves"></app-waves>
+<section class="auth wrapper section-padding" *ngIf="!isLoading">
+  <div class="auth__box">
+    <app-circles class="auth__box-circles auth__box-circles--login"></app-circles>
+    <h2 class="auth__title title">Logowanie</h2>
+
+    <app-login-form [form]="form" (submitForm)="onSubmit($event)"></app-login-form>
+
+    <a class="auth__link" routerLink="/auth/signup">
+      Zarejestuj się
+    </a>
+  </div>
+</section>

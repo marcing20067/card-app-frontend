@@ -5,7 +5,7 @@
                 <input type="text" formControlName="name" id="name" appInput>
                 <label for="name" label>Tytuł zestawu</label>
             </app-field>
-            <div *ngIf="form.get('name') as name">
+            <div *ngIf="form.controls.name as name">
                 <app-error *ngIf="name.errors?.alreadyTaken">
                     Ta nazwa zestawu jest już zajęta.
                 </app-error>

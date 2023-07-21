@@ -7,99 +7,88 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { UntypedFormArray, UntypedFormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { Card } from 'src/app/shared/models/set/card.model';
 import { Set } from 'src/app/shared/models/set/set.model';
 import { Stats } from 'src/app/shared/models/set/stats.model';
-import { Form } from 'src/app/shared/util/form';
+import { SetsForm } from '../sets-form';
 
 @Component({
   selector: 'app-sets-create-form',
   templateUrl: './sets-create-form.component.html',
   styleUrls: ['./sets-create-form.component.scss'],
 })
-export class SetsCreateFormComponent extends Form<Set> {
+export class SetsCreateFormComponent {
   @ViewChildren('concept', { read: ElementRef }) inputs!: QueryList<ElementRef>;
   @Output() addCard = new EventEmitter<void>();
   @Input() mode!: string;
   @Input() set!: Set;
-
-  constructor() {
-    super();
-  }
+  @Input() form!: FormGroup<SetsForm>;
+  @Output() submitForm = new EventEmitter<Set>();
 
   onAddCard() {
     this.addCard.emit();
   }
 
   setNameAlreadyTakenError() {
-    this.form.get('name')!.setErrors({ alreadyTaken: true });
+    this.form.controls.name.setErrors({ alreadyTaken: true });
   }
 
   get cards() {
-    interface FormCardsGroup extends Omit<UntypedFormArray, 'controls'> {
-      controls: UntypedFormGroup[];
-    }
-
-    return this.form.get('cards') as unknown as FormCardsGroup;
+    return this.form.controls.cards;
   }
 
-  override onSubmit() {
-    const newSet: Set = this.form.value;
-    const duplicatedCard = this.getDuplicatedCard([...newSet.cards]);
-    if (duplicatedCard) {
-      // TODO: YOU CAN DO IT WITHOUT QueryList
-      const conceptInput = this.getConceptInputByCard(duplicatedCard);
-      this.setDuplicateErrorOnControlByCard(duplicatedCard);
-      this.scrollToInput(conceptInput);
+  onSubmit() {
+    const value = this.form.getRawValue();
+    const duplicatedCardIndex = this.getDuplicatedCardIndex([...value.cards]);
+    let set: Set;
+    if (duplicatedCardIndex >= 0) {
+      const input = this.getInput(duplicatedCardIndex);
+      const control = this.getControl(duplicatedCardIndex);
+      this.setDuplicateError(control);
+      this.scrollToInput(input);
       return;
     }
 
     if (this.mode === 'edit') {
-      newSet.stats = this.computeStats([...newSet.cards]);
+      const stats = this.computeStats([...value.cards]);
+      set = { ...value, stats, creator: this.set.creator };
     }
 
     if (this.mode === 'create') {
-      newSet.stats = {
-        group1: newSet.cards.length,
+      const stats = {
+        group1: value.cards.length,
         group2: 0,
         group3: 0,
         group4: 0,
         group5: 0,
       };
+      set = { ...value, stats };
     }
-    this.submitForm.emit(newSet);
+    this.submitForm.emit(set!);
   }
 
-  private getDuplicatedCard(cards: Card[]) {
-    for (const card of cards) {
-      const duplicatedCards = cards.filter((c) => c.concept === card.concept);
-      if (duplicatedCards.length >= 2) {
-        return card;
+  private getDuplicatedCardIndex(cards: Card[]) {
+    for (let i1 = 0; i1 < cards.length; i1++) {
+      for (let i2 = 1; i2 < cards.length; i2++) {
+        if (cards[i1].concept === cards[i2].concept) {
+          return i2;
+        }
       }
     }
-    return null;
+    return -1;
+  }
+  private getInput(index: number) {
+    return this.inputs.toArray()[index].nativeElement;
   }
 
-  private getConceptInputByCard(card: Card) {
-    const duplicatedInputs = this.inputs
-      .toArray()
-      .filter((i) => i.nativeElement.value === card.concept);
-    const lastDuplicatedInputIndex = duplicatedInputs.length - 1;
-    const duplicatedInput =
-      duplicatedInputs[lastDuplicatedInputIndex].nativeElement;
-    return duplicatedInput;
+  private getControl(index: number) {
+    return this.cards.controls[index].controls.concept;
   }
 
-  private setDuplicateErrorOnControlByCard(card: Card) {
-    const controlsWithDuplicatedValue = this.cards.controls.filter(
-      (c) => c.value.concept === card.concept
-    );
-    const lastControlIndex = controlsWithDuplicatedValue.length - 1;
+  private setDuplicateError(control: AbstractControl) {
     setTimeout(() => {
-      controlsWithDuplicatedValue[lastControlIndex]
-        .get('concept')!
-        .setErrors({ duplicated: true });
+      control.setErrors({ duplicated: true });
     }, 0);
   }
 
@@ -111,7 +100,7 @@ export class SetsCreateFormComponent extends Form<Set> {
     );
   }
 
-  private computeStats(cards: Card[]) {
+  private computeStats(newCards: Card[]) {
     const stats = {
       group1: 0,
       group2: 0,
@@ -120,21 +109,26 @@ export class SetsCreateFormComponent extends Form<Set> {
       group5: 0,
     };
 
-    cards.forEach((c) => {
-      const notChangedElIndex = this.set.cards.findIndex(
-        (oldC: Card) =>
-          oldC.concept === c.concept && oldC.definition === c.definition
-      );
+    const oldCards = this.set.cards;
+    for (const newCard of newCards) {
+      const unChangedCardIndex = oldCards.findIndex((oldCard: Card) => {
+        return (
+          oldCard.concept === newCard.concept &&
+          oldCard.definition === newCard.definition
+        );
+      });
 
-      if (notChangedElIndex >= 0) {
-        const notChangedEl = this.set.cards[notChangedElIndex];
-        const elGroupFullName = `group${notChangedEl.group}` as keyof Stats;
-        stats[elGroupFullName] = stats[elGroupFullName] + 1;
-      } else {
-        c.group = 1;
+      if (unChangedCardIndex < 0) {
+        newCard.group = 1;
         stats.group1++;
+        continue;
       }
-    });
+
+      const unChangedCard = this.set.cards[unChangedCardIndex];
+      const statsProperty = `group${unChangedCard.group}` as keyof Stats;
+      stats[statsProperty] = stats[statsProperty] + 1;
+    }
+
     return stats;
   }
 }

@@ -1,0 +1,20 @@
+<app-loader *ngIf="isLoading"></app-loader>
+<app-waves class="waves" [rotate]="true"></app-waves>
+<section class="auth wrapper section-padding" *ngIf="!isLoading">
+  <div class="auth__box" *ngIf="!signupSuccessfully">
+    <app-circles class="auth__box-circles auth__box-circles--signup"></app-circles>
+    <h2 class="auth__title title">Rejestracja</h2>
+
+    <app-signup-form [form]="form" (submitForm)="onSubmit($event)"></app-signup-form>
+
+    <a routerLink="/auth/login" class="auth__link">
+      Zaloguj się
+    </a>
+  </div>
+
+  <div class="auth__signup-info" *ngIf="signupSuccessfully">
+    <p class="auth__signup-info-heading">Sprawdź swój e-mail</p>
+    <p class="auth__signup-info-text">Na e-mail został wysłany link aktywujący konto.</p>
+    <a routerLink="/auth/login" class="auth__signup-info-link button">Zaloguj się</a>
+  </div>
+</section>

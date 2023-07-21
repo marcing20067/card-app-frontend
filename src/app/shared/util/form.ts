@@ -1,13 +1,19 @@
 import { Directive, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 
 @Directive()
-export abstract class Form<T extends { [key: string]: FormControl }> {
+export abstract class Form<
+  T extends { [K in keyof T]: AbstractControl }
+> {
   @Input() form!: FormGroup<T>;
 
-  @Output() submitForm = new EventEmitter<Required<typeof this.form.value>>();
+  @Output() submitForm = new EventEmitter<
+    ReturnType<typeof this.form.getRawValue>
+  >();
 
   onSubmit() {
-    this.submitForm.emit(this.form.value as Required<typeof this.form.value>);
+    this.submitForm.emit(
+      this.form.value as ReturnType<typeof this.form.getRawValue>
+    );
   }
 }

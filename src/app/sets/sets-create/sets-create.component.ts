@@ -1,11 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import {
-  FormArray,
-  FormGroup,
-  NonNullableFormBuilder,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { Card } from 'src/app/shared/models/set/card.model';
@@ -20,12 +15,12 @@ import { SetCardForm } from './set-card-form';
   styleUrls: ['./sets-create.component.scss'],
 })
 export class SetsCreateComponent implements OnInit {
-  form: FormGroup<SetsForm> = this.fb.group({
+  form: FormGroup<SetsForm> = this.fb.nonNullable.group({
     name: [
       '',
       [Validators.required, Validators.minLength(3), Validators.maxLength(25)],
     ],
-    cards: this.fb.array<FormGroup<SetCardForm>>([]),
+    cards: this.fb.nonNullable.array<FormGroup<SetCardForm>>([]),
   });
   id = '';
   isLoading = false;
@@ -36,11 +31,12 @@ export class SetsCreateComponent implements OnInit {
     private setsService: SetsService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: NonNullableFormBuilder
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
+    this.mode = this.id ? 'edit' : 'create';
     if (this.id) {
       this.isLoading = true;
       this.setsService
@@ -49,7 +45,6 @@ export class SetsCreateComponent implements OnInit {
         .subscribe({
           next: (set) => {
             this.set = set;
-            this.mode = 'edit';
             this.isLoading = false;
             this.setFormValue();
           },
@@ -63,43 +58,12 @@ export class SetsCreateComponent implements OnInit {
 
     if (!this.id) {
       this.addCardToForm();
-      this.mode = 'create';
-    }
-  }
-
-  private setFormValue() {
-    this.form.get('name')?.setValue(this.set.name);
-    this.setCardsOnForm();
-  }
-
-  private setCardsOnForm() {
-    const cards = this.set.cards;
-    for (const card of cards) {
-      this.addCardToForm(card);
     }
   }
 
   addCardToForm(card?: Card) {
     const newCard = this.createCardGroup(card);
-    (this.form.get('cards') as FormArray<FormGroup<SetCardForm>>)!.push(
-      newCard
-    );
-  }
-
-  private createCardGroup(card?: Card) {
-    const cardGroup: FormGroup<SetCardForm> = this.fb.group({
-      concept: [
-        card?.concept || '',
-        [Validators.required, Validators.maxLength(50)],
-      ],
-      definition: [
-        card?.definition || '',
-        [Validators.required, Validators.maxLength(100)],
-      ],
-      example: [card?.example || '', [Validators.maxLength(100)]],
-      group: card?.group || 1,
-    });
-    return cardGroup;
+    this.form.controls.cards.push(newCard);
   }
 
   onSubmit(set: Set) {
@@ -140,9 +104,39 @@ export class SetsCreateComponent implements OnInit {
     }
   }
 
+  private setFormValue() {
+    this.form.controls.name.setValue(this.set.name);
+    this.setCardsOnForm();
+  }
+
+  private setCardsOnForm() {
+    const cards = this.set.cards;
+    for (const card of cards) {
+      this.addCardToForm(card);
+    }
+  }
+
+  private createCardGroup(card?: Card) {
+    const cardGroup: FormGroup<SetCardForm> = this.fb.nonNullable.group({
+      concept: [
+        card?.concept || '',
+        [Validators.required, Validators.maxLength(50)],
+      ],
+      definition: [
+        card?.definition || '',
+        [Validators.required, Validators.maxLength(100)],
+      ],
+      example: this.fb.control(card?.example || null, [
+        Validators.maxLength(100),
+      ]),
+      group: card?.group || 1,
+    });
+    return cardGroup;
+  }
+
   private setNameAlreadyTakenError() {
     setTimeout(() => {
-      this.form.get('name')!.setErrors({ alreadyTaken: true });
+      this.form.controls.name.setErrors({ alreadyTaken: true });
     }, 0);
   }
 }

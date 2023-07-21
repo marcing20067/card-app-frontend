@@ -1,0 +1,32 @@
+@import "../../shared/styles/variables";
+@import "../auth.scss";
+
+.auth {
+  &__signup-info {
+    text-align: center;
+
+    &-heading {
+      font-size: 2.4rem;
+      font-weight: 700;
+    }
+
+    &-text {
+      margin: 3.2rem 0;
+    }
+
+    &-link {
+      padding: 0.8rem 2.4rem;
+      text-decoration: none;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .auth {
+    &__box-circles--signup {
+      transform: rotate(50deg);
+      left: -50%;
+      bottom: -20%;
+    }
+  }
+}

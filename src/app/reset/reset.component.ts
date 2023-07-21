@@ -55,9 +55,9 @@ export class ResetComponent {
       });
   }
 
-  setAlreadyTakenErrorOnUsername() {
+  private setAlreadyTakenErrorOnUsername() {
     setTimeout(() => {
-      this.form.get('newUsername')!.setErrors({ alreadyTaken: true });
+      this.form.controls.newUsername.setErrors({ alreadyTaken: true });
     }, 0);
   }
 }

@@ -6,7 +6,7 @@
             <app-icon src="/assets/icons/user.svg" alt="" left inputId="new-username"></app-icon>
         </app-field>
 
-        <div *ngIf="form.get('newUsername') as newUsername">
+        <div *ngIf="form.controls.newUsername as newUsername">
             <app-error *ngIf="newUsername.errors?.required && newUsername.touched">
                 To pole jest obowiązkowe.</app-error>
             <app-error *ngIf="newUsername.errors?.pattern">

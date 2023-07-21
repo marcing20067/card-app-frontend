@@ -21,9 +21,9 @@ export class ResetPasswordFormComponent
   ngOnInit() {
     this.formSub = this.form.valueChanges.subscribe((value) => {
       const isSimilar = value.newPassword === value.repeatNewPassword;
-      this.form
-        .get('repeatNewPassword')!
-        .setErrors(isSimilar ? null : { similar: 'false' });
+      this.form.controls.repeatNewPassword.setErrors(
+        isSimilar ? null : { similar: 'false' }
+      );
     });
   }
 

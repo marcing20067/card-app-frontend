@@ -6,5 +6,5 @@ export interface Set {
   name: string;
   cards: Card[];
   stats: Stats;
-  creator: string;
+  creator?: string;
 }

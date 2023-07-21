@@ -1,15 +1,15 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
-import { Form } from '../../shared/util/form';
-import { SignupData } from './signup-data.model';
+import { Form } from '../../../shared/util/form';
+import { SignupForm } from './signup-form';
 
 @Component({
   selector: 'app-signup-form',
   templateUrl: './signup-form.component.html',
   styleUrls: ['./signup-form.component.scss'],
 })
-export class SignupFormComponent extends Form<SignupData> implements OnDestroy {
+export class SignupFormComponent extends Form<SignupForm> implements OnInit, OnDestroy {
   private formSub!: Subscription;
   constructor() {
     super();
@@ -28,7 +28,7 @@ export class SignupFormComponent extends Form<SignupData> implements OnDestroy {
       .subscribe((value) => {
         const isSimilar = value.password === value.repeatPassword;
         this.form
-          .get('repeatPassword')!
+          .controls.repeatPassword
           .setErrors(isSimilar ? null : { similar: 'false' });
       });
   }

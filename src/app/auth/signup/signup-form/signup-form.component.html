@@ -6,7 +6,7 @@
             <app-icon src="/assets/icons/user.svg" alt="" left inputId="username"></app-icon>
         </app-field>
 
-        <div *ngIf="form.get('username') as username">
+        <div *ngIf="form.controls.username as username">
             <app-error *ngIf="username.errors?.required && username.touched">
                 To pole jest obowiązkowe.</app-error>
             <app-error *ngIf="username.errors?.pattern">
@@ -26,7 +26,7 @@
             <app-icon src="/assets/icons/mail.svg" alt="" left inputId="email"></app-icon>
         </app-field>
 
-        <div *ngIf="form.get('email') as email">
+        <div *ngIf="form.controls.email as email">
             <app-error *ngIf="email.errors?.required && email.touched">
                 To pole jest obowiązkowe.</app-error>
             <app-error *ngIf="email.errors?.pattern">
@@ -43,7 +43,7 @@
             <app-icon src="/assets/icons/key.svg" alt="" left inputId="password"></app-icon>
         </app-field>
 
-        <div *ngIf="form.get('password') as password">
+        <div *ngIf="form.controls.password as password">
             <app-error *ngIf="password.errors?.required && password.touched">
                 To pole jest obowiązkowe.</app-error>
             <app-error *ngIf="password.errors?.minlength">
@@ -59,7 +59,7 @@
             <app-icon src="/assets/icons/key.svg" alt="" left inputId="repeat-password"></app-icon>
         </app-field>
 
-        <div *ngIf="form.get('repeatPassword') as repeatPassword">
+        <div *ngIf="form.controls.repeatPassword as repeatPassword">
             <app-error *ngIf="repeatPassword.errors?.similar && repeatPassword.value !== ''">
                 To pole nie jest takie same jak hasło.</app-error>
         </div>

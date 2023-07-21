@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoggedGuard } from '../shared/guards/auth/logged.guard';
 import { ActivationComponent } from './activation/activation.component';
-import { AuthComponent } from './auth.component';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
   {
@@ -12,12 +13,12 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: AuthComponent,
+    component: LoginComponent,
     canActivate: [LoggedGuard],
   },
   {
     path: 'signup',
-    component: AuthComponent,
+    component: SignupComponent,
     canActivate: [LoggedGuard],
   },
   {
