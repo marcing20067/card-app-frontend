@@ -13,7 +13,6 @@ export class AuthGuard  {
     if (isAuth) {
       return of(true);
     }
-
     return of(this.router.parseUrl('/auth/login'));
   }
 }

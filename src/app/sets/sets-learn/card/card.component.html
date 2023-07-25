@@ -1,44 +1,44 @@
-<div class="card card--not-active" [ngClass]="{'card--activate': isActivate, 'card--not-activate': !isActivate}"
-    *ngIf="card">
-    <button class="card__btn" (click)="onSwitch()">Zmień stronę</button>
+<div class="card card--not-active" [ngClass]="{'card--activate': isActivate, 'card--not-activate': !isActivate}">
+  <button class="card__btn" (click)="onSwitch()" [disabled]="!isActivate">Zmień stronę</button>
 
-    <div class="card__side card__side--concept" *ngIf="isConceptSide">
-        <div class="card__top">
-            <p class="card__top-heading">{{ setName }}</p>
-            <p class="card__top-level flex-center">LVL {{ card.group }}</p>
-        </div>
-
-        <div class="card__center flex-center">
-            <p class="card__center-text">{{ card.concept }}</p>
-        </div>
-
-        <div class="card__bottom flex-center">
-            <input class="card__bottom-icon" (click)="onInstrucionShow()" type="image" src="/assets/icons/info.svg" alt="Jak to działa?" >
-            <p class="card__bottom-label flex-center" >Phrase</p>
-        </div>
+  <div class="card__side card__side--concept" *ngIf="isConceptSide">
+    <div class="card__top">
+      <p class="card__top-heading">{{ setName }}</p>
+      <p class="card__top-level flex-center">LVL {{ card?.group }}</p>
     </div>
 
-    <div class="card__side card__side--definition" *ngIf="!isConceptSide">
-        <div class="card__top">
-            <p class="card__top-heading flex-center">{{ setName }}</p>
-            <p class="card__top-level flex-center">LVL {{ card.group }}</p>
-        </div>
-
-        <div class="card__center flex-center">
-            <p class="card__center-text" *ngIf="!card.example">{{ card.definition }}</p>
-
-            <div class="card__center-box" *ngIf="card.example">
-
-                <p class="card__center-box-heading">Definicja</p>
-                <p class="card__center-box-text card__center-box-text--definition">{{ card.definition }}</p>
-
-                <p class="card__center-box-heading">Przykłady użycia</p>
-                <p class="card__center-box-text card__center-box-text--example">{{ card.example }}</p>
-            </div>
-        </div>
-
-        <div class="card__bottom flex-center">
-            <p class="card__bottom-label">Definicja i przykłady</p>
-        </div>
+    <div class="card__center flex-center">
+      <p class="card__center-text">{{ card?.concept }}</p>
     </div>
+
+    <div class="card__bottom flex-center">
+      <input class="card__bottom-icon" (click)="onInstrucionShow()" type="image" src="/assets/icons/info.svg"
+        alt="Jak to działa?">
+      <p class="card__bottom-label flex-center">Phrase</p>
+    </div>
+  </div>
+
+  <div class="card__side card__side--definition" *ngIf="!isConceptSide">
+    <div class="card__top">
+      <p class="card__top-heading flex-center">{{ setName }}</p>
+      <p class="card__top-level flex-center">LVL {{ card?.group }}</p>
+    </div>
+
+    <div class="card__center flex-center">
+      <p class="card__center-text" *ngIf="! card?.example">{{ card?.definition }}</p>
+
+      <div class="card__center-box" *ngIf=" card?.example">
+
+        <p class="card__center-box-heading">Definicja</p>
+        <p class="card__center-box-text card__center-box-text--definition">{{ card?.definition }}</p>
+
+        <p class="card__center-box-heading">Przykłady użycia</p>
+        <p class="card__center-box-text card__center-box-text--example">{{ card?.example }}</p>
+      </div>
+    </div>
+
+    <div class="card__bottom flex-center">
+      <p class="card__bottom-label">Definicja i przykłady</p>
+    </div>
+  </div>
 </div>

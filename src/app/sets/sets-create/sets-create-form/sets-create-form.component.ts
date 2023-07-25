@@ -69,14 +69,10 @@ export class SetsCreateFormComponent {
   }
 
   private getDuplicatedCardIndex(cards: Card[]) {
-    for (let i1 = 0; i1 < cards.length; i1++) {
-      for (let i2 = 1; i2 < cards.length; i2++) {
-        if (cards[i1].concept === cards[i2].concept) {
-          return i2;
-        }
-      }
-    }
-    return -1;
+    return cards.findIndex((card) => {
+      const duplicates = cards.filter((c) => c.concept === card.concept);
+      return duplicates.length >= 2;
+    });
   }
   private getInput(index: number) {
     return this.inputs.toArray()[index].nativeElement;

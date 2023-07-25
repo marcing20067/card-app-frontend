@@ -1,104 +1,102 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { Card } from 'src/app/shared/models/set/card.model';
 import { Set } from 'src/app/shared/models/set/set.model';
 import { Stats } from 'src/app/shared/models/set/stats.model';
-import { CardsState } from '../../../shared/models/set/cards-state.model';
-import { CardsViewService } from './cards-view.service';
-// TODO: EVERYTHING IS STUPID AND USELESSS
+
+interface CardsState {
+  learnedCards: number;
+  initialDeckLength: number;
+  currentCard: Card | null;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class SetsLearnService {
+  private cardsState$ = new Subject<CardsState>();
+  private deck: Card[] = [];
+  private initialDeckLength = 0;
+  private learnedCards = 0;
+  private lastCardConcept = '';
   private set!: Set;
-  private cardsWithCurrentGroup!: Card[];
-  private learnEnd$ = new Subject<void>();
-  private cardIndex = 1;
 
-  constructor(private cardsViewService: CardsViewService) {}
-
-  getLearnEndListener() {
-    return this.learnEnd$.asObservable();
+  getCardsStateListener() {
+    return this.cardsState$.asObservable();
   }
 
-  init(set: Set): Observable<CardsState | null> {
+  init(set: Set) {
     this.set = set;
-    this.cardIndex = 1;
+    this.deck = this.set.cards.filter((c) => c.group < 6);
+    this.initialDeckLength = this.deck.length;
 
-    const cardWithSmallestGroup = this.getCardWithSmallestGroup();
-    if (cardWithSmallestGroup.group === 6) {
-      this.learnEnd$.next();
+    if (this.deck.length) {
+      return this.nextCard();
     }
 
-    this.cardsWithCurrentGroup = this.getCardsByGroup(
-      cardWithSmallestGroup.group
-    );
-
-    this.cardsViewService.wasLastCardUsed().subscribe(() => {
-      const cardWithSmallestGroup = this.getCardWithSmallestGroup();
-      if (cardWithSmallestGroup.group > 5) {
-        this.learnEnd$.next();
-        return;
-      }
-
-      this.cardsWithCurrentGroup = this.getCardsByGroup(
-        cardWithSmallestGroup.group
-      );
-      this.cardIndex = 1;
-      this.cardsViewService.resetView(this.cardsWithCurrentGroup);
-    });
-
-    const stateListener$ = this.cardsViewService.getCardsViewListener().pipe(
-      switchMap((cardsView) => {
-        if (cardsView) {
-          return of({
-            cardsView: cardsView,
-            cardIndex: this.cardIndex,
-            cardsLength: this.cardsWithCurrentGroup.length,
-          });
-        }
-        return of(null);
-      })
-    );
-    this.cardsViewService.initView(this.cardsWithCurrentGroup);
-    return stateListener$;
+    this.setCardsState(null);
   }
 
-  private getCardsByGroup(group: number) {
-    return this.set.cards.filter((c) => c.group === group);
+  onLearn(isKnow: boolean) {
+    const prevCard = this.deck[0];
+    this.updateStats(isKnow, prevCard.group);
+    prevCard.group = isKnow ? prevCard.group + 1 : 1;
+    this.nextCard();
   }
 
-  onLearn(isKnow: boolean, card: Card) {
-    const cardIndex = this.set.cards.indexOf(card);
-    this.cardIndex++;
-    this.set.cards[cardIndex] = {
-      ...card,
-      group: isKnow ? card.group + 1 : 1,
-    };
+  private nextCard() {
+    const prevCard = this.deck.shift();
+    if (!prevCard) {
+      return this.setCardsState(null);
+    }
 
-    this.updateGroupInStats(isKnow, card.group);
-    this.cardsViewService.nextCard();
-  }
-
-  private updateGroupInStats(isKnow: boolean, oldGroupNum: number) {
-    const oldGroup = `group${oldGroupNum}` as keyof Stats;
-    if (isKnow) {
-      const newGroup = `group${oldGroupNum + 1}` as keyof Stats;
-      this.set.stats[oldGroup] = this.set.stats[oldGroup] - 1;
-      this.set.stats[newGroup] = this.set.stats[newGroup] + 1;
+    if (prevCard.group <= 5) {
+      this.deck.push(prevCard);
     } else {
-      this.set.stats.group1 = this.set.stats.group1 + 1;
-      this.set.stats[oldGroup] = this.set.stats[oldGroup] - 1;
+      this.learnedCards++;
+    }
+
+    if (
+      this.deck.length > 2 &&
+      (!this.lastCardConcept || prevCard.concept === this.lastCardConcept)
+    ) {
+      this.shuffleDeck();
+    }
+
+    this.setCardsState(this.deck[0]);
+  }
+
+  private setCardsState(card: Card | null) {
+    this.cardsState$.next({
+      learnedCards: this.learnedCards,
+      initialDeckLength: this.initialDeckLength,
+      currentCard: card,
+    });
+  }
+
+  private updateStats(isKnow: boolean, oldGroupValue: number) {
+    const oldStatsProperty = `group${oldGroupValue}` as keyof Stats;
+    this.set.stats[oldStatsProperty]--;
+    if (isKnow) {
+      const newStatsProperty = `group${oldGroupValue + 1}` as keyof Stats;
+      this.set.stats[newStatsProperty]++;
+    } else {
+      this.set.stats.group1++;
     }
   }
 
-  private getCardWithSmallestGroup() {
-    return this.set.cards.reduce((prevCard, currentCard) => {
-      if (currentCard.group < prevCard.group) {
-        return currentCard;
-      }
-      return prevCard;
-    });
+  private shuffleDeck() {
+    this.deck = this.shuffle(this.deck);
+    const lastCard = this.deck[this.deck.length - 1];
+    this.lastCardConcept = lastCard.concept;
+  }
+
+  private shuffle(array: any[]) {
+    const copy = [...array];
+    for (let i = copy.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
   }
 }

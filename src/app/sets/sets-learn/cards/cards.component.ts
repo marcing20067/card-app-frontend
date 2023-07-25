@@ -8,14 +8,13 @@ import { Card } from 'src/app/shared/models/set/card.model';
 })
 export class CardsComponent {
   @Input() setName = '';
-  @Input() cardsView!: {
-    active: Card;
-    deactive: [Card, Card];
-  };
+  @Input() card!: Card;
 
   @Output() private learn = new EventEmitter<boolean>();
 
   onLearn(isKnow: boolean) {
     this.learn.emit(isKnow);
   }
+
+
 }
