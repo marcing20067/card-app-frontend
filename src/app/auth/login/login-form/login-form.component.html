@@ -1,28 +1,28 @@
 <form [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
-    <div class="form__box">
-        <app-field>
-            <input type="text" formControlName="username" id="username" appInput>
-            <label for="username" label>Nazwa użytkownika</label>
-            <app-icon src="/assets/icons/user.svg" alt="" left inputId="username"></app-icon>
-        </app-field>
-    </div>
+  <div class="form__box">
+    <app-field>
+      <input type="text" formControlName="username" id="username" appInput>
+      <label for="username" label>Nazwa użytkownika</label>
+      <app-icon src="/assets/icons/user.svg" alt="" left></app-icon>
+    </app-field>
+  </div>
 
-    <div class="form__box">
-        <app-field>
-            <input type="password" formControlName="password" id="password" #password appInput>
-            <label for="password" label>Hasło</label>
-            <app-icon src="/assets/icons/key.svg" alt="" left inputId="password"></app-icon>
-        </app-field>
+  <div class="form__box">
+    <app-field>
+      <input type="password" formControlName="password" id="password" #password appInput>
+      <label for="password" label>Hasło</label>
+      <app-icon src="/assets/icons/key.svg" alt="" left></app-icon>
+    </app-field>
 
-        <app-error *ngIf="form.errors?.loginFailed">Błędne dane logowania.</app-error>
-    </div>
+    <app-error *ngIf="form.errors?.loginFailed">Błędne dane logowania.</app-error>
+  </div>
 
-    <div class="form__box form__box--checkbox">
-        <input type="checkbox" formControlName="rememberMe" id="remember-me" class="form__box-checkbox">
-        <label for="remember-me" class="form__box-label--checkbox">Zapamiętaj mnie</label>
-    </div>
+  <div class="form__box form__box--checkbox">
+    <input type="checkbox" formControlName="rememberMe" id="remember-me" class="form__box-checkbox">
+    <label for="remember-me" class="form__box-label--checkbox">Zapamiętaj mnie</label>
+  </div>
 
-    <button type="submit" class="form__button button button--orange" [disabled]="form.invalid">
-        Zaloguj się
-    </button>
+  <button type="submit" class="form__button button button--orange" [disabled]="form.invalid">
+    Zaloguj się
+  </button>
 </form>

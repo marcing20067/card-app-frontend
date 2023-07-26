@@ -1,1 +1,2 @@
-<img [src]="src$ | async" alt="" class="icon">
+<img [src]="src" alt="" class="icon" [hidden]="isOrange">
+<img [src]="orangeSrc" alt="" class="icon" [hidden]="!isOrange">

@@ -3,7 +3,7 @@
         <app-field>
             <input type="text" formControlName="username" id="username" appInput>
             <label for="username" label>Nazwa użytkownika</label>
-            <app-icon src="/assets/icons/user.svg" alt="" left inputId="username"></app-icon>
+            <app-icon src="/assets/icons/user.svg" alt="" left ></app-icon>
         </app-field>
 
         <div *ngIf="form.controls.username as username">
@@ -23,7 +23,7 @@
         <app-field>
             <input type="text" formControlName="email" id="email" appInput>
             <label for="email" label>E-mail</label>
-            <app-icon src="/assets/icons/mail.svg" alt="" left inputId="email"></app-icon>
+            <app-icon src="/assets/icons/mail.svg" alt="" left ></app-icon>
         </app-field>
 
         <div *ngIf="form.controls.email as email">
@@ -40,7 +40,7 @@
         <app-field>
             <input type="password" formControlName="password" id="password" #password appInput>
             <label for="password" label>Hasło</label>
-            <app-icon src="/assets/icons/key.svg" alt="" left inputId="password"></app-icon>
+            <app-icon src="/assets/icons/key.svg" alt="" left ></app-icon>
         </app-field>
 
         <div *ngIf="form.controls.password as password">
@@ -56,7 +56,7 @@
         <app-field>
             <input type="password" formControlName="repeatPassword" id="repeat-password" #repeatPassword appInput>
             <label for="repeat-password" label>Powtórz hasło</label>
-            <app-icon src="/assets/icons/key.svg" alt="" left inputId="repeat-password"></app-icon>
+            <app-icon src="/assets/icons/key.svg" alt="" left ></app-icon>
         </app-field>
 
         <div *ngIf="form.controls.repeatPassword as repeatPassword">
