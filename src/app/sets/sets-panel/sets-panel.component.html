@@ -4,29 +4,27 @@
 
 <section class="sets-panel section-padding" *ngIf="!isLoading">
 
-    <h2 class="sets-panel__title">Utworzone zestawy</h2>
+  <h2 class="sets-panel__title">Utworzone zestawy</h2>
 
-    <button class="sets-panel__load-more" (click)="onLoadMore()">Załaduj więcej</button>
+  <button class="sets-panel__load-more" (click)="onLoadMore()">Załaduj więcej</button>
 
-    <div class="sets-panel__box">
-        <div class="wrapper" *ngIf="(sets$ | async) as sets">
-            <div class="sets-panel__empty-state" *ngIf="sets.length === 0">
-                <p class="sets-panel__empty-state-heading">Nie stworzyłeś jeszcze żadnego zestawu</p>
-                <p class="sets-panel__empty-state-text">Stwórz zestaw a pojawi się w tej sekcji.</p>
-            </div>
+  <div class="sets-panel__box">
+    <div class="wrapper" *ngIf="(sets$ | async) as sets">
+      <div class="sets-panel__empty-state" *ngIf="sets.length === 0">
+        <p class="sets-panel__empty-state-heading">Nie stworzyłeś jeszcze żadnego zestawu</p>
+        <p class="sets-panel__empty-state-text">Stwórz zestaw a pojawi się w tej sekcji.</p>
+      </div>
 
-            <div class="sets-panel__sets" *ngIf="sets.length > 0">
-              <!-- TODO: CONSIDER  CASE, dirty ng class -->
-                <app-set class=" sets-panel__set" *ngFor="let set of sets; last as last; even as even; odd as odd"
-                    [set]="set" (selectSet)="onSelectSet($event)" (deleteSet)="onDeleteSet($event)"
-
-                    [ngClass]="{'sets-panel__set--last': sets.length % 2 !== 0 && last, 'sets-panel__set--even': even, 'sets-panel__set--odd': odd }">
-                </app-set>
-            </div>
-        </div>
+      <div class="sets-panel__sets" *ngIf="sets.length > 0">
+        <app-set class=" sets-panel__set" *ngFor="let set of sets; last as last; even as even; odd as odd;" [set]="set"
+          (selectSet)="onSelectSet($event)" (deleteSet)="onDeleteSet($event)"
+          [ngClass]="{'sets-panel__set--last': even && last, 'sets-panel__set--even': even, 'sets-panel__set--odd': odd }">
+        </app-set>
+      </div>
     </div>
+  </div>
 
-    <h2 class="sets-panel__title">Podgląd zestawu</h2>
-    <a class="sets-panel__create" routerLink="/sets/create">Dodaj nowy zestaw</a>
-    <app-set-view [set]="selectedSet"></app-set-view>
+  <h2 class="sets-panel__title">Podgląd zestawu</h2>
+  <a class="sets-panel__create" routerLink="/sets/create">Dodaj nowy zestaw</a>
+  <app-set-view [set]="selectedSet"></app-set-view>
 </section>
