@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthResolver  {
+export class AuthResolver {
   constructor(private authService: AuthService) {}
   resolve() {
     return this.authService.getIsRefreshCalledListener().pipe(

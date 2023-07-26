@@ -47,7 +47,7 @@ export class AuthService {
               this.isRefreshCalled$.next(true);
               this.tokenService.setTokenData({
                 accessToken,
-                accessTokenExpiresIn,
+                accessTokenExpiresIn, 
               });
             }
           },

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { TokenData } from '../../models/token-data.model';
-// TODO: THINK ABOUt TEST CASE
+
 @Injectable({
   providedIn: 'root',
 })
@@ -23,22 +23,19 @@ export class TokenService {
   }
 
   isAuth() {
-    const isTokensValidity = this.checkTokensValidity();
-    if (!isTokensValidity) {
+    const areTokensValidity = this.checkTokensValidity();
+    if (!areTokensValidity) {
       this.clearTokenData();
     }
-    this.isAuth$.next(isTokensValidity);
-    return isTokensValidity;
+    this.isAuth$.next(areTokensValidity);
+    return areTokensValidity;
   }
 
   private checkTokensValidity() {
     const now = Date.now();
     const isAccessTokenValid =
       (this.tokenData.accessTokenEndValidity || 0) > now;
-    if (isAccessTokenValid) {
-      return true;
-    }
-    return false;
+    return isAccessTokenValid;
   }
 
   clearTokenData() {
