@@ -8,6 +8,7 @@ import { Set } from 'src/app/shared/models/set/set.model';
 import { SetsService } from '../sets.service';
 import { SetsForm } from './sets-form';
 import { SetCardForm } from './set-card-form';
+import { setFormError } from 'src/app/shared/util/set-form-error';
 
 @Component({
   selector: 'app-sets-create',
@@ -22,10 +23,10 @@ export class SetsCreateComponent implements OnInit {
     ],
     cards: this.fb.nonNullable.array<FormGroup<SetCardForm>>([]),
   });
-  id = '';
   isLoading = false;
   mode = '';
   set!: Set;
+  private id = '';
 
   constructor(
     private setsService: SetsService,
@@ -33,33 +34,6 @@ export class SetsCreateComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder
   ) {}
-
-  ngOnInit() {
-    this.id = this.route.snapshot.params.id;
-    this.mode = this.id ? 'edit' : 'create';
-    if (this.id) {
-      this.isLoading = true;
-      this.setsService
-        .getSet(this.id)
-        .pipe(take(1))
-        .subscribe({
-          next: (set) => {
-            this.set = set;
-            this.isLoading = false;
-            this.setFormValue();
-          },
-          error: (res: HttpErrorResponse) => {
-            if (res.status === 400) {
-              this.router.navigate(['/sets']);
-            }
-          },
-        });
-    }
-
-    if (!this.id) {
-      this.addCardToForm();
-    }
-  }
 
   addCardToForm(card?: Card) {
     const newCard = this.createCardGroup(card);
@@ -104,6 +78,33 @@ export class SetsCreateComponent implements OnInit {
     }
   }
 
+  ngOnInit() {
+    this.id = this.route.snapshot.params.id;
+    this.mode = this.id ? 'edit' : 'create';
+    if (this.id) {
+      this.isLoading = true;
+      this.setsService
+        .getSet(this.id)
+        .pipe(take(1))
+        .subscribe({
+          next: (set) => {
+            this.set = set;
+            this.isLoading = false;
+            this.setFormValue();
+          },
+          error: (res: HttpErrorResponse) => {
+            if (res.status === 400) {
+              this.router.navigate(['/sets']);
+            }
+          },
+        });
+    }
+
+    if (!this.id) {
+      this.addCardToForm();
+    }
+  }
+  
   private setFormValue() {
     this.form.controls.name.setValue(this.set.name);
     this.setCardsOnForm();
@@ -135,8 +136,6 @@ export class SetsCreateComponent implements OnInit {
   }
 
   private setNameAlreadyTakenError() {
-    setTimeout(() => {
-      this.form.controls.name.setErrors({ alreadyTaken: true });
-    }, 0);
+    setFormError(this.form, { alreadyTaken: true }, 'name');
   }
 }

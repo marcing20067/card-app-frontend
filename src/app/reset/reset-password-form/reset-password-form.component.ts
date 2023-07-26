@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Form } from 'src/app/shared/util/form';
+import { DummyForm } from 'src/app/shared/util/dummy-form';
 import { ResetPasswordForm } from './reset-password-form';
 
 @Component({
@@ -9,10 +9,10 @@ import { ResetPasswordForm } from './reset-password-form';
   styleUrls: ['./reset-password-form.component.scss'],
 })
 export class ResetPasswordFormComponent
-  extends Form<ResetPasswordForm>
+  extends DummyForm<ResetPasswordForm>
   implements OnInit, OnDestroy
 {
-  formSub!: Subscription;
+  private formSub!: Subscription;
 
   constructor() {
     super();

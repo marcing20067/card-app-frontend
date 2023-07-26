@@ -13,13 +13,13 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
+  private isRefreshCalled$ = new BehaviorSubject(false);
+
   constructor(
     private http: HttpClient,
     private tokenService: TokenService,
     private router: Router
   ) {}
-
-  private isRefreshCalled$ = new BehaviorSubject(false);
 
   getIsRefreshCalledListener() {
     return this.isRefreshCalled$.asObservable();
@@ -47,7 +47,7 @@ export class AuthService {
               this.isRefreshCalled$.next(true);
               this.tokenService.setTokenData({
                 accessToken,
-                accessTokenExpiresIn, 
+                accessTokenExpiresIn,
               });
             }
           },

@@ -15,16 +15,6 @@ export class UserPanelComponent implements OnInit {
 
   constructor(private authService: AuthService) {}
 
-  ngOnInit() {
-    this.authService
-      .userStatus()
-      .pipe(take(1))
-      .subscribe((status) => {
-        this.userStatus = status;
-        this.isLoading = false;
-      });
-  }
-
   onReset(mode: 'username' | 'password') {
     this.isLoading = true;
     this.authService
@@ -38,5 +28,15 @@ export class UserPanelComponent implements OnInit {
 
   onClose() {
     this.showPopup = false;
+  }
+
+  ngOnInit() {
+    this.authService
+      .userStatus()
+      .pipe(take(1))
+      .subscribe((status) => {
+        this.userStatus = status;
+        this.isLoading = false;
+      });
   }
 }

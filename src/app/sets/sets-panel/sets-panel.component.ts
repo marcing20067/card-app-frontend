@@ -21,15 +21,6 @@ export class SetsPanelComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  ngOnInit() {
-    this.setsService
-      .getSets(this.nameFilter)
-      .pipe(take(1))
-      .subscribe(() => {
-        this.isLoading = false;
-      });
-  }
-
   onDeleteSet(set: Set) {
     this.popupService
       .getConfirmEventListener()
@@ -62,6 +53,15 @@ export class SetsPanelComponent implements OnInit {
     this.isLoading = true;
     this.setsService
       .loadMore(this.nameFilter)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.isLoading = false;
+      });
+  }
+  
+  ngOnInit() {
+    this.setsService
+      .getSets(this.nameFilter)
       .pipe(take(1))
       .subscribe(() => {
         this.isLoading = false;

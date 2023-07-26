@@ -10,7 +10,7 @@ import { TokenService } from '../shared/services/token/token.service';
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private tokenService: TokenService) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler) {
+  intercept(req: HttpRequest<unknown>, next: HttpHandler) {
     const isAuth = this.tokenService.isAuth();
     if (!isAuth) {
       return next.handle(req);

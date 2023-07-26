@@ -2,7 +2,7 @@ import { Directive, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 
 @Directive()
-export abstract class Form<
+export abstract class DummyForm<
   T extends { [K in keyof T]: AbstractControl }
 > {
   @Input() form!: FormGroup<T>;

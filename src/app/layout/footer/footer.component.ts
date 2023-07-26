@@ -8,8 +8,8 @@ import { LayoutService } from '../layout.service';
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent implements OnInit, OnDestroy {
-  private sub!: Subscription;
   class = ['footer'];
+  private sub!: Subscription;
 
   constructor(private layoutService: LayoutService) {}
 

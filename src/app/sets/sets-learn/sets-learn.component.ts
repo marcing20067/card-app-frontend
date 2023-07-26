@@ -23,6 +23,11 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
     private setsLearnService: SetsLearnService
   ) {}
 
+  onLearn(isKnow: boolean) {
+    this.setsLearnService.onLearn(isKnow);
+    this.updateCardEvent$.next();
+  }
+
   ngOnInit() {
     const id = this.route.snapshot.params.id;
     this.setsService
@@ -38,11 +43,6 @@ export class SetsLearnComponent implements OnInit, OnDestroy {
             this.setsService.editSet(this.set).pipe(take(1)).subscribe();
           });
       });
-  }
-
-  onLearn(isKnow: boolean) {
-    this.setsLearnService.onLearn(isKnow);
-    this.updateCardEvent$.next();
   }
 
   ngOnDestroy() {

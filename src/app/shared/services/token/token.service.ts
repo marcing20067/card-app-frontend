@@ -31,13 +31,6 @@ export class TokenService {
     return areTokensValidity;
   }
 
-  private checkTokensValidity() {
-    const now = Date.now();
-    const isAccessTokenValid =
-      (this.tokenData.accessTokenEndValidity || 0) > now;
-    return isAccessTokenValid;
-  }
-
   clearTokenData() {
     this.tokenData = {};
     localStorage.clear();
@@ -56,5 +49,12 @@ export class TokenService {
       accessToken: newData.accessToken,
       accessTokenEndValidity,
     };
+  }
+
+  private checkTokensValidity() {
+    const now = Date.now();
+    const isAccessTokenValid =
+      (this.tokenData.accessTokenEndValidity || 0) > now;
+    return isAccessTokenValid;
   }
 }

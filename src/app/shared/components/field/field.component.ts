@@ -3,6 +3,7 @@ import {
   Component,
   ContentChild,
   ElementRef,
+  OnDestroy,
   Renderer2,
   ViewEncapsulation,
 } from '@angular/core';
@@ -15,11 +16,11 @@ import { InputDirective } from './input/input.directive';
   styleUrls: ['./field.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class FieldComponent implements AfterContentInit {
-  @ContentChild(IconComponent) icon!: IconComponent;
+export class FieldComponent implements AfterContentInit, OnDestroy {
+  @ContentChild(IconComponent) private icon!: IconComponent;
   @ContentChild(InputDirective, { read: ElementRef })
-  input!: ElementRef<HTMLInputElement>;
-  listeners: Array<() => void> = [];
+  private input!: ElementRef<HTMLInputElement>;
+  private listeners: Array<() => void> = [];
 
   constructor(private renderer: Renderer2) {}
 

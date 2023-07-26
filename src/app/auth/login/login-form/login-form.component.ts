@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Form } from '../../../shared/util/form';
+import { Form } from '../../../shared/util/dummy-form';
 import { LoginForm } from './login-form';
 
 @Component({

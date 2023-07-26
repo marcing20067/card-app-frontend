@@ -8,12 +8,16 @@ import { LayoutService } from '../layout.service';
   styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent implements OnInit, OnDestroy {
-  private sub!: Subscription;
   class = ['nav'];
   gotFeatures!: boolean;
   isActive!: boolean;
+  private sub!: Subscription;
 
   constructor(private layoutService: LayoutService) {}
+
+  onNav(isActive: boolean) {
+    this.isActive = isActive;
+  }
 
   ngOnInit() {
     this.sub = this.layoutService.onUrlChange('nav').subscribe((feature) => {
@@ -27,11 +31,7 @@ export class NavComponent implements OnInit, OnDestroy {
       this.gotFeatures = true;
     });
   }
-
-  onNav(isActive: boolean) {
-    this.isActive = isActive;
-  }
-
+  
   ngOnDestroy() {
     this.sub.unsubscribe();
   }

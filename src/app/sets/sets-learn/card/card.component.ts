@@ -17,22 +17,13 @@ import { Subscription } from 'rxjs';
 })
 export class CardComponent implements OnInit, OnDestroy {
   @Input() card?: Card;
-  @Input() setName: string = '';
-  @Input() isActivate: boolean = false;
+  @Input() setName = '';
+  @Input() isActivate = false;
+  @Output() showInstrucion = new EventEmitter<void>();
   isConceptSide = true;
   private sub!: Subscription;
 
-  @Output() showInstrucion = new EventEmitter<void>();
-
   constructor(private setsLearnService: SetsLearnService) {}
-
-  ngOnInit() {
-    if (this.isActivate) {
-      this.sub = this.setsLearnService.getCardsStateListener().subscribe(() => {
-        this.isConceptSide = true;
-      });
-    }
-  }
 
   onSwitch() {
     this.isConceptSide = !this.isConceptSide;
@@ -40,6 +31,14 @@ export class CardComponent implements OnInit, OnDestroy {
 
   onInstrucionShow() {
     this.showInstrucion.emit();
+  }
+  
+  ngOnInit() {
+    if (this.isActivate) {
+      this.sub = this.setsLearnService.getCardsStateListener().subscribe(() => {
+        this.isConceptSide = true;
+      });
+    }
   }
 
   ngOnDestroy() {

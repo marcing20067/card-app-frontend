@@ -19,12 +19,17 @@ import { SetsForm } from '../sets-form';
   styleUrls: ['./sets-create-form.component.scss'],
 })
 export class SetsCreateFormComponent {
-  @ViewChildren('concept', { read: ElementRef }) inputs!: QueryList<ElementRef>;
-  @Output() addCard = new EventEmitter<void>();
-  @Input() mode!: string;
-  @Input() set!: Set;
   @Input() form!: FormGroup<SetsForm>;
-  @Output() submitForm = new EventEmitter<Set>();
+  @ViewChildren('concept', { read: ElementRef })
+  private inputs!: QueryList<ElementRef>;
+  @Output() private addCard = new EventEmitter<void>();
+  @Input() private mode!: string;
+  @Input() private set!: Set;
+  @Output() private submitForm = new EventEmitter<Set>();
+
+  get cards() {
+    return this.form.controls.cards;
+  }
 
   onAddCard() {
     this.addCard.emit();
@@ -34,14 +39,9 @@ export class SetsCreateFormComponent {
     this.form.controls.name.setErrors({ alreadyTaken: true });
   }
 
-  get cards() {
-    return this.form.controls.cards;
-  }
-
   onSubmit() {
     const value = this.form.getRawValue();
     const duplicatedCardIndex = this.getDuplicatedCardIndex([...value.cards]);
-    let set: Set;
     if (duplicatedCardIndex >= 0) {
       const input = this.getInput(duplicatedCardIndex);
       const control = this.getControl(duplicatedCardIndex);
@@ -52,7 +52,8 @@ export class SetsCreateFormComponent {
 
     if (this.mode === 'edit') {
       const stats = this.computeStats([...value.cards]);
-      set = { ...value, stats, creator: this.set.creator };
+      const set = { ...value, stats, creator: this.set.creator };
+      this.submitForm.emit(set);
     }
 
     if (this.mode === 'create') {
@@ -63,9 +64,9 @@ export class SetsCreateFormComponent {
         group4: 0,
         group5: 0,
       };
-      set = { ...value, stats };
+      const set = { ...value, stats };
+      this.submitForm.emit(set);
     }
-    this.submitForm.emit(set!);
   }
 
   private getDuplicatedCardIndex(cards: Card[]) {

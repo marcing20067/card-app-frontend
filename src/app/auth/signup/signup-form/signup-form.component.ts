@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
-import { Form } from '../../../shared/util/form';
+import { DummyForm } from '../../../shared/util/dummy-form';
 import { SignupForm } from './signup-form';
 
 @Component({
@@ -9,7 +9,7 @@ import { SignupForm } from './signup-form';
   templateUrl: './signup-form.component.html',
   styleUrls: ['./signup-form.component.scss'],
 })
-export class SignupFormComponent extends Form<SignupForm> implements OnInit, OnDestroy {
+export class SignupFormComponent extends DummyForm<SignupForm> implements OnInit, OnDestroy {
   private formSub!: Subscription;
   constructor() {
     super();

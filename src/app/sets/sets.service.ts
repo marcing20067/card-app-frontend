@@ -28,14 +28,6 @@ export class SetsService {
     );
   }
 
-  private formatName(name: string) {
-    let formattedName = (name[0].toUpperCase() + name.slice(1)).trim();
-    if (formattedName.length > 9) {
-      formattedName = formattedName.slice(0, 7) + '..';
-    }
-    return formattedName;
-  }
-
   getSets(name?: string) {
     this.page = 1;
     return this.loadSets(name).pipe(tap((sets) => this.sets$.next(sets)));
@@ -55,15 +47,6 @@ export class SetsService {
     );
   }
 
-  private loadSets(name = '') {
-    return this.http.get<Set[]>(environment.BACKEND_URL + 'sets', {
-      params: {
-        name,
-        page: this.page,
-      },
-    });
-  }
-
   deleteSet(id: string) {
     return this.http.delete(environment.BACKEND_URL + 'sets/' + id).pipe(
       tap(() => {
@@ -81,5 +64,22 @@ export class SetsService {
 
   editSet(set: Set) {
     return this.http.put(environment.BACKEND_URL + 'sets/' + set._id, set);
+  }
+
+  private formatName(name: string) {
+    let formattedName = (name[0].toUpperCase() + name.slice(1)).trim();
+    if (formattedName.length > 9) {
+      formattedName = formattedName.slice(0, 7) + '..';
+    }
+    return formattedName;
+  }
+
+  private loadSets(name = '') {
+    return this.http.get<Set[]>(environment.BACKEND_URL + 'sets', {
+      params: {
+        name,
+        page: this.page,
+      },
+    });
   }
 }
