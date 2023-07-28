@@ -20,11 +20,11 @@ import { SetsForm } from '../sets-form';
 })
 export class SetsCreateFormComponent {
   @Input() form!: FormGroup<SetsForm>;
+  @Input() set!: Set;
+  @Input() mode!: string;
   @ViewChildren('concept', { read: ElementRef })
   private inputs!: QueryList<ElementRef>;
   @Output() private addCard = new EventEmitter<void>();
-  @Input() private mode!: string;
-  @Input() private set!: Set;
   @Output() private submitForm = new EventEmitter<Set>();
 
   get cards() {
