@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
-import {
-  FormGroup,
-  NonNullableFormBuilder,
-  Validators,
-} from '@angular/forms';
+import { FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { AuthValidators } from 'src/app/shared/util/user-validators';
+import { UserValidators } from 'src/app/shared/util/user-validators';
 import { LoginData } from './login-form/login-data.model';
 import { take } from 'rxjs/operators';
 import { LoginForm } from './login-form/login-form';
@@ -19,8 +15,8 @@ import { setFormError } from 'src/app/shared/util/set-form-error';
 export class LoginComponent {
   isLoading = false;
   form: FormGroup<LoginForm> = this.fb.group({
-    username: ['', AuthValidators.username],
-    password: ['', AuthValidators.password],
+    username: ['', UserValidators.username],
+    password: ['', UserValidators.password],
     rememberMe: [false, Validators.required],
   });
 

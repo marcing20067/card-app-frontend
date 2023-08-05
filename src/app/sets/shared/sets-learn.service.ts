@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Card } from 'src/app/shared/models/set/card.model';
-import { Set } from 'src/app/shared/models/set/set.model';
-import { Stats } from 'src/app/shared/models/set/stats.model';
+import { Set } from './models/set.model';
+import { Card } from './models/card.model';
+import { Stats } from './models/stats.model';
 
 interface CardsState {
   learnedCards: number;

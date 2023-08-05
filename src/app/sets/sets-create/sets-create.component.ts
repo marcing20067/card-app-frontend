@@ -3,12 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
-import { Card } from 'src/app/shared/models/set/card.model';
-import { Set } from 'src/app/shared/models/set/set.model';
+import { Card } from 'src/app/sets/shared/models/card.model';
 import { SetsService } from '../sets.service';
-import { SetsForm } from './sets-form';
-import { SetCardForm } from './set-card-form';
+import { SetsForm } from '../shared/sets-form';
 import { setFormError } from 'src/app/shared/util/set-form-error';
+import { SetCardForm } from '../shared/set-card-form';
+import { Set } from '../shared/models/set.model';
 
 @Component({
   selector: 'app-sets-create',
@@ -104,7 +104,7 @@ export class SetsCreateComponent implements OnInit {
       this.addCardToForm();
     }
   }
-  
+
   private setFormValue() {
     this.form.controls.name.setValue(this.set.name);
     this.setCardsOnForm();

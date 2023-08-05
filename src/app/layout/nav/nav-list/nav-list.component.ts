@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { Subscription, fromEvent } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { TabulationService } from 'src/app/services/tabulation.service';
-import { GLOBAL_ELEMENTS } from 'src/app/shared/global-elements';
+import { TabulationService } from 'src/app/shared/services/tabulation/tabulation.service';
+import { GLOBAL_ELEMENTS } from 'src/app/shared/util/global-elements';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { ScrollService } from 'src/app/shared/services/scroll/scroll.service';

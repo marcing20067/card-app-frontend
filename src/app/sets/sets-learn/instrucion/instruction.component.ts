@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TabulationService } from 'src/app/services/tabulation.service';
+import { TabulationService } from 'src/app/shared/services/tabulation/tabulation.service';
 import { ScrollService } from 'src/app/shared/services/scroll/scroll.service';
 
 @Component({

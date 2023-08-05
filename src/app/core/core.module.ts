@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from '../auth/auth.interceptor';
+import { AuthInterceptor } from '../shared/interceptors/auth/auth.interceptor';
 import { CoreComponent } from './core.component';
 import { LayoutModule } from '../layout/layout.module';
 import { ServerErrorInterceptor } from '../server-error/server-error.interceptor';

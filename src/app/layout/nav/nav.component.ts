@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { LayoutService } from '../layout.service';
+import { LayoutService } from '../shared/layout.service';
 
 @Component({
   selector: 'app-nav',

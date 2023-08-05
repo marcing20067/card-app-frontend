@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Set } from 'src/app/shared/models/set/set.model';
+import { Set } from '../../shared/models/set.model';
 @Component({
   selector: 'app-set-view',
   templateUrl: './set-view.component.html',

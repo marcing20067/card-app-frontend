@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DummyForm } from 'src/app/shared/util/dummy-form';
-import { ResetUsernameForm } from './reset-username-form';
+import { ResetUsernameForm } from '../shared/reset-username-form';
 
 @Component({
   selector: 'app-reset-username-form',

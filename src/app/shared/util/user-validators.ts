@@ -17,7 +17,7 @@ const email = [
 
 const repeatPassword = Validators.required;
 
-export const AuthValidators = {
+export const UserValidators = {
   username,
   password,
   email,

@@ -8,10 +8,10 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { Card } from 'src/app/shared/models/set/card.model';
-import { Set } from 'src/app/shared/models/set/set.model';
-import { Stats } from 'src/app/shared/models/set/stats.model';
-import { SetsForm } from '../sets-form';
+import { Card } from 'src/app/sets/shared/models/card.model';
+import { SetsForm } from '../../shared/sets-form';
+import { Set } from '../../shared/models/set.model';
+import { Stats } from '../../shared/models/stats.model';
 
 @Component({
   selector: 'app-sets-create-form',

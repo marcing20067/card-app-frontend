@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DummyForm } from 'src/app/shared/util/dummy-form';
-import { ResetPasswordForm } from './reset-password-form';
+import { ResetPasswordForm } from '../shared/reset-password-form';
 
 @Component({
   selector: 'app-reset-password-form',

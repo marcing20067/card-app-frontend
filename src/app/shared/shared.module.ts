@@ -8,7 +8,6 @@ import { CirclesComponent } from './components/circles/circles.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ErrorComponent } from './components/error/error.component';
 import { WavesComponent } from './components/waves/waves.component';
-// STOP USING ONE GLOBAL SHARED
 @NgModule({
   declarations: [
     FieldComponent,

@@ -5,8 +5,8 @@ import { switchMap } from 'rxjs/operators';
 import {
   FooterExtraFeaturesForRoute,
   NavExtraFeaturesForRoute,
-} from '../shared/enums/layout.enums';
-import { Path } from '../shared/types/path.type';
+} from './layout.enums';
+import { Path } from './path.type';
 
 @Injectable({
   providedIn: 'root',

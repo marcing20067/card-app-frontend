@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { DummyForm } from '../../../shared/util/dummy-form';
-import { SignupForm } from './signup-form';
+import { SignupForm } from '../../shared/signup-form';
 
 @Component({
   selector: 'app-signup-form',

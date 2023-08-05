@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { take, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { AuthService } from '../shared/services/auth/auth.service';
-import { ResetPasswordData } from './reset-password-form/reset-password-data.model';
-import { ResetUsernameData } from './reset-username-form/reset-username-data.model';
+import { AuthService } from '../../shared/services/auth/auth.service';
+import { ResetUsernameData } from './reset-username-data.model';
+import { ResetPasswordData } from './reset-password-data.model';
 
 @Injectable({
   providedIn: 'root',

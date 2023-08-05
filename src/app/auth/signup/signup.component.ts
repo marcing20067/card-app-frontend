@@ -4,12 +4,12 @@ import {
   NonNullableFormBuilder,
 } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { AuthValidators } from 'src/app/shared/util/user-validators';
-import { SignupData } from './signup-form/signup-data.model';
+import { SignupData } from '../shared/signup-data.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { take } from 'rxjs/operators';
-import { SignupForm } from './signup-form/signup-form';
 import { setFormError } from 'src/app/shared/util/set-form-error';
+import { UserValidators } from 'src/app/shared/util/user-validators';
+import { SignupForm } from '../shared/signup-form';
 
 @Component({
   selector: 'app-signup',
@@ -21,10 +21,10 @@ export class SignupComponent {
   isLoading = false;
 
   form: FormGroup<SignupForm> = this.fb.group({
-    username: ['', AuthValidators.username],
-    password: ['', AuthValidators.password],
-    email: ['', AuthValidators.email],
-    repeatPassword: ['', AuthValidators.repeatPassword],
+    username: ['', UserValidators.username],
+    password: ['', UserValidators.password],
+    email: ['', UserValidators.email],
+    repeatPassword: ['', UserValidators.repeatPassword],
   });
 
   constructor(

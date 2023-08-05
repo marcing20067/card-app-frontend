@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { SetsService } from '../sets.service';
-import { Set } from 'src/app/shared/models/set/set.model';
 import { take } from 'rxjs/operators';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { ActivatedRoute } from '@angular/router';
-import { TabulationService } from 'src/app/services/tabulation.service';
-import { GLOBAL_ELEMENTS } from 'src/app/shared/global-elements';
+import { TabulationService } from 'src/app/shared/services/tabulation/tabulation.service';
+import { GLOBAL_ELEMENTS } from 'src/app/shared/util/global-elements';
+import { Set } from '../shared/models/set.model';
 @Component({
   selector: 'app-sets-panel',
   templateUrl: './sets-panel.component.html',

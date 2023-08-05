@@ -6,8 +6,8 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Card } from 'src/app/shared/models/set/card.model';
-import { SetsLearnService } from '../services/sets-learn.service';
+import { Card } from 'src/app/sets/shared/models/card.model';
+import { SetsLearnService } from '../../shared/sets-learn.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -32,7 +32,7 @@ export class CardComponent implements OnInit, OnDestroy {
   onInstrucionShow() {
     this.showInstrucion.emit();
   }
-  
+
   ngOnInit() {
     if (this.isActivate) {
       this.sub = this.setsLearnService.getCardsStateListener().subscribe(() => {

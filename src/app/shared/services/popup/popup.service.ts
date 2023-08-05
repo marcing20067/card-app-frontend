@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { PopupData } from 'src/app/layout/popup/popup-data.model';
+import { PopupData } from 'src/app/layout/shared/popup-data.model';
 
 @Injectable({
   providedIn: 'root',

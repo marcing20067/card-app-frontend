@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Set } from '../shared/models/set/set.model';
+import { Set } from './shared/models/set.model';
 
 @Injectable({
   providedIn: 'root',

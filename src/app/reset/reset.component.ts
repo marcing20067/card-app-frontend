@@ -3,10 +3,10 @@ import { Component } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
-import { AuthValidators } from '../shared/util/user-validators';
-import { ResetPasswordData } from './reset-password-form/reset-password-data.model';
-import { ResetUsernameData } from './reset-username-form/reset-username-data.model';
-import { ResetService } from './reset.service';
+import { ResetPasswordData } from './shared/reset-password-data.model';
+import { ResetUsernameData } from './shared/reset-username-data.model';
+import { ResetService } from './shared/reset.service';
+import { UserValidators } from '../shared/util/user-validators';
 
 @Component({
   selector: 'app-reset',
@@ -26,14 +26,14 @@ export class ResetComponent {
     this.mode = this.route.snapshot.url[0].path;
     if (this.mode === 'username') {
       this.form = this.fb.group({
-        newUsername: ['', AuthValidators.username],
+        newUsername: ['', UserValidators.username],
       });
     }
 
     if (this.mode === 'password') {
       this.form = this.fb.group({
-        newPassword: ['', AuthValidators.password],
-        repeatNewPassword: ['', AuthValidators.repeatPassword],
+        newPassword: ['', UserValidators.password],
+        repeatNewPassword: ['', UserValidators.repeatPassword],
       });
     }
   }

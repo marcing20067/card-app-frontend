@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Stats } from 'src/app/shared/models/set/stats.model';
+import { Stats } from '../../shared/models/stats.model';
 
 @Component({
   selector: 'app-stats',

@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, take } from 'rxjs/operators';
-import { Set } from 'src/app/shared/models/set/set.model';
 import { SetsService } from '../sets.service';
-import { SetsLearnService } from './services/sets-learn.service';
+import { SetsLearnService } from '../shared/sets-learn.service';
+import { Set } from '../shared/models/set.model';
 // ADD CREATING RANDOM DECK
 @Component({
   selector: 'app-sets-learn',
