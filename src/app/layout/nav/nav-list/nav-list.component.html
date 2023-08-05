@@ -1,27 +1,28 @@
 <ng-container *ngIf="{ isAuth: isAuth$ | async } as authData">
-    <ul class="nav-list" [ngClass]="{'nav-list--active': isActive}" *ngIf="!authData.isAuth">
-        <li class="nav-list__item">
-            <a routerLink="/auth/login" class="nav-list__item-link" (focus)="onNav(true)" (blur)="onNav(false)"
-                (click)="onNav(false)">Zaloguj się</a>
-        </li>
-        <li class="nav-list__item nav-list__item--reverse">
-            <a routerLink="/auth/signup" class="nav-list__item-link nav-list__item-link--reverse" (focus)="onNav(true)"
-                (blur)="onNav(false)" (click)="onNav(false)">Zarejestruj się</a>
-        </li>
-    </ul>
+  <ul class="nav-list" [ngClass]="{'nav-list--active': isActive}" *ngIf="!authData.isAuth">
+    <li class="nav-list__item">
+      <a routerLink="/auth/login" class="nav-list__item-link" (click)="onNav(false)"
+        [tabindex]="navItemTabIndex">Zaloguj
+        się</a>
+    </li>
+    <li class="nav-list__item nav-list__item--reverse">
+      <a routerLink="/auth/signup" class="nav-list__item-link nav-list__item-link--reverse" (click)="onNav(false)"
+        [tabindex]="navItemTabIndex">Zarejestruj się</a>
+    </li>
+  </ul>
 
-    <ul class="nav-list" [ngClass]="{'nav-list--active': isActive}" *ngIf="authData.isAuth">
-        <li class="nav-list__item">
-            <a routerLink="/sets" class="nav-list__item-link" (focus)="onNav(true)" (blur)="onNav(false)"
-                (click)="onNav(false)">Panel główny</a>
-        </li>
-        <li class="nav-list__item">
-            <a routerLink="/user" class="nav-list__item-link" (focus)="onNav(true)" (blur)="onNav(false)"
-                (click)="onNav(false)">Dane użytkownika</a>
-        </li>
-        <li class="nav-list__item nav-list__item--button" *ngIf="authData.isAuth">
-            <button class="nav-list__item-link nav-list__item-link--button nav-list__item-link--reverse"
-                (focus)="onNav(true)" (blur)="onNav(false)" (click)="onNav(false); onLogout()">Wyloguj się</button>
-        </li>
-    </ul>
+  <ul class="nav-list" [ngClass]="{'nav-list--active': isActive}" *ngIf="authData.isAuth">
+    <li class="nav-list__item">
+      <a routerLink="/sets" class="nav-list__item-link" (click)="onNav(false)" [tabindex]="navItemTabIndex">Panel
+        główny</a>
+    </li>
+    <li class="nav-list__item">
+      <a routerLink="/user" class="nav-list__item-link" (click)="onNav(false)" [tabindex]="navItemTabIndex">Dane
+        użytkownika</a>
+    </li>
+    <li class="nav-list__item nav-list__item--button" *ngIf="authData.isAuth">
+      <button class="nav-list__item-link nav-list__item-link--button nav-list__item-link--reverse" (click)="onLogout()"
+        [tabindex]="navItemTabIndex">Wyloguj się</button>
+    </li>
+  </ul>
 </ng-container>

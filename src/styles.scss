@@ -1,4 +1,4 @@
-@import './app/shared/styles/variables';
+@import "./app/shared/styles/variables";
 
 * {
   margin: 0;
@@ -35,7 +35,7 @@ button:disabled {
 body {
   font-size: 1.8rem;
   color: $black;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .block-scroll {
@@ -53,7 +53,7 @@ body {
 }
 
 .title {
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
   font-weight: 700;
   color: $black;
   text-align: center;

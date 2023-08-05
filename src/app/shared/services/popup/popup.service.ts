@@ -9,6 +9,8 @@ export class PopupService {
   private displayEvent$ = new Subject<PopupData | null>();
   private confirmEvent$ = new Subject<boolean>();
 
+  constructor() {}
+
   display(data: PopupData) {
     this.displayEvent$.next(data);
   }

@@ -1,10 +1,10 @@
-<app-instrucion #instrucion></app-instrucion>
+<app-instruction #instruction></app-instruction>
 <!-- get animation of rotating  -->
 <div class="cards">
   <div class="cards__box">
     <app-card [isActivate]="false" class="cards__box-item cards__box-item--three"></app-card>
     <app-card [isActivate]="false" class="cards__box-item cards__box-item--two"></app-card>
-    <app-card [isActivate]="true" [setName]="setName" [card]="card" (showInstrucion)="instrucion.onShow()"
+    <app-card [isActivate]="true" [setName]="setName" [card]="card" (showInstrucion)="instruction.onShow()"
       class="cards__box-item cards__box-item--one"></app-card>
   </div>
 

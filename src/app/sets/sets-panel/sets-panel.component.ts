@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { SetsService } from '../sets.service';
 import { Set } from 'src/app/shared/models/set/set.model';
 import { take } from 'rxjs/operators';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { ActivatedRoute } from '@angular/router';
+import { TabulationService } from 'src/app/services/tabulation.service';
+import { GLOBAL_ELEMENTS } from 'src/app/shared/global-elements';
 @Component({
   selector: 'app-sets-panel',
   templateUrl: './sets-panel.component.html',
   styleUrls: ['./sets-panel.component.scss'],
+  providers: [GLOBAL_ELEMENTS]
 })
 export class SetsPanelComponent implements OnInit {
   isLoading = true;
@@ -15,11 +18,14 @@ export class SetsPanelComponent implements OnInit {
   sets$ = this.setsService.getSetsListener();
   nameFilter = this.route.snapshot.queryParams.name;
 
+
   constructor(
     private setsService: SetsService,
     private popupService: PopupService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private tabulationService: TabulationService,
+    @Inject('popup') private popupEl: HTMLElement
+    ) {}
 
   onDeleteSet(set: Set) {
     this.popupService
@@ -43,6 +49,7 @@ export class SetsPanelComponent implements OnInit {
         text: 'Wybrany zestaw zostanie nieodwracalnie usunięty.',
       },
     });
+    this.tabulationService.trapTabulation(this.popupEl);
   }
 
   onSelectSet(set: Set) {
@@ -58,7 +65,7 @@ export class SetsPanelComponent implements OnInit {
         this.isLoading = false;
       });
   }
-  
+
   ngOnInit() {
     this.setsService
       .getSets(this.nameFilter)

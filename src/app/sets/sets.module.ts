@@ -11,7 +11,7 @@ import { SetViewComponent } from './sets-panel/set-view/set-view.component';
 import { CardComponent } from './sets-learn/card/card.component';
 import { StatsComponent } from './sets-learn/stats/stats.component';
 import { CardsComponent } from './sets-learn/cards/cards.component';
-import { InstrucionComponent } from './sets-learn/instrucion/instrucion.component';
+import { InstructionComponent } from './sets-learn/instrucion/instruction.component';
 import { SetsCreateFormComponent } from './sets-create/sets-create-form/sets-create-form.component';
 
 @NgModule({
@@ -25,7 +25,7 @@ import { SetsCreateFormComponent } from './sets-create/sets-create-form/sets-cre
     CardComponent,
     StatsComponent,
     CardsComponent,
-    InstrucionComponent,
+    InstructionComponent,
   ],
   imports: [CommonModule, SetsRoutingModule, ReactiveFormsModule, SharedModule],
 })
