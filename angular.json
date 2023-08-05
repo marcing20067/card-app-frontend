@@ -9,7 +9,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "card-app-frontend": {
+    "poliglot-frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -65,7 +65,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "outputPath": "../card-app-backend/public",
+              "outputPath": "../poliglot-backend/public",
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
@@ -80,7 +80,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputPath": "../card-app-backend/public",
+              "outputPath": "../poliglot-backend/public",
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
@@ -95,10 +95,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "card-app-frontend:build:production"
+              "browserTarget": "poliglot-frontend:build:production"
             },
             "development": {
-              "browserTarget": "card-app-frontend:build:development",
+              "browserTarget": "poliglot-frontend:build:development",
               "proxyConfig": "src/proxy.conf.js"
             }
           },
@@ -107,7 +107,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "card-app-frontend:build"
+            "browserTarget": "poliglot-frontend:build"
           }
         },
         "test": {

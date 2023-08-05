@@ -3,7 +3,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "../../card-app-backend/dist/out-tsc",
+    "outDir": "../../poliglot-backend/dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitReturns": true,
