@@ -55,7 +55,6 @@ export class NavListComponent {
   }
 
   onNav(value: boolean) {
-    console.log(value);
     this.isActive = value;
     this.nav.emit(value);
     if (this.isActive) {

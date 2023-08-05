@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
-import { UserStatus } from '../shared/models/user-status.model';
-import { AuthService } from '../shared/services/auth/auth.service';
+import { UserStatus } from './shared/user-status.model';
+import { UserPanelService } from './shared/user-panel.service';
+import { ResetService } from '../shared/services/reset/reset.service';
 
 @Component({
   selector: 'app-user-panel',
@@ -13,11 +14,14 @@ export class UserPanelComponent implements OnInit {
   userStatus!: UserStatus;
   showPopup = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private userPanelService: UserPanelService,
+    private resetService: ResetService
+  ) {}
 
   onReset(mode: 'username' | 'password') {
     this.isLoading = true;
-    this.authService
+    this.resetService
       .reset(mode, this.userStatus.username)
       .pipe(take(1))
       .subscribe(() => {
@@ -31,7 +35,7 @@ export class UserPanelComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authService
+    this.userPanelService
       .userStatus()
       .pipe(take(1))
       .subscribe((status) => {

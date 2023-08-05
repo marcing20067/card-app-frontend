@@ -3,10 +3,10 @@ import { Component } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
-import { ResetPasswordData } from './shared/reset-password-data.model';
-import { ResetUsernameData } from './shared/reset-username-data.model';
-import { ResetService } from './shared/reset.service';
 import { UserValidators } from '../shared/util/user-validators';
+import { ResetService } from '../shared/services/reset/reset.service';
+import { ResetPasswordData } from '../shared/services/reset/reset-password-data.model';
+import { ResetUsernameData } from '../shared/services/reset/reset-username-data.model';
 
 @Component({
   selector: 'app-reset',

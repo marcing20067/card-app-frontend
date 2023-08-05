@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { TokenData } from '../../models/token-data.model';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +11,9 @@ import { TokenData } from '../../models/token-data.model';
 export class TokenService {
   private isAuth$ = new BehaviorSubject(false);
   private tokenData: Partial<TokenData> = {};
+  private isRefreshCalled$ = new BehaviorSubject(false);
+
+  constructor(private http: HttpClient) {}
 
   getAccessToken() {
     return this.tokenData.accessToken;
@@ -49,6 +54,43 @@ export class TokenService {
       accessToken: newData.accessToken,
       accessTokenEndValidity,
     };
+  }
+
+  getIsRefreshCalledListener() {
+    return this.isRefreshCalled$.asObservable();
+  }
+
+  refresh() {
+    return this.http
+      .post<{
+        error?: string;
+        accessToken?: string;
+        accessTokenExpiresIn?: number;
+      }>(environment.BACKEND_URL + 'refresh', {})
+      .pipe(
+        tap(
+          (tokenData) => {
+            if (tokenData.error) {
+              this.isRefreshCalled$.next(true);
+              return;
+            }
+
+            const { accessToken, accessTokenExpiresIn } = tokenData;
+
+            if (accessToken && accessTokenExpiresIn) {
+              this.changeIsAuth(true);
+              this.isRefreshCalled$.next(true);
+              this.setTokenData({
+                accessToken,
+                accessTokenExpiresIn,
+              });
+            }
+          },
+          () => {
+            this.isRefreshCalled$.next(true);
+          }
+        )
+      );
   }
 
   private checkTokensValidity() {

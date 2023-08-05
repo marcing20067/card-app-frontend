@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { take, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { AuthService } from '../../shared/services/auth/auth.service';
 import { ResetUsernameData } from './reset-username-data.model';
 import { ResetPasswordData } from './reset-password-data.model';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,5 +24,11 @@ export class ResetService {
           this.authService.logout().pipe(take(1)).subscribe();
         })
       );
+  }
+
+  reset(mode: 'password' | 'username', username: string) {
+    return this.http.post(environment.BACKEND_URL + `reset/${mode}`, {
+      username: username,
+    });
   }
 }

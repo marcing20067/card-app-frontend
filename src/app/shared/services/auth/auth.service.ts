@@ -6,57 +6,17 @@ import { User } from './user.model';
 import { tap } from 'rxjs/operators';
 import { TokenService } from '../token/token.service';
 import { Router } from '@angular/router';
-import { UserStatus } from '../../models/user-status.model';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private isRefreshCalled$ = new BehaviorSubject(false);
 
   constructor(
     private http: HttpClient,
     private tokenService: TokenService,
     private router: Router
   ) {}
-
-  getIsRefreshCalledListener() {
-    return this.isRefreshCalled$.asObservable();
-  }
-
-  refresh() {
-    return this.http
-      .post<{
-        error?: string;
-        accessToken?: string;
-        accessTokenExpiresIn?: number;
-      }>(environment.BACKEND_URL + 'refresh', {})
-      .pipe(
-        tap(
-          (tokenData) => {
-            if (tokenData.error) {
-              this.isRefreshCalled$.next(true);
-              return;
-            }
-
-            const { accessToken, accessTokenExpiresIn } = tokenData;
-
-            if (accessToken && accessTokenExpiresIn) {
-              this.tokenService.changeIsAuth(true);
-              this.isRefreshCalled$.next(true);
-              this.tokenService.setTokenData({
-                accessToken,
-                accessTokenExpiresIn,
-              });
-            }
-          },
-          () => {
-            this.isRefreshCalled$.next(true);
-          }
-        )
-      );
-  }
 
   login(user: User, rememberMe: boolean) {
     return this.http
@@ -78,10 +38,6 @@ export class AuthService {
     return this.http.post(environment.BACKEND_URL + 'auth/signup', user);
   }
 
-  userStatus() {
-    return this.http.get<UserStatus>(environment.BACKEND_URL + 'auth/status');
-  }
-
   activation(activationToken: string) {
     return this.http
       .get(environment.BACKEND_URL + `auth/activate/${activationToken}`)
@@ -100,11 +56,5 @@ export class AuthService {
         this.router.navigate(['/auth/login']);
       })
     );
-  }
-
-  reset(mode: 'password' | 'username', username: string) {
-    return this.http.post(environment.BACKEND_URL + `reset/${mode}`, {
-      username: username,
-    });
   }
 }
