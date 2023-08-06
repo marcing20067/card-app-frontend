@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 
 import { of } from 'rxjs';
 import { catchError, switchMap, take } from 'rxjs/operators';
-import { TokenService } from '../../services/token/token.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RefreshGuard {
-  constructor(private tokenService: TokenService) {}
+  constructor(private authService: AuthService) {}
   canLoad() {
-    return this.tokenService.getIsRefreshCalledListener().pipe(
+    return this.authService.getIsRefreshCalledListener().pipe(
       take(1),
       switchMap((isCalled) => {
         if (!isCalled) {
-          return this.tokenService.refresh().pipe(
+          return this.authService.refresh().pipe(
             take(1),
             switchMap(() => {
               return of(true);

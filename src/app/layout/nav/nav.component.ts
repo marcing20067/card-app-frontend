@@ -13,9 +13,7 @@ export class NavComponent implements OnInit, OnDestroy {
   isActive!: boolean;
   private sub!: Subscription;
 
-  constructor(
-    private layoutService: LayoutService,
-  ) {}
+  constructor(private layoutService: LayoutService) {}
 
   onNav(isActive: boolean) {
     this.isActive = isActive;
@@ -26,7 +24,6 @@ export class NavComponent implements OnInit, OnDestroy {
       this.class = ['nav'];
       if (feature) {
         feature.split(' ').forEach((f) => {
-          if (!f) return;
           this.class.push(`nav--${f}`);
         });
       }

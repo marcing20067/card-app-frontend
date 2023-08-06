@@ -1,43 +1,18 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { TokenData } from '../../models/token-data.model';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TokenService {
-  private isAuth$ = new BehaviorSubject(false);
-  private tokenData: Partial<TokenData> = {};
-  private isRefreshCalled$ = new BehaviorSubject(false);
-
-  constructor(private http: HttpClient) {}
+  private tokenData: TokenData | null = null;
 
   getAccessToken() {
-    return this.tokenData.accessToken;
-  }
-
-  changeIsAuth(isAuth: boolean) {
-    this.isAuth$.next(isAuth);
-  }
-
-  getIsAuthListener() {
-    return this.isAuth$.asObservable().pipe(distinctUntilChanged());
-  }
-
-  isAuth() {
-    const areTokensValidity = this.checkTokensValidity();
-    if (!areTokensValidity) {
-      this.clearTokenData();
-    }
-    this.isAuth$.next(areTokensValidity);
-    return areTokensValidity;
+    return this.tokenData?.accessToken;
   }
 
   clearTokenData() {
-    this.tokenData = {};
+    this.tokenData = null;
     localStorage.clear();
   }
 
@@ -56,44 +31,10 @@ export class TokenService {
     };
   }
 
-  getIsRefreshCalledListener() {
-    return this.isRefreshCalled$.asObservable();
-  }
-
-  refresh() {
-    return this.http
-      .post<{
-        error?: string;
-        accessToken?: string;
-        accessTokenExpiresIn?: number;
-      }>(environment.BACKEND_URL + 'refresh', {})
-      .pipe(
-        tap(
-          (tokenData) => {
-            if (tokenData.error) {
-              this.isRefreshCalled$.next(true);
-              return;
-            }
-
-            const { accessToken, accessTokenExpiresIn } = tokenData;
-
-            if (accessToken && accessTokenExpiresIn) {
-              this.changeIsAuth(true);
-              this.isRefreshCalled$.next(true);
-              this.setTokenData({
-                accessToken,
-                accessTokenExpiresIn,
-              });
-            }
-          },
-          () => {
-            this.isRefreshCalled$.next(true);
-          }
-        )
-      );
-  }
-
-  private checkTokensValidity() {
+  areTokensValidity() {
+    if (!this.tokenData) {
+      return false;
+    }
     const now = Date.now();
     const isAccessTokenValid =
       (this.tokenData.accessTokenEndValidity || 0) > now;

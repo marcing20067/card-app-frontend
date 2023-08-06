@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import { TokenService } from '../../services/token/token.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard  {
-  constructor(private tokenService: TokenService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
   canActivate() {
-    const isAuth = this.tokenService.isAuth();
+    const isAuth = this.authService.isAuth();
     if (isAuth) {
       return of(true);
     }

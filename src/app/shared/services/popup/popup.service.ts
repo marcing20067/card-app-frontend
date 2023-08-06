@@ -6,12 +6,16 @@ import { PopupData } from 'src/app/layout/shared/popup-data.model';
   providedIn: 'root',
 })
 export class PopupService {
+  private isOpen = false;
   private displayEvent$ = new Subject<PopupData | null>();
   private confirmEvent$ = new Subject<boolean>();
 
-  constructor() {}
+  getIsOpen() {
+    return this.isOpen;
+  }
 
   display(data: PopupData) {
+    this.isOpen = true;
     this.displayEvent$.next(data);
   }
 
@@ -20,6 +24,7 @@ export class PopupService {
   }
 
   confirm(value: boolean) {
+    this.isOpen = false;
     this.confirmEvent$.next(value);
     this.displayEvent$.next(null);
   }

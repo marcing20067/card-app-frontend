@@ -31,10 +31,10 @@ export class FieldComponent implements AfterContentInit, OnDestroy {
 
     const input = this.input.nativeElement;
     const onFocus = this.renderer.listen(input, 'focus', () => {
-      this.icon.isOrange = true;
+      this.icon.changeIsOrange(true);
     });
     const onBlur = this.renderer.listen(input, 'blur', () => {
-      this.icon.isOrange = false;
+      this.icon.changeIsOrange(false);
     });
     this.listeners.push(onFocus, onBlur);
   }

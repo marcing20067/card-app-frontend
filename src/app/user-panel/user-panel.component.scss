@@ -1,4 +1,4 @@
-@import '../shared/styles/variables';
+@import "../shared/styles/variables";
 
 .user-panel {
   position: relative;
@@ -8,33 +8,6 @@
     margin-bottom: 6.4rem;
     font-size: 2.4rem;
     text-align: left;
-  }
-
-  .status {
-    display: flex;
-    flex-direction: column;
-    row-gap: 3.2rem;
-    margin-bottom: 6.4rem;
-
-    &__item {
-      display: flex;
-      justify-content: space-between;
-      font-size: 1.6rem;
-      font-weight: 500;
-    }
-  }
-
-  &__buttons {
-    display: flex;
-    flex-direction: column;
-    row-gap: 3.2rem;
-
-    &-item {
-      padding: 0.8rem 0;
-      width: 100%;
-      max-width: 20rem;
-      font-family: inherit;
-    }
   }
 
   &__popup {
@@ -64,5 +37,32 @@
       max-width: 34.2rem;
       font-size: 2.4rem;
     }
+  }
+  
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3.2rem;
+
+    &-item {
+      padding: 0.8rem 0;
+      width: 100%;
+      max-width: 20rem;
+      font-family: inherit;
+    }
+  }
+}
+
+.status {
+  display: flex;
+  flex-direction: column;
+  row-gap: 3.2rem;
+  margin-bottom: 6.4rem;
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.6rem;
+    font-weight: 500;
   }
 }

@@ -26,6 +26,7 @@ export class LoginComponent {
   ) {}
 
   onSubmit(data: LoginData) {
+    this.isLoading = true;
     this.authService
       .login(data, data.rememberMe)
       .pipe(take(1))

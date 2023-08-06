@@ -28,7 +28,7 @@ export class ResetService {
 
   reset(mode: 'password' | 'username', username: string) {
     return this.http.post(environment.BACKEND_URL + `reset/${mode}`, {
-      username: username,
+      username
     });
   }
 }

@@ -18,6 +18,7 @@ export class ActivationComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.isLoading = true;
     const activationToken = this.route.snapshot.params.activationToken;
     this.authService
       .activation(activationToken)

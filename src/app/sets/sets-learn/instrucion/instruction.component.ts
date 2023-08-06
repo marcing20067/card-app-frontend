@@ -8,8 +8,8 @@ import { ScrollService } from 'src/app/shared/services/scroll/scroll.service';
   styleUrls: ['./instruction.component.scss'],
 })
 export class InstructionComponent {
-  private instructionEl = document.querySelector('app-instruction') as HTMLElement;
   show = false;
+  private instructionEl = document.querySelector('app-instruction') as HTMLElement;
 
   constructor(private scrollService: ScrollService, private tabulationService: TabulationService) {}
 

@@ -11,6 +11,10 @@ export class IconComponent implements OnInit {
   isOrange = false;
   private ICON_EXT = '.svg';
 
+  changeIsOrange(value: boolean) {
+    this.isOrange = value;
+  }
+  
   ngOnInit() {
     const iconName = this.src.split(this.ICON_EXT)[0];
     this.orangeSrc = iconName + '-orange' + this.ICON_EXT;

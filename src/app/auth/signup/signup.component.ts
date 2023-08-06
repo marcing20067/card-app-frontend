@@ -19,7 +19,6 @@ import { SignupForm } from '../shared/signup-form';
 export class SignupComponent {
   signupSuccessfully = false;
   isLoading = false;
-
   form: FormGroup<SignupForm> = this.fb.group({
     username: ['', UserValidators.username],
     password: ['', UserValidators.password],
@@ -33,6 +32,7 @@ export class SignupComponent {
   ) {}
 
   onSubmit(data: SignupData) {
+    this.isLoading = true;
     this.authService
       .signup(data)
       .pipe(take(1))
