@@ -1,17 +1,17 @@
 <ng-container *ngIf="{ isAuth: isAuth$ | async } as authData">
-  <ul class="nav-list" [ngClass]="{'nav-list--active': isActive}" *ngIf="!authData.isAuth">
+  <ul class="nav-list flex-center" [ngClass]="{'nav-list--active': isActive}" *ngIf="!authData.isAuth">
     <li class="nav-list__item">
       <a routerLink="/auth/login" class="nav-list__item-link" (click)="onNav(false)"
         [tabindex]="navItemTabIndex">Zaloguj
         się</a>
     </li>
     <li class="nav-list__item nav-list__item--reverse">
-      <a routerLink="/auth/signup" class="nav-list__item-link nav-list__item-link--reverse" (click)="onNav(false)"
+      <a routerLink="/auth/signup" class="nav-list__item-link nav-list__item-link--reverse button button--reverse" (click)="onNav(false)"
         [tabindex]="navItemTabIndex">Zarejestruj się</a>
     </li>
   </ul>
 
-  <ul class="nav-list" [ngClass]="{'nav-list--active': isActive}" *ngIf="authData.isAuth">
+  <ul class="nav-list flex-center" [ngClass]="{'nav-list--active': isActive}" *ngIf="authData.isAuth">
     <li class="nav-list__item">
       <a routerLink="/sets" class="nav-list__item-link" (click)="onNav(false)" [tabindex]="navItemTabIndex">Panel
         główny</a>
@@ -20,8 +20,8 @@
       <a routerLink="/user" class="nav-list__item-link" (click)="onNav(false)" [tabindex]="navItemTabIndex">Dane
         użytkownika</a>
     </li>
-    <li class="nav-list__item nav-list__item--button" *ngIf="authData.isAuth">
-      <button class="nav-list__item-link nav-list__item-link--button nav-list__item-link--reverse" (click)="onLogout()"
+    <li class="nav-list__item" *ngIf="authData.isAuth">
+      <button class="button button--reverse" (click)="onLogout()"
         [tabindex]="navItemTabIndex">Wyloguj się</button>
     </li>
   </ul>

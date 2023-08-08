@@ -8,13 +8,8 @@
 
   &__load-more {
     font-weight: 600;
-    display: block;
     margin: 0 auto 1.6rem auto;
     font-size: 1.8rem;
-    color: $gray;
-    background: none;
-    border: none;
-    text-transform: uppercase;
     text-decoration: underline;
   }
 
@@ -64,16 +59,10 @@
   }
 
   &__create {
-    display: block;
     padding: 0.8rem 1.6rem;
     margin: 0 auto 1.6rem auto;
-    width: fit-content;
     font-size: 1.2rem;
     font-weight: 600;
-    color: $gray;
-    border: 1px solid $gray;
-    border-radius: 1.5rem;
-    text-transform: uppercase;
     text-decoration: none;
   }
 }

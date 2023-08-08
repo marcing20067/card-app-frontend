@@ -3,7 +3,7 @@
         <p class="popup__heading">{{ data.content?.heading }}</p>
         <p class="popup__text" *ngIf="data.content?.text">{{ data.content?.text }}</p>
         <div class="popup__buttons" *ngIf="!data.buttons">
-            <button class="popup__buttons-item button button--reverse" (click)="onConfirm(false)">Nie</button>
+            <button class="popup__buttons-item button button--gray" (click)="onConfirm(false)">Nie</button>
             <button class="popup__buttons-item button" (click)="onConfirm(true)">Tak</button>
         </div>
         <div class="popup__buttons" *ngIf="data.buttons">

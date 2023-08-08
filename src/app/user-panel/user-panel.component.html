@@ -16,7 +16,7 @@
         <button class="user-panel__buttons-item button" (click)="onReset('password')">Zmień hasło</button>
     </div>
 
-    <div class="user-panel__popup" *ngIf="showPopup">
+    <div class="user-panel__popup flex-center" *ngIf="showPopup">
         <p class="user-panel__popup-heading">Sprawdź swój e-mail</p>
         <p class="user-panel__popup-text">Na e-mail został wysłany link, dzięki któremu zmienisz swoje dane użytkownika.</p>
         <button class="user-panel__popup-button button" (click)="onClose()">Ok</button>

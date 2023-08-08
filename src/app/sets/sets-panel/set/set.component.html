@@ -1,14 +1,15 @@
 <div class="set">
-    <a [routerLink]="[ '/sets/learn', set._id ]" class="set__learn">Ucz się zestawu</a>
-    <div class="set__box">
-        <button class="set__box-button" (click)="onSelectSet(set)">Wybierz zestaw</button>
-        <p class="set__name">{{ set.name }}</p>
-        <p class="set__cards-length">({{ set.cards.length}} fiszek)</p>
-    </div>
-    <div class="set__buttons">
-        <a class="set__buttons-item set__buttons-item--edit" [routerLink]="[ '/sets/create', set._id ]">
-            <img src="/assets/icons/pencil.svg" alt="Ołówek">
-        </a>
-        <button class="set__buttons-item set__buttons-item--delete" (click)="onDeleteSet(set)"><img src="/assets/icons/dustbin.svg" alt="Kosz na śmieci"></button>
-    </div>
+  <a [routerLink]="[ '/sets/learn', set._id ]" class="set__learn">Ucz się zestawu</a>
+  <div class="set__box">
+    <button class="set__box-button" (click)="onSelectSet(set)">Wybierz zestaw</button>
+    <p class="set__name">{{ set.name }}</p>
+    <p class="set__cards-length">({{ set.cards.length}} fiszek)</p>
+  </div>
+  <div class="set__buttons">
+    <a class="set__buttons-item flex-center " [routerLink]="[ '/sets/create', set._id ]">
+      <img src="/assets/icons/pencil.svg" alt="Ołówek">
+    </a>
+    <button class="set__buttons-item flex-center set__buttons-item--delete" (click)="onDeleteSet(set)"><img
+        src="/assets/icons/dustbin.svg" alt="Kosz na śmieci"></button>
+  </div>
 </div>

@@ -1,14 +1,14 @@
 <div class="stats">
     <div class="stats__box wrapper">
-        <div class="stats__item stats__item--red" [ngClass]="{ 'stats__item--activate': data.currentGroup === 1 }">{{
+        <div class="stats__item flex-center stats__item--red" [ngClass]="{ 'stats__item--activate': data.currentGroup === 1 }">{{
             data.stats.group1 }}</div>
-        <div class="stats__item stats__item--yellow" [ngClass]="{ 'stats__item--activate': data.currentGroup === 2 }">{{
+        <div class="stats__item flex-center stats__item--yellow" [ngClass]="{ 'stats__item--activate': data.currentGroup === 2 }">{{
             data.stats.group2 }}</div>
-        <div class="stats__item stats__item--light-yellow" [ngClass]="{ 'stats__item--activate': data.currentGroup === 3 }">{{
+        <div class="stats__item flex-center stats__item--light-yellow" [ngClass]="{ 'stats__item--activate': data.currentGroup === 3 }">{{
             data.stats.group3 }}</div>
-        <div class="stats__item stats__item--light-green"
+        <div class="stats__item flex-center stats__item--light-green"
             [ngClass]="{ 'stats__item--activate': data.currentGroup === 4 }">{{ data.stats.group4 }}</div>
-        <div class="stats__item stats__item--green" [ngClass]="{ 'stats__item--activate': data.currentGroup === 5 }">{{
+        <div class="stats__item flex-center stats__item--green" [ngClass]="{ 'stats__item--activate': data.currentGroup === 5 }">{{
             data.stats.group5 }}</div>
     </div>
 </div>

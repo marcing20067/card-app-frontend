@@ -9,6 +9,7 @@ import { LayoutService } from '../shared/layout.service';
 })
 export class FooterComponent implements OnInit, OnDestroy {
   class = ['footer'];
+  year = new Date().getFullYear();
   private sub!: Subscription;
 
   constructor(private layoutService: LayoutService) {}

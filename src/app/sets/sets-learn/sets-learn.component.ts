@@ -5,7 +5,6 @@ import { debounceTime, take } from 'rxjs/operators';
 import { SetsService } from '../sets.service';
 import { SetsLearnService } from '../shared/sets-learn.service';
 import { Set } from '../shared/models/set.model';
-// ADD CREATING RANDOM DECK
 @Component({
   selector: 'app-sets-learn',
   templateUrl: './sets-learn.component.html',

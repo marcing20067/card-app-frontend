@@ -17,7 +17,7 @@
             currentGroup: state.currentCard.group
         }"></app-stats>
   </div>
-  <div *ngIf="!state.currentCard" class="learn__complete">
+  <div *ngIf="!state.currentCard" class="learn__complete flex-center">
     <p class="learn__complete-heading">Gratulację!</p>
     <p class="learn__complete-text">Skończyłeś naukę zestawu "{{ set.name | titlecase }}"</p>
   </div>

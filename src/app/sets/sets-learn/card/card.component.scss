@@ -1,4 +1,4 @@
-@import '../../../shared/styles/variables';
+@import "../../../shared/styles/variables";
 
 :host {
   display: block;
@@ -32,11 +32,6 @@
     border-top-left-radius: 2.5rem;
     border-bottom-right-radius: 2.5rem;
     text-indent: -200vw;
-
-    &:focus {
-      outline: none;
-      border: 1px solid $orange;
-    }
   }
 
   &__side {
@@ -44,9 +39,9 @@
     grid-template-columns: 1fr;
     grid-template-rows: 6rem 1fr 6rem;
     grid-template-areas:
-      'top'
-      'center'
-      'bottom';
+      "top"
+      "center"
+      "bottom";
     height: 100%;
     width: 100%;
 
@@ -119,6 +114,7 @@
 
     &-icon {
       position: absolute;
+      height: 100%;
       z-index: 3;
       left: 0;
       bottom: 0;
@@ -139,6 +135,7 @@
   &--activate &__top-level,
   &__bottom-icon {
     background-color: $light-purple;
+    border: none;
   }
 
   &--activate &__top-level {

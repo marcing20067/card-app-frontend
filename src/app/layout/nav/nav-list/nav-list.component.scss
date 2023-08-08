@@ -1,4 +1,4 @@
-@import '../../../shared/styles/variables';
+@import "../../../shared/styles/variables";
 
 :host {
   position: fixed;
@@ -9,10 +9,7 @@
   z-index: 100;
   top: 7.6rem;
   left: 100%;
-  display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   width: 100%;
   height: calc(100vh - 7.6rem);
   background-color: $nav-list-color;
@@ -33,18 +30,8 @@
       color: $white;
       text-decoration: none;
 
-      &--button {
-        font-weight: 600;
-        font-size: inherit;
-        font-family: inherit;
-        border: none;
-        text-transform: uppercase;
-      }
-
       &--reverse {
         color: $orange;
-        background-color: $white;
-        border-radius: 50px;
       }
     }
   }

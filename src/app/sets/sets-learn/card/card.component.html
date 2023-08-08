@@ -11,9 +11,11 @@
       <p class="card__center-text">{{ card?.concept }}</p>
     </div>
 
-    <div class="card__bottom flex-center">
-      <input class="card__bottom-icon" (click)="onInstrucionShow()" type="image" src="/assets/icons/info.svg"
-        alt="Jak to działa?">
+    <div class="card__bottom flex-center" *ngIf="isActivate">
+      <button class="card__bottom-icon focusable" (click)="onInstrucionShow()">
+        <img src="/assets/icons/info.svg" alt="Jak to działa?">
+      </button>
+
       <p class="card__bottom-label flex-center">Phrase</p>
     </div>
   </div>
