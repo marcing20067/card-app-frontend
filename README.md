@@ -15,9 +15,9 @@ Learn faster by using flashcards. All you need to do is spend 10 minutes a day t
 
 **Client:** Angular, SCSS, Typescript
 
-**Server:** Node, Express, MongoDB, JavaScript
+**Server:** Node, Express, MongoDB, JavaScript, Jest
 
-[Server repository](https://www.google.com/)
+[Server repository](https://github.com/marcing20067/poliglot-backend)
   
 
 ## Installation
