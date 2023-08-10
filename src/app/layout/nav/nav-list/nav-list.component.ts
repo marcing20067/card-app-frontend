@@ -47,13 +47,11 @@ export class NavListComponent implements OnInit, OnDestroy {
       .pipe(map((event) => (<Window>event.target).innerWidth < 1050))
       .subscribe((isMobile) => {
         if (!isMobile && this.isActive && !this.popupService.getIsOpen()) {
-          this.scrollService.unLockScroll();
-          this.tabulationService.releaseTabulation();
+          this.unLockAppMove();
         }
 
         if (isMobile && this.isActive) {
-          this.scrollService.blockScroll();
-          this.tabulationService.trapTabulation(this.navEl);
+          this.blockAppMove();
         }
       });
   }
@@ -62,12 +60,10 @@ export class NavListComponent implements OnInit, OnDestroy {
     this.isActive = value;
     this.nav.emit(value);
     if (this.isActive) {
-      this.scrollService.blockScroll();
-      this.tabulationService.trapTabulation(this.navEl);
+      this.blockAppMove();
       return;
     }
-    this.scrollService.unLockScroll();
-    this.tabulationService.releaseTabulation();
+    this.unLockAppMove();
   }
 
   onLogout() {
@@ -77,17 +73,16 @@ export class NavListComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((isConfirm) => {
         if (isConfirm) {
-          this.tabulationService.releaseTabulation();
           this.authService.logout().pipe(take(1)).subscribe();
-          this.isActive = false;
+          this.onNav(false);
           return;
         }
 
         if (window.innerWidth < 1050 && this.isActive) {
-          this.tabulationService.trapTabulation(this.navEl, previousTab);
+          this.blockAppMove(previousTab);
           return;
         }
-        this.tabulationService.releaseTabulation();
+        this.unLockAppMove();
       });
 
     this.popupService.display({
@@ -100,5 +95,15 @@ export class NavListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  blockAppMove(previousTab?: HTMLElement) {
+    this.scrollService.blockScroll();
+    this.tabulationService.trapTabulation(this.navEl, previousTab);
+  }
+
+  unLockAppMove() {
+    this.scrollService.unLockScroll();
+    this.tabulationService.releaseTabulation();
   }
 }
