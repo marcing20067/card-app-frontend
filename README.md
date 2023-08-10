@@ -8,14 +8,14 @@ Learn faster by using flashcards. All you need to do is spend 10 minutes a day t
 
 ## Demo
 
-[Check out our app in action!](https://www.google.com/)
+[Check out our app in action!](https://poliglot.onrender.com/home)
 
 
 ## Tech Stack
 
 **Client:** Angular, SCSS, Typescript
 
-**Server:** Node, Express, MongoDB, JavaScript, Jest
+**Server:** Node, Express, MongoDB, Jest JavaScript
 
 [Server repository](https://github.com/marcing20067/poliglot-backend)
   
