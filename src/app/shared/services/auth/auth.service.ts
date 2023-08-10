@@ -25,10 +25,6 @@ export class AuthService {
     return this.isAuth$.asObservable().pipe(distinctUntilChanged());
   }
 
-  changeIsAuth(isAuth: boolean) {
-    this.isAuth$.next(isAuth);
-  }
-
   isAuth() {
     const areTokensValidity = this.tokenService.areTokensValidity();
     if (!areTokensValidity) {
@@ -59,7 +55,7 @@ export class AuthService {
 
             const { accessToken, accessTokenExpiresIn } = tokenData;
             if (accessToken && accessTokenExpiresIn) {
-              this.changeIsAuth(true);
+              this.isAuth$.next(true);
               this.isRefreshCalled$.next(true);
               this.tokenService.setTokenData({
                 accessToken,
@@ -107,7 +103,7 @@ export class AuthService {
   logout() {
     return this.http.get(environment.BACKEND_URL + 'auth/logout').pipe(
       tap(() => {
-        this.changeIsAuth(false);
+        this.isAuth$.next(false);
         this.tokenService.clearTokenData();
         this.router.navigate(['/auth/login']);
       })

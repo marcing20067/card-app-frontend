@@ -41,7 +41,7 @@ export class NavListComponent implements OnInit, OnDestroy {
   get navItemTabIndex() {
     return window.innerWidth >= 1050 || this.isActive ? 0 : -1;
   }
-  
+
   ngOnInit() {
     this.sub = this.resize$
       .pipe(map((event) => (<Window>event.target).innerWidth < 1050))
@@ -79,6 +79,7 @@ export class NavListComponent implements OnInit, OnDestroy {
         if (isConfirm) {
           this.tabulationService.releaseTabulation();
           this.authService.logout().pipe(take(1)).subscribe();
+          this.isActive = false;
           return;
         }
 
