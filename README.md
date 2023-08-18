@@ -33,3 +33,9 @@ Learn faster by using flashcards. All you need to do is spend 10 minutes a day t
 ```bash
 ng serve
 ```
+
+## Copyright
+
+**Code:** Me
+
+**Design:** Aleksandra Mazan
